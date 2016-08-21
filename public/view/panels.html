@@ -1,0 +1,217 @@
+<div id="register_panel" class="panel_outer" hidden="hidden">
+    <div class="mask" onclick="Panel.close('register')"></div>
+    <div class="panel">
+        <div class="panel_head">
+            <span>注册</span>
+            <i class="fa fa-times" onclick="Panel.close('register')"></i>
+        </div>
+        <div class="panel_body">
+            <div id="register_instruction">
+                <p>欢迎前来注册！注册了之后，如果你在多台设备上登录同一个账号，你将可以同步你的所有追的漫画的信息。将会十分便利。注册依旧不是强制的，您在本机上的使用不会受到任何影响，您之前的浏览记录也将会继续保留。</p>
+                <p>该注册不涉及除记录浏览数据之外的任何用户隐私，也就是说，你并不需要填写电子邮箱等个人信息。请放心使用。</p>
+                <p>注：如果您在注册的时候显示了“用户已经注册”，您可以使用菜单中的重置按钮来重置本机的数据。</p>
+            </div>
+            <div id="register_form">
+                <label>用户名仅能由4到10位的字母或数字组成</label>
+                <input type="text" id="register_username" placeholder="用户名" />
+                <label>密码仅能由8到16的数字，字母和-、_、@、=这几个符号组成</label>
+                <input type="password" id="register_password" placeholder="密码" />
+                <label>请在这里重新输入您的密码</label>
+                <input type="password" id="register_confirm_password" placeholder="请重新输入您的密码" />
+                <div class="button" id="register_submit" onclick="User.register()">注册</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="change_password_panel" class="panel_outer" hidden="hidden">
+    <div class="mask" onclick="Panel.close('change_password')"></div>
+    <div class="panel">
+        <div class="panel_head">
+            <span>更改密码</span>
+            <i class="fa fa-times" onclick="Panel.close('change_password')"></i>
+        </div>
+        <div class="panel_body">
+            <div id="register_form">
+                <label>请在这里重新输入您的原密码</label>
+                <input type="password" id="original_password" placeholder="请输入您原来的密码" />
+                <label>密码仅能由8到16的数字，字母和-、_、@、=这几个符号组成</label>
+                <input type="password" id="new_password" placeholder="请输入您的新密码" />
+                <label>请在这里重新输入您的密码</label>
+                <input type="password" id="confirm_new_password" placeholder="请重新输入您的密码" />
+                <div class="button" id="register_submit" onclick="User.changePassword()">更换密码</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="about_panel" class="panel_outer" hidden="hidden">
+    <div class="mask" onclick="Panel.close('about')"></div>
+    <div class="panel">
+        <div class="panel_head">
+            <span id="beatmap_more_name">帮助 & 关于</span>
+            <i class="fa fa-times" onclick="Panel.close('about')"></i>
+        </div>
+        <div class="panel_body" id="about_panel_body">
+            <section class="collapsed">
+                <div class="title">
+                    <i class="fa fa-angle-right"></i>
+                    <span>声明</span>
+                </div>
+                <div class="body">
+                    <p>本站点所有漫画资源取自<a href="http://www.cartoonmad.com">动漫狂</a>，漫画Credit自漫画作者及各汉化组，与本人没有任何关系。制作本站点纯粹为了学习与交流使用，严禁进行任何商业传播。</p>
+                </div>
+            </section>
+            <section class="collapsed">
+                <div class="title">
+                    <i class="fa fa-angle-right"></i>
+                    <span>漫画</span>
+                </div>
+                <div class="body">
+                    <p>在首页上，你可以在搜索框输入想要找的漫画名字，然后按下回车键搜索～</p>
+                    <p>在搜索结果中，点击任意一个进去便会自动开始追这部漫画哦～</p>
+                    <p>但如果没有搜索到的话非常可惜。这个网站显示的漫画全部来自于<a href="http://www.cartoonmad.com">动漫狂</a>，所以如果源站上没有的话，我们这里也不会有了......</p>
+                    <p>您在首页上任意点击一个漫画，进去之后会自动开始追这部漫画。之后，这部漫画就会显示在“正在追的”漫画列表中。</p>
+                    <p>所有的功能都建立在您使用Cookie的基础上。请务必启用浏览器Cookie。</p>
+                </div>
+            </section>
+            <section class="collapsed">
+                <div class="title">
+                    <i class="fa fa-angle-right"></i>
+                    <span>设置</span>
+                </div>
+                <div class="body">
+                    <p>在右边的菜单中可以选择一些用户设置</p>
+                    <p>日间模式和夜间模式将更改整个页面的颜色，天黑的时候选择黑色背景对眼睛有益哦～</p>
+                    <p>左右手模式的话，在用不同的姿势躺在床上的时候会相当便利呢～</p>
+                    <p>希望这些小设置能对大家有帮助～！</p>
+                </div>
+            </section>
+            <section class="collapsed">
+                <div class="title">
+                    <i class="fa fa-angle-right"></i>
+                    <span>用户</span>
+                </div>
+                <div class="body">
+                    <p>在2.0版本我们开始采用用户账户系统。</p>
+                    <p>注册了之后，如果你在多台设备上登录同一个账号，你将可以同步你的所有追的漫画的信息。将会十分便利。</p>
+                    <p>注册依旧不是强制的，您在本机上的使用不会受到任何影响，您之前的浏览记录也将会继续保留。</p>
+                    <p>该注册不涉及除记录浏览数据之外的任何用户隐私，也就是说，你并不需要填写电子邮箱等个人信息。</p>
+                    <p>重置按钮用于你不希望注册并且也想要清空当前的所有信息的情况。请酌情使用。</p>
+                    <p>欢迎来注册哦！</p>
+                </div>
+            </section>
+            <section class="collapsed">
+                <div class="title">
+                    <i class="fa fa-angle-right"></i>
+                    <span>关于</span>
+                </div>
+                <div class="body">
+                    <p>
+                        这货由Liby脑子一时进水写成。( ´ ▽ ` )ﾉ<br />
+                        本来1.0版本的时候这行留了一句话，但是现在已经2.0版本了呢～所以大家可以更自由地看自己喜欢的漫画了～<br />
+                        有什么建议的话也请务必发来邮件告诉我哦。ε=ε=ε=┌(;￣◇￣)┘<br />
+                        如果能帮到大家就好了呢！<br />
+                        这货的个人主页：<a href="http://liby.cubes.studio">http://liby.cubes.studio</a><br />
+                        这货的邮箱：<a href="mailto:liby99@icloud.com">liby99@icloud.com</a><br />
+                    </p>
+                </div>
+            </section>
+            <section class="collapsed">
+                <div class="title">
+                    <i class="fa fa-angle-right"></i>
+                    <span>日志</span>
+                </div>
+                <div class="body" id="update">
+                    <p>
+                        <strong class="version">2.0.2</strong> --
+                        <span class="date">2016-06-18</span><br />
+                        - 不需要重置本机UUID也可以注册了。<br />
+                        - 终于增加了Badge，这样子就能更清晰地知道哪个漫画更新了。数据库的操作很好玩哦，这个。<br />
+                        - 在Index也可以显示完结与否的信息了～<br />
+                        - 如果当前没有正在追的漫画，会显示出来<br />
+                        - 觉得封面的名字太Low了，果然还是换个新名字（好像还是很不好听？）<br />
+                        - 修复了一大堆Bug<br />
+                    </p>
+                    <p>
+                        <strong class="version">2.0.1</strong> --
+                        <span class="date">2016-06-16</span><br />
+                        - 可以管理自己追的漫画啦！<br />
+                        - 可以修改自己的密码啦！<br />
+                        - 用户可以重复注册并覆盖掉之前的用户信息。现在在同一台机器上如果已经登录了就已经不能再注册了。<br />
+                        - 用户需要用重置本机UUID的方式来注册新账号。<br />
+                        - 提供了更清晰的注册提示。<br />
+                        - 修复了一大堆Bug<br />
+                    </p>
+                    <p>
+                        <strong class="version">2.0.0</strong> -- 
+                        <span class="date">2016-06-15</span><br />
+                        - 终于迎来了好玩的2.0版本！<br />
+                        - 提供漫画搜索功能！终于可以随时搜索并且随意看自己想看的漫画了！<br />
+                        - 提供热门漫画功能！可以看看最近有什么好玩的漫画更新了呢～<br />
+                        - 提供用户账户功能！这样的话，不管到哪里都能以同样的进度看漫画啦！而且经过大量调整的后台程序和数据库让您的浏览更稳定更快捷！<br />
+                        - 可以管理自己追的漫画啦！<br />
+                        - 修复了许多许多Bug<br />
+                        P.S. 后台写的真是太好玩了，第一次用NodeJs干这么多事，从爬虫，计划任务，数据库到用户账户全都用上了，有趣有趣<br />
+                    </p>
+                    <p>
+                        <strong class="version">1.3.4</strong> -- 
+                        <span class="date">2016-04-10</span><br />
+                        - 资源站更新了部分漫画的链接，已修复
+                        - 感谢Routine桑指出的bug，随机一话的时候有可能随机到第0话的样子。已修复
+                    </p>
+                    <p>
+                        <strong class="version">1.3.3</strong> -- 
+                        <span class="date">2016-03-17</span><br />
+                        - 感谢Al-Hwayizmi的随机一话的灵感～增加了随机一话的功能～这样二刷的时候就方便多了呢～<br />
+                        P.S. 明明明天早上就要考试了但是还努力的更新（其实就花了两分钟）。
+                    </p>
+                    <p>
+                        <strong class="version">1.3.2</strong> -- 
+                        <span class="date">2016-03-08</span><br />
+                        - 修复了Cookie会短时间内过期的问题。Cookie现在将会保存365天并且会及时更新。
+                    </p>
+                    <p>
+                        <strong class="version">1.3.1</strong> -- 
+                        <span class="date">2016-03-07</span><br />
+                        - 在出包王女中发现资源站会有漏的漫画章节，将判别是否有遗漏，直接计入数据跳过遗漏章节。
+                    </p>
+                    <p>
+                        <strong class="version">1.3.0</strong> -- 
+                        <span class="date">2016-03-07</span><br />
+                        - 增加了自动查看是否有已经更新的漫画的功能！如果有更新的话，在漫画列表的图片右上角会有小红圈！<br />
+                        - 修复了许多代码上的问题。<br />
+                        - 增加了Liby的吐槽（太羞耻了已经被删掉了）<br />
+                        - 注：还有什么好优化的点吗＝＝把所有的方法都OOP＝＝？
+                    </p>
+                    <p>
+                        <strong class="version">1.2.1</strong> -- 
+                        <span class="date">2016-03-06</span><br />
+                        - 修复了就算打开菜单或关于页面也可以滚动的问题。<br />
+                        - 修复了关于页面上下的空白的问题。<br />
+                    </p>
+                    <p>
+                        <strong class="version">1.2.0</strong> -- 
+                        <span class="date">2016-03-06</span><br />
+                        - 加入了日间模式与夜间模式。<br />
+                        - 加入了左手模式与右手模式。<br />
+                        - 加入了帮助与关于。<br />
+                    </p>
+                    <p>
+                        <strong class="version">1.1.0</strong> -- 
+                        <span class="date">2016-03-05</span><br />
+                        - 使用Cookie记录阅读历史。<br/>
+                        - 在漫画列表界面中加入封面图片。<br />
+                        - 在菜单中删去了不必要的导航按钮，加入了漫画章节列表。<br />
+                    </p>
+                    <p>
+                        <strong class="version">1.0.0</strong> -- 
+                        <span class="date">2016-03-04</span><br />
+                        - 发布啦！<br/>
+                        - 提供基本的漫画列表界面<br />
+                        - 可以没有广告地流畅连贯地浏览漫画！<br />
+                        - 漫画的导航好像还需要进一步更新<br />
+                    </p>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

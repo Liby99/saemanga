@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Manga - Cubes Studio</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <link href="css/font-awesome.css" rel="stylesheet" />
+        <link href="css/shake.css" rel="stylesheet" />
+        <link href="css/basic.css" rel="stylesheet" />
+        <script src="js/jquery.js"></script>
+        <script src="js/basic.js"></script>
+        <script src="js/index.js"></script>
+    </head>
+    <body>
+        <div class="page">
+            <section id="index_head_section">
+                <div id="index_title">漫画INDEX</div>
+                <div id="index_intro">Presented by Liby</div>
+            </section>
+            <section id="index_manga_search_section">
+                <div id="index_manga_search_outer">
+                    <i class="fa fa-search"></i>
+                    <input type="text" id="search" placeholder="请在这里输入想要搜索的漫画" />
+                </div>
+                <div id="index_manga_search_result_outer" class="horizontal_scroll_list collapsed">
+                    <div id="index_manga_search_result" class="horizontal_scroll_list_inner" style="width: 10000px">
+                        <!-- Search Manga will go here -->
+                    </div>
+                </div>
+            </section>
+            <section id="index_hot_manga_section">
+                <div class="head">热门</div>
+                <div id="index_hot_manga_list_outer" class="horizontal_scroll_list">
+                    <div id="index_hot_manga_list" class="horizontal_scroll_list_inner" style="width: 10000px">
+                        <!-- Hot Manga will go here -->
+                    </div>
+                </div>
+            </section>
+            <section id="index_following_manga_section">
+                <div class="head">
+                    <span>正在追的</span>
+                    <a id="manage_following_manga">管理</a>
+                </div>
+                <div id="index_following_manga_list">
+                    <!-- Following Manga will go here -->
+                </div>
+            </section>
+            <section id="footer_section">
+                &copy; 2016 Cubes Studio - Manga. Developed by Liby. <a onclick="Panel.show('about')">帮助 & 关于</a>
+            </section>
+        </div>
+        <div id="menu">
+            <div id="menu_toggle" onclick="Menu.show()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <div id="menu_outer">
+                <div id="menu_inner">
+                    <div id="menu_head" class="menu_section">
+                        <span>菜单</span>
+                        <i class="fa fa-times" onclick="Menu.hide()"></i>
+                    </div>
+                    <div id="menu_user_login" class="menu_section" hidden="hidden">
+                        <!-- Login goes here -->
+                    </div>
+                    <div id="menu_others" class="menu_section">
+                        <div id="menu_user_account" class="menu_button" hidden="hidden">
+                            <!-- Account Goes Here -->
+                        </div>
+                        <div id="menu_help" class="menu_button" onclick="Panel.show('about')">帮助 & 关于</div>
+                        <div id="random_manga" class="menu_button" onclick="Manga.random()">手气不错</div>
+                    </div>
+                    <div id="menu_setting" class="menu_section">
+                        <!-- Setting goes here -->
+                    </div>
+                </div>
+            </div>
+            <div id="menu_mask" class="mask" hidden="hidden" onclick="Menu.hide()"></div>
+        </div>
+        <div id="panels">
+            <!-- Panels goes here -->
+        </div>
+    </body>
+    <script>
+        $(function () {
+            Page.initiate();
+            Search.initiate();
+            Manga.initiate();
+            Manga.getHotManga();
+            Manga.getFollowingManga();
+        });
+    </script>
+</html>

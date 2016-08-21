@@ -1,0 +1,14 @@
+{
+  "name": "manga-reader",
+  "version": "2.1.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "keywords": [
+    "manga"
+  ],
+  "author": "Liby Lee",
+  "license": "ISC"
+}

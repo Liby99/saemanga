@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Manga - Cubes Studio</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <link href="css/font-awesome.css" rel="stylesheet" />
+        <link href="css/basic.css" rel="stylesheet" />
+        <script src="js/jquery.js"></script>
+        <script src="js/basic.js"></script>
+        <script src="js/manga.js"></script>
+        <style>
+            
+        </style>
+    </head>
+    <body>
+        <div class="page">
+            <section id="manga_header_section">
+                <div id="manga_title">
+                    <span>-</span>
+                    <span class="name"></span>
+                    <span>-</span>
+                </div>
+                <div id="manga_episode">
+                    <span>第</span>
+                    <span class="episode"></span>
+                    <span>话</span>
+                </div>
+            </section>
+            <section id="manga_holder_section">
+                <!-- Comics will appear here -->
+            </section>
+            <section id="manga_footer_section">
+                <div class="btn" id="prev_episode_button"></div>
+                <div class="btn" id="back_to_index" onclick="Page.goToIndex()">返回漫画列表</div>
+                <div class="btn" id="next_episode_button"></div>
+            </section>
+            <section id="footer_section">
+                &copy; 2016 Cubes Studio - Manga. Developed by Liby. <a onclick="Panel.show('about')">帮助 & 关于</a>
+            </section>
+        </div>
+        <div id="menu">
+            <div id="menu_toggle" onclick="Menu.show()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <div id="menu_outer">
+                <div id="menu_inner">
+                    <div id="menu_head" class="menu_section">
+                        <span>菜单</span>
+                        <i class="fa fa-times" onclick="Menu.hide()"></i>
+                    </div>
+                    <div id="menu_user_login" class="menu_section" hidden="hidden">
+                        <!-- Login Goes Here -->
+                    </div>
+                    <div id="menu_others" class="menu_section">
+                        <div id="menu_user_account" class="menu_button" hidden="hidden">
+                            <!-- Account Goes Here -->
+                        </div>
+                        <div id="menu_back" class="menu_button" onclick="Page.goToIndex()">返回漫画列表</div>
+                        <div id="menu_prev_episode" class="menu_button" onclick="Manga.prevEpisode()">上一话</div>
+                        <div id="menu_next_episode" class="menu_button" onclick="Manga.nextEpisode()">下一话</div>
+                        <div id="menu_random_episode" class="menu_button" onclick="Manga.randomEpisode()">随机一话</div>
+                        <div id="menu_unfollow_manga" class="menu_button" onclick="Manga.unfollow()">取消关注该漫画</div>
+                        <div id="menu_help" class="menu_button" onclick="Panel.show('about')">帮助 & 关于</div>
+                    </div>
+                    <div id="menu_setting" class="menu_section">
+                        <!-- Setting goes here -->
+                    </div>
+                    <div id="menu_episode" class="menu_section">
+                        <ul id="menu_episode_list">
+                            <!-- Menu Episode List goes here -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="menu_mask" class="mask" hidden="hidden" onclick="Menu.hide()"></div>
+        </div>
+        <div id="panels">
+            
+        </div>
+    </body>
+    <script>
+        $(function () {
+            Page.initiate();
+            Manga.initiate();
+        });
+    </script>
+</html>
