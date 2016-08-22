@@ -12,6 +12,6 @@
     ],
     "mysql_host": "127.0.0.1",
     "mysql_database": "Manga",
-    "mysql_user": "root",
+    "mysql_username": "liby99",
     "mysql_password": "Bionicle-120"
 }
