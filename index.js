@@ -1,5 +1,5 @@
 var express = require("express");
-var config = require("./server/data/config.js");
+var config = require("./server/data/config.json");
 
 function setDateTime() {
     require("./server/module/datetime.js")();
@@ -52,7 +52,7 @@ function setSchedule() {
     setDateTime();
     setCookie(server);
     setRenderEngine(server);
-    setRouting(server);
+    setRoute(server);
     setAjax(server);
     setSchedule();
     
