@@ -86,3 +86,120 @@ function s4() {
     }
     return str;
 }
+
+exports.Stack = Stack;
+
+function Stack() {
+    this._size = 0;
+    this._head = null;
+}
+
+Stack.prototype.isEmpty = function () {
+    return this._size == 0;
+}
+
+Stack.prototype.size = function () {
+    return this._size;
+}
+
+Stack.prototype.push = function (element) {
+    var node = new Node(element);
+    if (this.isEmpty()) {
+        this._head = node;
+        this._size++;
+    }
+    else {
+        node._next = this._head;
+        this._head = node;
+        this._size++;
+    }
+}
+
+Stack.prototype.pop = function (element) {
+    if (this.isEmpty()) {
+        throw new Error("Empty Stack Exception");
+    }
+    else {
+        var element = this._head._element;
+        if (this._size == 1) {
+            this._head = null;
+            this._size = 0;
+        }
+        else {
+            this._head = this._head._next;
+            this._size--;
+        }
+        return element;
+    }
+}
+
+Stack.prototype.peek = function () {
+    if (this.isEmpty()) {
+        throw new Error("Empty Stack Exception");
+    }
+    else {
+        return this._head._element;
+    }
+}
+
+exports.Queue = Queue;
+
+function Queue() {
+    this._size = 0;
+    this._head = null;
+    this._tail = null;
+}
+
+Queue.prototype.isEmpty = function () {
+    return this._size == 0;
+}
+
+Queue.prototype.size = function () {
+    return this._size;
+}
+
+Queue.prototype.push = function (element) {
+    var node = new Node(element);
+    if (this.isEmpty()) {
+        this._head = node;
+        this._tail = node;
+        this._size++;
+    }
+    else {
+        this._tail._next = node;
+        this._size++;
+    }
+}
+
+Queue.prototype.pop = function () {
+    if (this.isEmpty()) {
+        throw new Error("Empty Queue Exception");
+    }
+    else {
+        var element = this._head._element;
+        if (this._size == 1) {
+            this._head = null;
+            this._tail = null;
+            this._size = 0;
+        }
+        else {
+            this._head = this._head._next;
+            this._size--;
+        }
+        return element;
+    }
+}
+
+Queue.prototype.peek = function () {
+    if (this.isEmpty()) {
+        throw new Error("Empty Queue Exception");
+    }
+    else {
+        return this._head._element;
+    }
+}
+
+function Node(element) {
+    this._element = element;
+    this._next = null;
+}

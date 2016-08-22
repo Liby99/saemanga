@@ -7,13 +7,19 @@ function setDateTime() {
 
 function setCookie(server) {
     server.use(require("cookie-parser")());
-    server.use(require("./server/handler/cookie.js"));
+    server.use(require("./server/api/cookie.js"));
 }
 
-function setRouting(server) {
+function setRenderEngine(server) {
+    server.set("views", __dirname + "/public");
+    server.engine(".html", require("ejs").__express);
+    server.set('view engine', "html");
+}
+
+function setRoute(server) {
     setDefaultPage(server);
-    setPageHandler(server);
     setStaticField(server);
+    setPageHandler(server);
 }
 
 function setDefaultPage(server) {
@@ -22,15 +28,14 @@ function setDefaultPage(server) {
     });
 }
 
-function setPageHandler(server) {
-    require("./server/handler/page.js").set(server);
+function setStaticField(server) {
+    config["static_field"].forEach(function (obj, number) {
+        server.use(obj, express.static(__dirname + "/public/" + obj));
+    });
 }
 
-function setStaticField(server) {
-    var fields = ["/css", "/js", "/fonts", "/img", "/view"];
-    fields.forEach(function (obj, number) {
-        server.use(obj, express.static(require("path").resolve("./public/" + obj)));
-    });
+function setPageHandler(server) {
+    require("./server/module/route.js").set(server);
 }
 
 function setAjax(server) {
@@ -38,7 +43,7 @@ function setAjax(server) {
 }
 
 function setSchedule() {
-    require("./server/handler/schedule.js").set();
+    require("./server/api/schedule.js").set();
 }
 
 (function () {
@@ -46,6 +51,7 @@ function setSchedule() {
     
     setDateTime();
     setCookie(server);
+    setRenderEngine(server);
     setRouting(server);
     setAjax(server);
     setSchedule();

@@ -3,26 +3,7 @@ var util = require("../module/util.js");
 var Creeper = require("./creeper.js");
 var Database = require("./database.js");
 
-module.exports = {
-    set: function (server) {
-        
-        server.get("/index.html", function (req, res) {
-            processIndex(req, res);
-        });
-        
-        server.get("/manga.html", function (req, res) {
-            processManga(req, res);
-        });
-    }
-}
-
-function processIndex(req, res) {
-    processUUID(req, res, function (UUID) {
-        res.sendFile(require("path").resolve("./public/index.html"));
-    });
-}
-
-function processManga(req, res) {
+module.exports = function (req, res) {
     if (req.query.id) {
         var id = parseInt(req.query.id);
         processUUID(req, res, function (UUID) {
@@ -32,7 +13,7 @@ function processManga(req, res) {
                         if (follow) {
                             if (req.query.epi && parseInt(req.query.epi) >= 0 && parseInt(req.query.epi) <= manga.latest_episode) {
                                 Database.refreshFollowStatus(UUID, id, parseInt(req.query.epi), function () {
-                                    res.sendFile(require("path").resolve("./public/manga.html"));
+                                    res.render("manga");
                                 });
                             }
                             else {

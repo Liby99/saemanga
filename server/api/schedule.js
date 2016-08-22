@@ -5,7 +5,7 @@ var Database = require("./database.js");
 var tasks = [
     {
         name: "[Update Hot Manga]",
-        rule: "*/20 * * * *",
+        rule: "*/30 * * * *",
         action: function () {
             Creeper.getHotManga(function (result) {
                 if (result.length != 0) {
