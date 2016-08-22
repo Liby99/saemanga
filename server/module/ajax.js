@@ -49,12 +49,7 @@ function process(req, res) {
                         response: res
                     }
                     
-                    //Check the validity in the request
-                    verify(context, handler, req.query.action, function () {
-                        
-                        //Call the handler
-                        handler[req.query.action].handle(context);
-                    });
+                    handler[req.query["action"]](context);
                 }
                 catch (ex) {
                     
@@ -72,46 +67,7 @@ function process(req, res) {
         }
     }
     catch (ex) {
+        console.error(ex);
         res.error(404, "Handler Not Found");
     }
-}
-
-function verify(context, handler, action, callback) {
-    var requirement = handler[action].requirement;
-    var request = context.request;
-    
-    //Loop through the field
-    for (var field in requirement) {
-        
-        if (requirement[field] != null) {
-        
-            //Loop through the entry in the field
-            for (var entry in requirement[field]) {
-                
-                //Check if the entry exists
-                if (request[field][entry]) {
-                    
-                    //The entry in the request does not match the requirement
-                    if (!verification[requirement[field][entry]](request[field][entry])) {
-                        context.response.error(406, field + " " + entry + " invalid");
-                        return;
-                    }
-                }
-                else {
-                    
-                    //There's no such entry in the request
-                    context.response.error(405, "Need " + field + " " + entry);
-                    return;
-                }
-            }
-        }
-        else {
-            
-            //There's no such field in the request
-            context.response.error(407, "Field " + field + " not exists");
-        }
-    }
-    
-    //No error is founc so callback
-    callback();
 }
