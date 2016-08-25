@@ -1,6 +1,6 @@
 {
-    "name": "manga - cubes studio",
-    "port": 8193,
+    "name": "Manga - Cubes Studio",
+    "port": 9005,
     "default_page": "index.html",
     "404_page": "404.html",
     "static_field": [
