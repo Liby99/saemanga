@@ -1,4 +1,4 @@
-exports = function (req, res, callback) {
+module.exports = function (req, res, callback) {
     if (req.cookies.UUID) {
         res.touchUUID();
         callback(req.cookies.UUID);
@@ -23,4 +23,4 @@ exports = function (req, res, callback) {
             res.sendStatus(403);
         }
     }
-}
+};
