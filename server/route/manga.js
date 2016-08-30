@@ -7,7 +7,7 @@ var ProcessUUID = require("../api/uuid.js");
 module.exports = function (req, res) {
     if (req.query.id) {
         var id = parseInt(req.query.id);
-        ProcessUUID(req, res, function (UUID) {
+        ProcessUUID(req, res, function (req, res, UUID) {
             Database.getMangaInfo(id, function (manga) {
                 if (manga) {
                     Database.getFollowInfo(UUID, id, function (follow) {

@@ -1,7 +1,9 @@
+var util = require("../module/util.js");
+
 module.exports = function (req, res, callback) {
     if (req.cookies.UUID) {
         res.touchUUID();
-        callback(req.cookies.UUID);
+        callback(req, res, req.cookies.UUID);
     }
     else {
         if (req.headers["user-agent"]) {
@@ -15,7 +17,7 @@ module.exports = function (req, res, callback) {
                 }
                 else {
                     res.updateUUID(UUID);
-                    callback(UUID);
+                    callback(req, res, UUID);
                 }
             });
         }

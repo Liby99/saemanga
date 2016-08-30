@@ -15,44 +15,49 @@ exports.set = function (server) {
 }
 
 function process(req, res) {
-    var file = req.path.substring(0, req.path.indexOf(".html"));
+    var file = req.path.substring(1, req.path.indexOf(".html"));
     try {
         
         //Check if there's a route written
         var route = require("../route/" + file + ".js");
+        console.log("Route " + file + " Handling Request");
         route(req, res);
     }
-    catch (ex) {
+    catch (err) {
         
-        //First load the option
-        var options = {
-            root: path.resolve(__dirname + "../../../public/"),
-            dotfiles: 'deny',
-            headers: {
-                'x-timestamp': Date.now(),
-                'x-sent': true
+        if (err.code === "MODULE_NOT_FOUND") {
+            
+            //First load the option
+            var options = {
+                root: path.resolve(__dirname + "../../../public/"),
+                dotfiles: 'deny',
+                headers: {
+                    'x-timestamp': Date.now(),
+                    'x-sent': true
+                }
             }
-        }
-        
-        //Try send the static file
-        res.sendFile(file + ".html", options, function (err) {
-            if (err) {
-                
-                //If there's error finding the file,
-                res.sendFile(config["404_page"], options, function (err) {
-                    if (err) {
-                        
-                        //If there's a 404 page error, then send regular failure string
-                        res.status(404).send("Sorry, There's no such file");
+            
+            //Try send the static file
+            res.render(file + ".html", function (err) {
+                if (err) {
+                    console.log(err);
+                    if (file == "404") {
+                        console.log("404 Page not found. Directly send error message");
+                        res.send("404 Page Not Found");
                     }
                     else {
-                        console.log("Request " + file + ".html failed. 404 Sent");
+                        console.log("File " + file + ".html not found. Redirecting to 404");
+                        res.redirect("404.html");
                     }
-                });
-            }
-            else {
-                console.log("Request " + file + ".html sent");
-            }
-        });
+                }
+                else {
+                    console.log("Request " + file + ".html sent");
+                }
+            });
+        }
+        else {
+            
+            res.send(err);
+        }
     }
 }
