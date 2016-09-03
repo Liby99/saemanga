@@ -25,8 +25,6 @@ function process(req, res) {
     }
     catch (err) {
         
-        console.log(err);
-        
         //Check if the module exists
         if (err.code === "MODULE_NOT_FOUND") {
             
@@ -41,10 +39,16 @@ function process(req, res) {
             }
             
             //Try send the static file
-            res.render(file, function (err) {
+            res.sendFile(file + ".html", options, function (err) {
+                
+                //Check if there's an error rendering the static file.s
                 if (err) {
+                    
+                    //Then Log the error
                     console.log(err);
                     if (file == "404") {
+                        
+                        //To avoid 404 recursively requested, if there's an error sending 404 page then directly send the error message
                         console.log("404 Page not found. Directly send error message");
                         res.status(404).send(config["404_message"]);
                     }
@@ -54,8 +58,9 @@ function process(req, res) {
                     }
                 }
                 else {
+                    
+                    //Directly Send the html success
                     console.log("Request " + file + ".html sent");
-                    res.status(500).send(config["500_message"])
                 }
             });
         }
