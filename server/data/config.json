@@ -13,7 +13,7 @@
         "/view"
     ],
     "mysql_host": "127.0.0.1",
-    "mysql_database": "CubesManga",
+    "mysql_database": "Manga",
     "mysql_username": "liby99",
     "mysql_password": "Bionicle-120"
 }
