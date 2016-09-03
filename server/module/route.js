@@ -25,6 +25,9 @@ function process(req, res) {
     }
     catch (err) {
         
+        console.log(err);
+        
+        //Check if the module exists
         if (err.code === "MODULE_NOT_FOUND") {
             
             //First load the option
@@ -38,12 +41,12 @@ function process(req, res) {
             }
             
             //Try send the static file
-            res.render(file + ".html", function (err) {
+            res.render(file, function (err) {
                 if (err) {
                     console.log(err);
                     if (file == "404") {
                         console.log("404 Page not found. Directly send error message");
-                        res.send("404 Page Not Found");
+                        res.status(404).send(config["404_message"]);
                     }
                     else {
                         console.log("File " + file + ".html not found. Redirecting to 404");
@@ -52,6 +55,7 @@ function process(req, res) {
                 }
                 else {
                     console.log("Request " + file + ".html sent");
+                    res.status(500).send(config["500_message"])
                 }
             });
         }

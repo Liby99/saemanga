@@ -1,4 +1,5 @@
 var util = require("../module/util.js");
+var mysql = require("../module/mysql.js");
 
 module.exports = function (req, res, callback) {
     if (req.cookies.UUID) {

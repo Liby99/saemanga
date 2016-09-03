@@ -3,6 +3,8 @@
     "port": 9048,
     "default_page": "index.html",
     "404_page": "404.html",
+    "404_message": "404 Page Not Found",
+    "500_message": "500 Server Internal Error",
     "static_field": [
         "/css",
         "/fonts",
@@ -11,7 +13,7 @@
         "/view"
     ],
     "mysql_host": "127.0.0.1",
-    "mysql_database": "Manga",
+    "mysql_database": "CubesManga",
     "mysql_username": "liby99",
     "mysql_password": "Bionicle-120"
 }

@@ -38,18 +38,13 @@ function process(req, res) {
         if (req.query["action"]) {
             
             //Check if the handler has the action
-            if (typeof handler[req.query["action"]]["handle"] === "function") {
+            if (typeof handler[req.query["action"]] === "function") {
                 
                 //Try execute the request
                 try {
-                
-                    //Create context object
-                    var context = {
-                        request: req,
-                        response: res
-                    }
                     
-                    handler[req.query["action"]](context);
+                    //Call the handler
+                    handler[req.query["action"]](req, res);
                 }
                 catch (ex) {
                     
@@ -59,15 +54,23 @@ function process(req, res) {
                 }
             }
             else {
-                res.error(404, "Action Not Found");
+                res.error(404, "Action " + req.query["action"] + " Not Found");
             }
         }
         else {
             res.error(404, "No Action Specified");
         }
     }
-    catch (ex) {
-        console.error(ex);
-        res.error(404, "Handler Not Found");
+    catch (err) {
+        
+        if (err.code === "MODULE_NOT_FOUND") {
+            
+            //If the module has not been found
+            console.log(err);
+            res.error(404, "Handler " + req.params[0] + " Not Found");
+        }
+        else {
+            res.error(500, "Internal Server Error");
+        }
     }
 }
