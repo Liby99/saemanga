@@ -25,6 +25,7 @@ function process(req, res) {
     }
     catch (err) {
         
+        
         //Check if the module exists
         if (err.code === "MODULE_NOT_FOUND") {
             
@@ -46,13 +47,15 @@ function process(req, res) {
                     
                     //Then Log the error
                     console.log(err);
-                    if (file == "404") {
+                    if (file === "404") {
                         
                         //To avoid 404 recursively requested, if there's an error sending 404 page then directly send the error message
                         console.log("404 Page not found. Directly send error message");
                         res.status(404).send(config["404_message"]);
                     }
                     else {
+                        
+                        //If the request err is not 404, then directly send the 404 file.
                         console.log("File " + file + ".html not found. Redirecting to 404");
                         res.redirect("404.html");
                     }
@@ -66,6 +69,7 @@ function process(req, res) {
         }
         else {
             
+            console.log(err);
             res.send(err);
         }
     }
