@@ -61,7 +61,12 @@ function setSchedule() {
         next(err);
     });
     
-    server.listen(config['port'], function () {
-        console.log(config['name'] + ' Server Now Listening to Port ' + config['port']);
+    server.listen(config['port'], function (err) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            console.log(config['name'] + ' Server Now Listening to Port ' + config['port']);
+        }
     });
 })();
