@@ -19,7 +19,7 @@ var Manga = {
     },
     unfollow: function () {
         $.ajax({
-            url: "/ajax/handler?action=unfollow_manga",
+            url: "/ajax/manga?action=unfollow_manga",
             type: "post",
             data: { id: this.params:id },
             success: function (result) {
@@ -38,7 +38,7 @@ var Manga = {
     },
     getInfo: function (callback) {
         $.ajax({
-            url: "/ajax/handler?action=get_manga_info",
+            url: "/ajax/manga?action=get_manga_info",
             type: "post",
             data: { id: this.params.id },
             success: function (result) {

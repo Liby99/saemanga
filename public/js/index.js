@@ -106,7 +106,7 @@ var Manga = {
     },
     random: function () {
         $.ajax({
-            url: "/ajax/handler?action=get_random_manga",
+            url: "/ajax/manga?action=get_random_manga",
             type: "get",
             success: function (result) {
                 
@@ -115,7 +115,7 @@ var Manga = {
     },
     getHotManga: function () {
         $.ajax({
-            url: "/ajax/handler?action=get_hot_manga",
+            url: "/ajax/manga?action=get_hot_manga",
             type: "get",
             success: function (result) {
                 var data = JSON.parse(result);
@@ -132,7 +132,7 @@ var Manga = {
     },
     getFollowingManga: function () {
         $.ajax({
-            url: "/ajax/handler?action=get_following_manga",
+            url: "/ajax/manga?action=get_following_manga",
             type: "get",
             success: function (result) {
                 var data = JSON.parse(result);
@@ -192,7 +192,7 @@ var Manga = {
     },
     unfollow: function (id) {
         $.ajax({
-            url: "/ajax/handler?action=unfollow_manga",
+            url: "/ajax/manga?action=unfollow_manga",
             type: "post",
             data: { id: id },
             success: function (result) {

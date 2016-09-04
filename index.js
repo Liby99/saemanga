@@ -43,7 +43,7 @@ function setAjax(server) {
 }
 
 function setSchedule() {
-    require("./server/api/schedule.js").set();
+    //require("./server/api/schedule.js").set();
 }
 
 (function () {

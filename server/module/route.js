@@ -24,17 +24,25 @@ function process(req, res) {
         route(req, res);
     }
     catch (err) {
+<<<<<<< HEAD
         
         console.log(err);
+=======
+>>>>>>> 7f5fb2e4a77ec56c23e4f5e55303528049fd9627
         
-        //First load the option
-        var options = {
-            root: path.resolve(__dirname + "../../../public/"),
-            dotfiles: 'deny',
-            headers: {
-                'x-timestamp': Date.now(),
-                'x-sent': true
+        //Check if the module exists
+        if (err.code === "MODULE_NOT_FOUND") {
+            
+            //First load the option
+            var options = {
+                root: path.resolve(__dirname + "../../../public/"),
+                dotfiles: 'deny',
+                headers: {
+                    'x-timestamp': Date.now(),
+                    'x-sent': true
+                }
             }
+<<<<<<< HEAD
         }
         
         //Try send the static file
@@ -54,5 +62,38 @@ function process(req, res) {
                 console.log("Request " + file + ".html sent");
             }
         });
+=======
+            
+            //Try send the static file
+            res.sendFile(file + ".html", options, function (err) {
+                
+                //Check if there's an error rendering the static file.s
+                if (err) {
+                    
+                    //Then Log the error
+                    console.log(err);
+                    if (file == "404") {
+                        
+                        //To avoid 404 recursively requested, if there's an error sending 404 page then directly send the error message
+                        console.log("404 Page not found. Directly send error message");
+                        res.status(404).send(config["404_message"]);
+                    }
+                    else {
+                        console.log("File " + file + ".html not found. Redirecting to 404");
+                        res.redirect("404.html");
+                    }
+                }
+                else {
+                    
+                    //Directly Send the html success
+                    console.log("Request " + file + ".html sent");
+                }
+            });
+        }
+        else {
+            
+            res.send(err);
+        }
+>>>>>>> 7f5fb2e4a77ec56c23e4f5e55303528049fd9627
     }
 }

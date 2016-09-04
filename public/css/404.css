@@ -4,7 +4,12 @@ body {
 }
 
 .emoji {
+<<<<<<< HEAD
     padding: 50px;
+=======
+    padding: 10px;
+    font-size: 30px;
+>>>>>>> 7f5fb2e4a77ec56c23e4f5e55303528049fd9627
 }
 
 .title {
