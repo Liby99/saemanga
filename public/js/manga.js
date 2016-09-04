@@ -21,7 +21,7 @@ var Manga = {
         $.ajax({
             url: "/ajax/manga?action=unfollow_manga",
             type: "post",
-            data: { id: this.params:id },
+            data: { id: this.params.id },
             success: function (result) {
                 var data = JSON.parse(result);
                 if (data.error_code == 0) {
