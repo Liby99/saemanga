@@ -24,11 +24,6 @@ function process(req, res) {
         route(req, res);
     }
     catch (err) {
-<<<<<<< HEAD
-        
-        console.log(err);
-=======
->>>>>>> 7f5fb2e4a77ec56c23e4f5e55303528049fd9627
         
         //Check if the module exists
         if (err.code === "MODULE_NOT_FOUND") {
@@ -42,27 +37,6 @@ function process(req, res) {
                     'x-sent': true
                 }
             }
-<<<<<<< HEAD
-        }
-        
-        //Try send the static file
-        res.render(file + ".html", function (err) {
-            if (err) {
-                console.log(err);
-                if (file == "404") {
-                    console.log("404 Page not found. Directly send error message");
-                    res.send("404 Page Not Found");
-                }
-                else {
-                    console.log("File " + file + ".html not found. Redirecting to 404");
-                    res.redirect("404.html");
-                }
-            }
-            else {
-                console.log("Request " + file + ".html sent");
-            }
-        });
-=======
             
             //Try send the static file
             res.sendFile(file + ".html", options, function (err) {
@@ -94,6 +68,5 @@ function process(req, res) {
             
             res.send(err);
         }
->>>>>>> 7f5fb2e4a77ec56c23e4f5e55303528049fd9627
     }
 }
