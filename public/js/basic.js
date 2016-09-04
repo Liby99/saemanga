@@ -193,7 +193,7 @@ var User = {
                 error: function () {
                     alert("服务器连接错误");
                 }
-            })
+            });
         }
         else {
             alert("请输入您的用户名和密码");
@@ -385,7 +385,7 @@ var Utility = {
     getCookie: function (entry) {
         if (document.cookie.length > 0) {
             start = document.cookie.indexOf(entry + "=")
-            if (start != -1) { 
+            if (start != -1) {
                 start += entry.length + 1 ;
                 end = document.cookie.indexOf(";", start);
                 if (end == -1) {

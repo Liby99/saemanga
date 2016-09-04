@@ -7,7 +7,6 @@ var ProcessUUID = require("../api/uuid.js");
 module.exports = function (req, res) {
     ProcessUUID(req, res, function (req, res, UUID) {
         if (req.headers["user-agent"]) {
-            var UUID = util.UUID();
             mysql.query("INSERT INTO `user` SET `register_date_time` = NOW(), `last_login` = NOW(), ?", {
                 UUID: UUID,
                 agent: req.headers["user-agent"]
