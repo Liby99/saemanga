@@ -1,8 +1,5 @@
 var util = require("../module/util.js");
-<<<<<<< HEAD
-=======
 var mysql = require("../module/mysql.js");
->>>>>>> 7f5fb2e4a77ec56c23e4f5e55303528049fd9627
 
 module.exports = function (req, res, callback) {
     if (req.cookies.UUID) {
