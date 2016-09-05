@@ -25,14 +25,12 @@ function process(req, res) {
     }
     catch (err) {
         
-        console.log(path.resolve(__dirname + "../../../public/"));
-        
         //Check if the module exists
         if (err.code === "MODULE_NOT_FOUND") {
             
             //First load the option
             var options = {
-                root: path.resolve(__dirname + "../../../public/"),
+                root: path.resolve(__dirname + "/../../public/"),
                 dotfiles: 'deny',
                 headers: {
                     'x-timestamp': Date.now(),
