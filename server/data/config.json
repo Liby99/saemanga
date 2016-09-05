@@ -1,6 +1,6 @@
 {
     "name": "Manga - Cubes Studio",
-    "port": 9048,
+    "port": 9012,
     "default_page": "index.html",
     "404_page": "404.html",
     "404_message": "404 Page Not Found",
