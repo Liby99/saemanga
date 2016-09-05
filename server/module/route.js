@@ -25,6 +25,7 @@ function process(req, res) {
     }
     catch (err) {
         
+        console.log(path.resolve(__dirname + "../../../public/"));
         
         //Check if the module exists
         if (err.code === "MODULE_NOT_FOUND") {
