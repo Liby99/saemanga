@@ -1,9 +1,8 @@
 /**
- * MySQL 
+ * MySQL
  */
 
 var mysql = require("mysql");
-var config = require("./../data/config.json");
 
 /**
  * Mysql Module
@@ -11,10 +10,10 @@ var config = require("./../data/config.json");
 module.exports = {
     connection: null,
     config: {
-        host: config["mysql_host"],
-        user: config["mysql_username"],
-        password: config["mysql_password"],
-        database: config["mysql_database"]
+        host: process.env.config["mysql_host"],
+        user: process.env.config["mysql_username"],
+        password: process.env.config["mysql_password"],
+        database: process.env.config["mysql_database"]
     },
     connect: function () {
         var self = this;

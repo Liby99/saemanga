@@ -3,7 +3,6 @@
  */
  
 var path = require("path");
-var config = require("../data/config.json");
 
 exports.set = function (server) {
     
@@ -50,7 +49,7 @@ function process(req, res) {
                         
                         //To avoid 404 recursively requested, if there's an error sending 404 page then directly send the error message
                         console.log("404 Page not found. Directly send error message");
-                        res.status(404).send(config["404_message"]);
+                        res.status(404).send(process.env.config["404_message"]);
                     }
                     else {
                         
