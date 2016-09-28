@@ -3,6 +3,7 @@
  */
 
 var mysql = require("mysql");
+var config = require("../data/config.js");
 
 /**
  * Mysql Module
@@ -10,10 +11,10 @@ var mysql = require("mysql");
 module.exports = {
     connection: null,
     config: {
-        host: process.env.config["mysql_host"],
-        user: process.env.config["mysql_username"],
-        password: process.env.config["mysql_password"],
-        database: process.env.config["mysql_database"]
+        host: config["mysql_host"],
+        user: config["mysql_username"],
+        password: config["mysql_password"],
+        database: config["mysql_database"]
     },
     connect: function () {
         var self = this;
