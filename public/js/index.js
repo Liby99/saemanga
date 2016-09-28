@@ -42,7 +42,7 @@ var Search = {
     search: function () {
         if (!this.isEmpty()) {
             $.ajax({
-                url: "/ajax/handler?action=search",
+                url: "/ajax/manga?action=search",
                 type: "post",
                 data: { search: this.get() },
                 success: function (result) {
