@@ -3,7 +3,7 @@
  */
 
 var mysql = require("mysql");
-var config = require("../data/config.js");
+var config = require("../data/config.json");
 
 /**
  * Mysql Module

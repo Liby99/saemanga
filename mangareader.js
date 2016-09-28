@@ -1,8 +1,5 @@
 var express = require("express");
-
-function setConfig() {
-    process.env.config = require("./server/data/config.json");
-}
+var config = require("./server/data/config.json");
 
 function setDateTime() {
     require("./server/module/datetime.js")();
@@ -27,12 +24,12 @@ function setRoute(server) {
 
 function setDefaultPage(server) {
     server.get("/", function (req, res) {
-        res.redirect("/" + process.env.config["default_page"]);
+        res.redirect("/" + config["default_page"]);
     });
 }
 
 function setStaticField(server) {
-    process.env.config["static_field"].forEach(function (obj, number) {
+    config["static_field"].forEach(function (obj, number) {
         server.use(obj, express.static(__dirname + "/public/" + obj));
     });
 }
@@ -64,12 +61,12 @@ function setSchedule() {
         next(err);
     });
     
-    server.listen(process.env.config['port'], function (err) {
+    server.listen(config['port'], function (err) {
         if (err) {
             console.log(err);
         }
         else {
-            console.log(process.env.config['name'] + ' Server Now Listening to Port ' + process.env.config['port']);
+            console.log(config['name'] + ' Server Now Listening to Port ' + config['port']);
         }
     });
 })();
