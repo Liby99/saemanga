@@ -56,6 +56,7 @@ var Manga = {
         });
     },
     loadInfo: function (name) {
+        $("title").html(name + " - Manga");
         $("#manga_title .name").text(name);
     },
     loadEpisode: function (episode) {
@@ -87,6 +88,7 @@ var Manga = {
             else {
                 callback(1);
             }
+            return false;
         });
     },
     loadMenuEpisode: function (latestEpisode) {
