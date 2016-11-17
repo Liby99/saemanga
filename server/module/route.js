@@ -4,6 +4,7 @@
  
 var path = require("path");
 var config = require("../data/config.json");
+var debug = false;
 
 exports.set = function (server) {
     
@@ -20,56 +21,74 @@ function process(req, res) {
         
         //Check if there's a route written
         var route = require("../route/" + file + ".js");
-        console.log("Route " + file + " Handling Request");
-        route(req, res);
+        log("Router " + file + " handling request");
+        route(req, res, function (data) {
+            
+            //Render the data and the file
+            res.render(file, {
+                "file": file,
+                "data": data
+            }, function (err, html) {
+                
+                //Check if there's error when rendering
+                if (err) {
+                    
+                    console.log("Renderer Error: ");
+                    console.log(err);
+                    res.redirect("/error.html?err=500");
+                }
+                else {
+                    
+                    //If correct, then send html directly
+                    res.status(200).send(html);
+                }
+            });
+        });
     }
     catch (err) {
         
         //Check if the module exists
         if (err.code === "MODULE_NOT_FOUND") {
             
-            //First load the option
-            var options = {
-                root: path.resolve(__dirname + "/../../public/"),
-                dotfiles: 'deny',
-                headers: {
-                    'x-timestamp': Date.now(),
-                    'x-sent': true
-                }
-            }
-            
             //Try send the static file
-            res.sendFile(file + ".html", options, function (err) {
+            res.render(file + ".html", {
+                "file": file
+            }, function (err) {
                 
                 //Check if there's an error rendering the static file.s
                 if (err) {
                     
                     //Then Log the error
                     console.log(err);
-                    if (file === "404") {
+                    
+                    if (file === "error") {
                         
                         //To avoid 404 recursively requested, if there's an error sending 404 page then directly send the error message
-                        console.log("404 Page not found. Directly send error message");
+                        log("Directly sent static html " + file);
                         res.status(404).send(config["404_message"]);
                     }
                     else {
                         
                         //If the request err is not 404, then directly send the 404 file.
-                        console.log("File " + file + ".html not found. Redirecting to 404");
-                        res.redirect("404.html");
+                        res.redirect("/error.html?err=404");
                     }
                 }
                 else {
-                    
-                    //Directly Send the html success
-                    console.log("Request " + file + ".html sent");
+                    log("Directly sent static html " + file);
                 }
             });
         }
         else {
             
+            console.log("Router " + file + " Error: ");
             console.log(err);
-            res.send(err);
+            res.redirect("/error.html?err=500");
         }
+    }
+}
+
+function log(text) {
+    if (debug) {
+        console.log(text);
     }
 }

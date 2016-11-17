@@ -4,7 +4,7 @@ var Creeper = require("../api/creeper.js");
 var Database = require("../api/database.js");
 var ProcessUUID = require("../api/uuid.js");
 
-module.exports = function (req, res) {
+module.exports = function (req, res, callback) {
     if (req.query.id) {
         var id = parseInt(req.query.id);
         ProcessUUID(req, res, function (req, res, UUID) {
@@ -14,7 +14,7 @@ module.exports = function (req, res) {
                         if (follow) {
                             if (req.query.epi && parseInt(req.query.epi) >= 0 && parseInt(req.query.epi) <= manga.latest_episode) {
                                 Database.refreshFollowStatus(UUID, id, parseInt(req.query.epi), function () {
-                                    res.render("manga");
+                                    callback({});
                                 });
                             }
                             else {

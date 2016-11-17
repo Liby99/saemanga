@@ -4,8 +4,8 @@ var Creeper = require("../api/creeper.js");
 var Database = require("../api/database.js");
 var ProcessUUID = require("../api/uuid.js");
 
-module.exports = function (req, res) {
+module.exports = function (req, res, callback) {
     ProcessUUID(req, res, function (req, res, UUID) {
-        res.render("index");
+        callback({});
     });
 }
