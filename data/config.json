@@ -1,8 +1,8 @@
 {
-    "debug": true,
-    "name": "Keeling Js Default",
-    "port": 21023,
-    "session_secret": "keeling-session",
+    "debug": false,
+    "name": "Sae Manga",
+    "port": 9012,
+    "session_secret": "sae-manga-session",
     "default_page": "index",
     "error_page": "error",
     "public_directory": "public",
