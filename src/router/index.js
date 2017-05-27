@@ -1,11 +1,12 @@
-var mysql = require("../module/mysql.js");
-var util = require("../module/util.js");
-var Creeper = require("../api/creeper.js");
-var Database = require("../api/database.js");
-var ProcessUUID = require("../api/uuid.js");
+
+// Require Keeling-js Module
+var mysql = require("keeling-js/lib/mysql");
+
+// Process UUID Function
+var processUUID = require("../api/uuid.js");
 
 module.exports = function (req, res, callback) {
-    ProcessUUID(req, res, function (req, res, UUID) {
+    processUUID(req, res, function (req, res, UUID) {
         callback({});
     });
 }

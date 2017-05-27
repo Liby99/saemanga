@@ -1,5 +1,5 @@
-var util = require("../module/util.js");
-var mysql = require("../module/mysql.js");
+var mysql = require("keeling-js/lib/mysql");
+var util = require("./util");
 
 module.exports = function (req, res, callback) {
     if (req.cookies.UUID) {
@@ -8,7 +8,7 @@ module.exports = function (req, res, callback) {
     }
     else {
         if (req.headers["user-agent"]) {
-            var UUID = util.UUID();
+            var UUID = util.generateUUID();
             mysql.query("INSERT INTO `user` SET `register_date_time` = NOW(), `last_login` = NOW(), ?", {
                 UUID: UUID,
                 agent: req.headers["user-agent"]

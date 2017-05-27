@@ -1,6 +1,10 @@
-var mysql = require("../module/mysql.js");
-var util = require("../module/util.js");
-var crypto = require("../module/crypto.js");
+
+// Require Keeling Js Modules
+var mysql = require("keeling-js/lib/mysql");
+var crypto = require("keeling-js/lib/crypto");
+
+// Require Utility API
+var util = require("../api/util.js");
 
 module.exports = {
     login: function (req, res) {
@@ -77,7 +81,7 @@ module.exports = {
                         }
 
                         if (result[0]["username"]) {
-                            UUID = util.UUID();
+                            UUID = util.generateUUID();
                             mysql.query("INSERT INTO `user` SET `register_date_time` = NOW(), `last_login` = NOW(), ?", {
                                 UUID: UUID,
                                 agent: req.headers["user-agent"]

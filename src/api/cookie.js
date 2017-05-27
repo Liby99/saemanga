@@ -1,4 +1,4 @@
-var mysql = require("../module/mysql.js");
+var mysql = require("keeling-js/lib/mysql");
 
 module.exports = function (req, res, next) {
 

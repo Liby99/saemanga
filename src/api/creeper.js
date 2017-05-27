@@ -1,8 +1,8 @@
 var request = require("request");
-var http = require('http');
+var http = require("http");
 var jsdom = require("jsdom");
-var iconv = require('iconv-lite');
-var BufferHelper = require('bufferhelper');
+var iconv = require("iconv-lite");
+var BufferHelper = require("bufferhelper");
 
 var authorRegex = /\>\s+原創作者：\s([\S]+)\<\/td\>/;
 var episodeRegex = /\/comic\/([\d]{4})([\d]{4})[\d]{7}.html/;

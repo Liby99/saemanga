@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cp node_modules/keeling-js/entry.js ./app.js"
+    "start": "node node_modules/keeling-js/entry.js",
+    "create-entry": "cp node_modules/keeling-js/entry.js ./app.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,9 @@
   },
   "homepage": "https://github.com/Liby99/MangaReader#readme",
   "dependencies": {
-    "keeling-js": "^1.2.6"
+    "bufferhelper": "^0.2.1",
+    "iconv-lite": "^0.4.17",
+    "keeling-js": "^1.2.7",
+    "request": "^2.81.0"
   }
 }

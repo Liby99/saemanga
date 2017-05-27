@@ -1,5 +1,9 @@
-var mysql = require("../module/mysql.js");
-var chinese = require("../module/chinese.js");
+
+// Require Keeling-JS Modules
+var mysql = require("keeling-js/lib/mysql");
+
+// Require APIs
+var chinese = require("../api/chinese.js");
 var Creeper = require("../api/creeper.js");
 var Database = require("../api/database.js");
 
