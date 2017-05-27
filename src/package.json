@@ -2,10 +2,10 @@
   "name": "sae-manga",
   "version": "3.0.0",
   "description": "Saenai Manga Site",
-  "main": "index.js",
+  "main": "saemanga.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node node_modules/keeling-js/entry.js",
+    "start": "node saemanga.js",
     "create-entry": "cp node_modules/keeling-js/entry.js ./app.js"
   },
   "repository": {
@@ -26,6 +26,7 @@
   "dependencies": {
     "bufferhelper": "^0.2.1",
     "iconv-lite": "^0.4.17",
+    "jsdom": "^11.0.0",
     "keeling-js": "^1.2.7",
     "request": "^2.81.0"
   }
