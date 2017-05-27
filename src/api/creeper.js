@@ -1,6 +1,7 @@
 var request = require("request");
 var http = require("http");
 var jsdom = require("jsdom");
+const { Jsdom } = jsdom;
 var iconv = require("iconv-lite");
 var BufferHelper = require("bufferhelper");
 
@@ -9,12 +10,13 @@ var episodeRegex = /\/comic\/([\d]{4})([\d]{4})[\d]{7}.html/;
 var imageUrlRegex = /src\=\"http:\/\/web(\d?)\.cartoonmad.com\/([\d|\w]{11})\/([\d]{4})\/[\d]{3}\/[\d]{3}\.jpg/;
 
 function getHomepageWindow(callback) {
-    jsdom.env({
-        url: "http://cartoonmad.com/",
-        done: function (err, window) {
-            var $ = require("jquery")(window);
-            callback($);
-        }
+    request.get("http://cartoonmad.com")
+    .on("response", function (response) {
+        var dom = new Jsdom(response);
+        var $ = require("jquery")(dom.window);
+        callback($);
+    }).on("error", function (err) {
+        throw new Error("Error when getting homepage");
     });
 }
 
@@ -46,49 +48,36 @@ function getMangaId($, callback) {
             break;
         }
     }
-    jsdom.env({
-        url: "http://cartoonmad.com" + href,
-        done: function (err, window) {
-            if (err) {
-                console.log("Error Requesting http://cartoonmad.com" + href);
-                callback(undefined);
-            }
-            else {
-                var $ = require("jquery")(window);
-                try {
-                    var match = $("body table tbody").html().match(imageUrlRegex);
-                    callback({
-                        dmk_id: parseInt(match[3]),
-                        dmk_id_gen: match[2],
-                        dmk_id_web: match[1]
-                    });
-                }
-                catch (ex) {
-                    console.log("Error Getting Manga Id From: ");
-                    //console.log($("body table tbody").html());
-                    console.log(ex);
-                    callback(undefined);
-                }
-            }
-        },
-        error: function (err) {
-            console.log("Error Occured In Getting Manga Id");
+    request.get("http://cartoonmad.com" + href)
+    .on("response", function (response) {
+        var $ = require("jquery")(window);
+        try {
+            var match = $("body table tbody").html().match(imageUrlRegex);
+            callback({
+                dmk_id: parseInt(match[3]),
+                dmk_id_gen: match[2],
+                dmk_id_web: match[1]
+            });
         }
+        catch (ex) {
+            console.log("Error Getting Manga Id From: ");
+            //console.log($("body table tbody").html());
+            console.log(ex);
+            callback(undefined);
+        }
+    }).on("error", function (err) {
+        console.log("Error Occured In Getting Manga Id");
     });
 }
 
 function getMangaWindow(id, callback) {
-    jsdom.env({
-        url: "http://cartoonmad.com/comic/" + id + ".html",
-        done: function (err, window) {
-            if (err) {
-                throw new Error("Error Occurs when getting manga window " + id);
-            }
-            else {
-                var $ = require("jquery")(window);
-                callback($);
-            }
-        }
+    request.get("http://cartoonmad.com/comic/" + id + ".html")
+    .on("response", function (response) {
+        var dom = new Jsdom(response);
+        var $ = require("jquery")(dom.window);
+        callback($);
+    }).on("error", function (err) {
+        throw new Error("Error Occurs when getting manga window " + id);
     });
 }
 
