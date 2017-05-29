@@ -2,6 +2,7 @@ var Creeper = require("../api/creeper");
 var Database = require("../api/database");
 
 module.exports = {
+    name: "update manga episode",
     schedule: "*/30 * * * *",
     task: function () {
         Database.getAllUpdatableManga(function (result) {

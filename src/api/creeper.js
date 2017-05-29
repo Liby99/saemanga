@@ -1,19 +1,21 @@
-var request = require("request");
-var http = require("http");
-var jsdom = require("jsdom");
-const { Jsdom } = jsdom;
-var iconv = require("iconv-lite");
-var BufferHelper = require("bufferhelper");
+const request = require("request");
+const http = require("http");
+const jquery = require("jquery");
+const { JSDOM } = require("jsdom");
+const iconv = require("iconv-lite");
+const BufferHelper = require("bufferhelper");
+const debug = require("keeling-js/lib/debug");
 
-var authorRegex = /\>\s+原創作者：\s([\S]+)\<\/td\>/;
-var episodeRegex = /\/comic\/([\d]{4})([\d]{4})[\d]{7}.html/;
-var imageUrlRegex = /src\=\"http:\/\/web(\d?)\.cartoonmad.com\/([\d|\w]{11})\/([\d]{4})\/[\d]{3}\/[\d]{3}\.jpg/;
+const hrefRegex = /comic\/([\d]{4})\.html/;
+const authorRegex = /\>\s+原創作者：\s([\S]+)\<\/td\>/;
+const episodeRegex = /\/comic\/([\d]{4})([\d]{4})[\d]{7}.html/;
+const imageUrlRegex = /src\=\"http:\/\/web(\d?)\.cartoonmad.com\/([\d|\w]{11})\/([\d]{4})\/[\d]{3}\/[\d]{3}\.jpg/;
 
 function getHomepageWindow(callback) {
     request.get("http://cartoonmad.com")
     .on("response", function (response) {
-        var dom = new Jsdom(response);
-        var $ = require("jquery")(dom.window);
+        var dom = new JSDOM(response);
+        var $ = jquery(dom.window);
         callback($);
     }).on("error", function (err) {
         throw new Error("Error when getting homepage");
@@ -73,8 +75,8 @@ function getMangaId($, callback) {
 function getMangaWindow(id, callback) {
     request.get("http://cartoonmad.com/comic/" + id + ".html")
     .on("response", function (response) {
-        var dom = new Jsdom(response);
-        var $ = require("jquery")(dom.window);
+        var dom = new JSDOM(response);
+        var $ = jquery(dom.window);
         callback($);
     }).on("error", function (err) {
         throw new Error("Error Occurs when getting manga window " + id);
@@ -98,7 +100,7 @@ function getSearchHtml(value, callback) {
             bufferhelper.concat(chunk);
         });
         res.on('end', function () {
-            callback(iconv.decode(bufferhelper.toBuffer(), 'Big5'));
+            callback(iconv.decode(bufferhelper.toBuffer(), "Big5"));
         });
     });
     request.on("error", function (err) {
@@ -124,16 +126,18 @@ module.exports = {
     getHotManga: function (callback) {
         getHomepageWindow(function ($) {
             var list = $("body").children("table").eq(0).children("tbody").eq(0).children("tr").eq(0).children("td").eq(1)
-                    .children("table").eq(0).children("tbody").eq(0).children("tr").eq(3).children("td").eq(0)
-                    .children("table").eq(0).children("tbody").eq(0).children("tr").eq(1).children("td").eq(1)
-                    .children("table").eq(0).children("tbody").eq(0).children("tr");
+                                .children("table").eq(0).children("tbody").eq(0).children("tr").eq(3).children("td").eq(0)
+                                .children("table").eq(0).children("tbody").eq(0).children("tr").eq(1).children("td").eq(1)
+                                .children("table").eq(0).children("tbody").eq(0).children("tr");
             var list1 = list.eq(2).children("td");
             var list2 = list.eq(4).children("td");
-            var hrefRegex = /comic\/([\d]{4})\.html/;
             var result = [];
             for (var i = 0; i < 10; i++) {
+                var id = (i < 5 ? list1.eq(i) : list2.eq(i - 5)).children("a");
+                debug.log(JSON.stringify(id));
+                var dmk_id = id.attr("href").match(hrefRegex)[1];
                 result.push({
-                    dmk_id: (i < 5 ? list1.eq(i) : list2.eq(i - 5)).children("a").attr("href").match(hrefRegex)[1],
+                    dmk_id: dmk_id,
                     name: (i < 5 ? list1.eq(i) : list2.eq(i - 5)).children("a").text()
                 });
             }

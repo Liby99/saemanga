@@ -1,6 +1,6 @@
 {
-    "host": "::1",
-    "username": "liby99",
-    "password": "Bionicle-120",
-    "database": "Manga"
+    "host": "localhost",
+    "user": "root",
+    "password": "bionicle",
+    "database": "manga"
 }

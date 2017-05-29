@@ -26,6 +26,7 @@
   "dependencies": {
     "bufferhelper": "^0.2.1",
     "iconv-lite": "^0.4.17",
+    "jquery": "^3.2.1",
     "jsdom": "^11.0.0",
     "keeling-js": "^1.2.7",
     "request": "^2.81.0"
