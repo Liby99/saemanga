@@ -12,12 +12,16 @@ const episodeRegex = /\/comic\/([\d]{4})([\d]{4})[\d]{7}.html/;
 const imageUrlRegex = /src\=\"http:\/\/web(\d?)\.cartoonmad.com\/([\d|\w]{11})\/([\d]{4})\/[\d]{3}\/[\d]{3}\.jpg/;
 
 function getHomepageWindow(callback) {
-    request('http://www.cartoonmad.com/', function (error, response, body) {
+    request({
+        url: "http://www.cartoonmad.com",
+        encoding: null
+    }, function (error, response, body) {
         if (error) {
             throw new Error("Error when getting homepage");
         }
         else {
-            var dom = new JSDOM(body);
+            var cbody = iconv.decode(body, "Big5");
+            var dom = new JSDOM(cbody);
             var $ = jquery(dom.window);
             callback($);
         }
@@ -65,7 +69,6 @@ function getMangaId($, callback) {
         }
         catch (ex) {
             console.log("Error Getting Manga Id From: ");
-            //console.log($("body table tbody").html());
             console.log(ex);
             callback(undefined);
         }

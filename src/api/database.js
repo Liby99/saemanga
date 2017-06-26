@@ -1,3 +1,4 @@
+var chinese = require("./chinese");
 var mysql = require("keeling-js/lib/mysql");
 
 module.exports = {
