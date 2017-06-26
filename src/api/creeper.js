@@ -12,13 +12,15 @@ const episodeRegex = /\/comic\/([\d]{4})([\d]{4})[\d]{7}.html/;
 const imageUrlRegex = /src\=\"http:\/\/web(\d?)\.cartoonmad.com\/([\d|\w]{11})\/([\d]{4})\/[\d]{3}\/[\d]{3}\.jpg/;
 
 function getHomepageWindow(callback) {
-    request.get("http://cartoonmad.com")
-    .on("response", function (response) {
-        var dom = new JSDOM(response);
-        var $ = jquery(dom.window);
-        callback($);
-    }).on("error", function (err) {
-        throw new Error("Error when getting homepage");
+    request('http://www.cartoonmad.com/', function (error, response, body) {
+        if (error) {
+            throw new Error("Error when getting homepage");
+        }
+        else {
+            var dom = new JSDOM(body);
+            var $ = jquery(dom.window);
+            callback($);
+        }
     });
 }
 
@@ -134,7 +136,6 @@ module.exports = {
             var result = [];
             for (var i = 0; i < 10; i++) {
                 var id = (i < 5 ? list1.eq(i) : list2.eq(i - 5)).children("a");
-                debug.log(JSON.stringify(id));
                 var dmk_id = id.attr("href").match(hrefRegex)[1];
                 result.push({
                     dmk_id: dmk_id,
