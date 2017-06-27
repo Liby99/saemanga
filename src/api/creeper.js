@@ -1,30 +1,22 @@
-const request = require("request");
-const http = require("http");
-const jquery = require("jquery");
-const { JSDOM } = require("jsdom");
-const iconv = require("iconv-lite");
-const BufferHelper = require("bufferhelper");
+/**
+ * Cartoonmad Creeper
+ * @author Liby99
+ */
+
+const request = require("./request");
 const debug = require("keeling-js/lib/debug");
 
 const hrefRegex = /comic\/([\d]{4})\.html/;
 const authorRegex = /\>\s+原創作者：\s([\S]+)\<\/td\>/;
 const episodeRegex = /\/comic\/([\d]{4})([\d]{4})[\d]{7}.html/;
 const imageUrlRegex = /src\=\"http:\/\/web(\d?)\.cartoonmad.com\/([\d|\w]{11})\/([\d]{4})\/[\d]{3}\/[\d]{3}\.jpg/;
+const searchResultRegex = /\<a href\=comic\/([\d]+).html title=\"([\s\S]{1,30})\"\>\<span class\=\"covers\"\>\<\/span\>/g;
 
 function getHomepageWindow(callback) {
-    request({
-        url: "http://www.cartoonmad.com",
-        encoding: null
-    }, function (error, response, body) {
-        if (error) {
-            throw new Error("Error when getting homepage");
-        }
-        else {
-            var cbody = iconv.decode(body, "Big5");
-            var dom = new JSDOM(cbody);
-            var $ = jquery(dom.window);
-            callback($);
-        }
+    request.get("http://www.cartoonmad.com", function ($) {
+        callback($);
+    }, function (err) {
+        throw new Error("Error when getting homepage");
     });
 }
 
@@ -56,9 +48,7 @@ function getMangaId($, callback) {
             break;
         }
     }
-    request.get("http://cartoonmad.com" + href)
-    .on("response", function (response) {
-        var $ = require("jquery")(window);
+    request.get("http://cartoonmad.com" + href, function ($) {
         try {
             var match = $("body table tbody").html().match(imageUrlRegex);
             callback({
@@ -68,59 +58,38 @@ function getMangaId($, callback) {
             });
         }
         catch (ex) {
-            console.log("Error Getting Manga Id From: ");
+            console.log("Error Parsing Manga Id: ");
             console.log(ex);
             callback(undefined);
         }
-    }).on("error", function (err) {
-        console.log("Error Occured In Getting Manga Id");
+    }, function (err) {
+        throw new Error("Error Getting Manga Id");
     });
 }
 
 function getMangaWindow(id, callback) {
-    request.get("http://cartoonmad.com/comic/" + id + ".html")
-    .on("response", function (response) {
-        var dom = new JSDOM(response);
-        var $ = jquery(dom.window);
+    request.get("http://cartoonmad.com/comic/" + id + ".html", function ($) {
         callback($);
-    }).on("error", function (err) {
+    }, function (err) {
         throw new Error("Error Occurs when getting manga window " + id);
     });
 }
 
 function getSearchHtml(value, callback) {
-    var query = 'keyword=' + toByteString(value) + '&searchtype=all';
-    var request = http.request({
-        host: 'www.cartoonmad.com',
-        path: '/search.html',
-        port: '80',
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Content-Length': Buffer.byteLength(query)
-        }
-    }, function (res) {
-        var bufferhelper = new BufferHelper();
-        res.on('data', function (chunk) {
-            bufferhelper.concat(chunk);
-        });
-        res.on('end', function () {
-            callback(iconv.decode(bufferhelper.toBuffer(), "Big5"));
-        });
+    var query = "keyword=" + toByteString(value) + "&searchtype=all";
+    request.post("http://www.cartoonmad.com/search.html", query, function ($) {
+        callback($);
+    }, function (err) {
+        throw new Error("Error Getting Search Result HTML");
     });
-    request.on("error", function (err) {
-        console.log("Error Getting Search Html");
-    });
-    request.write(query);
-    request.end();
 }
 
 function toByteString(str) {
-    var buf = iconv.encode(str, 'Big5');
-    var hex = buf.toString('hex');
-    var ret = '';
+    var buf = iconv.encode(str, "Big5");
+    var hex = buf.toString("hex");
+    var ret = "";
     for (var i = 0; i < hex.length; i += 2) {
-        ret += '%';
+        ret += "%";
         ret += hex[i].toUpperCase();
         ret += hex[i + 1].toUpperCase();
     }
@@ -155,18 +124,7 @@ module.exports = {
                 info.name = getName($);
                 info.ended = getEnded($) ? 0 : 1; // 0 is ended, 1 is still updating
                 info.latest_episode = getLatestEpisode($);
-                getMangaId($, function (id) {
-                    if (id) {
-                        info.dmk_id = id.dmk_id;
-                        info.dmk_id_gen = id.dmk_id_gen;
-                        info.dmk_id_web = id.dmk_id_web;
-                        callback(info);
-                    }
-                    else {
-                        console.log("Error Occurs while getting manga " + id + ": ");
-                        callback(undefined);
-                    }
-                });
+                getMangaId($, callback);
             }
             catch (ex) {
                 console.log("Error Occurs while getting manga " + id + ": ");
@@ -177,9 +135,8 @@ module.exports = {
     },
     search: function (value, callback) {
         getSearchHtml(value, function (data) {
-            var reg = /\<a href\=comic\/([\d]+).html title=\"([\s\S]{1,30})\"\>\<span class\=\"covers\"\>\<\/span\>/g;
             var matches = [], found;
-            while (found = reg.exec(data)) {
+            while (found = searchResultRegex.exec(data)) {
                 matches.push({
                     id: found[1],
                     name: found[2]
