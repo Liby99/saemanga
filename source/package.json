@@ -1,0 +1,28 @@
+{
+    "name": "sae-manga",
+    "version": "3.0.0",
+    "description": "Saenai Manga no Sodate Kata",
+    "main": "saemanga.js",
+    "dependencies": {
+        "keeling-js": "^1.3.0"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "test": "node saemanga.js",
+        "start": "node node_modules/keeling-js/entry.js",
+        "create-entry": "cp node_modules/keeling-js/entry.js ./app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Liby99/SaeManga.git"
+    },
+    "keywords": [
+        "MangaReader"
+    ],
+    "author": "Liby99",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Liby99/SaeManga/issues"
+    },
+    "homepage": "https://github.com/Liby99/SaeManga#readme"
+}
