@@ -10,7 +10,7 @@ module.exports = {
      * @param {Function} callback Callback that takes a boolean of whether the
      * user existed
      */
-    hasUser(username, callback) {
+    hasUser (username, callback) {
         Users.findOne({
             "username": username
         }, function (err, user) {
@@ -36,7 +36,7 @@ module.exports = {
      * @param {Function} callback Callback function takes a boolean indicating
      * whether the add is successful
      */
-    addUser(username, password, callback) {
+    addUser (username, password, callback) {
         Users.findOne({
             "username": username
         }, function (err, user) {
@@ -76,7 +76,7 @@ module.exports = {
      * @param {Function} callback Callback function takes a boolean of whether
      * the remove is successful
      */
-    removeUser(username, callback) {
+    removeUser (username, callback) {
         Users.findOne({
             "username": username
         }, function (err, user) {
@@ -93,7 +93,7 @@ module.exports = {
      * @param {Function} callback takes a boolean indicates whether the change
      * password is success or not.
      */
-    changePassword(username, oldPassword, newPassword, callback) {
+    changePassword (username, oldPassword, newPassword, callback) {
         Users.findOne({
             "username": username
         }, function (err, user) {
@@ -134,7 +134,7 @@ module.exports = {
      * @param {Function} callback Callback takes a boolean indicate whether
      * the login is successful
      */
-    login(username, password, callback) {
+    login (username, password, callback) {
         Users.findOne({
             "username": username
         }, function (err, user) {
