@@ -26,7 +26,19 @@ module.exports = {
         });
     },
     
-    getAll () {
-        
+    /**
+     * Return a list of types
+     * @param  {Function} callback
+     * @return [ <typeId> ]
+     */
+    get (callback) {
+        MangaTypes.find({}).toArray(function (err, types) {
+            if (err) {
+                Debug.error(err);
+            }
+            else {
+                callback(types);
+            }
+        });
     }
 }
