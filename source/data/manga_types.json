@@ -1,0 +1,58 @@
+[
+    {
+        "type": "格鬥",
+        "dir": "comic01"
+    },
+    {
+        "type": "魔法",
+        "dir": "comic02"
+    },
+    {
+        "type": "偵探",
+        "dir": "comic03"
+    },
+    {
+        "type": "競技",
+        "dir": "comic04"
+    },
+    {
+        "type": "恐怖",
+        "dir": "comic10"
+    },
+    {
+        "type": "戰國",
+        "dir": "comic07"
+    },
+    {
+        "type": "魔幻",
+        "dir": "comic08"
+    },
+    {
+        "type": "冒險",
+        "dir": "comic09"
+    },
+    {
+        "type": "校園",
+        "dir": "comic16"
+    },
+    {
+        "type": "搞笑",
+        "dir": "comic17"
+    },
+    {
+        "type": "少女",
+        "dir": "comic13"
+    },
+    {
+        "type": "少男",
+        "dir": "comic14"
+    },
+    {
+        "type": "科幻",
+        "dir": "comic18"
+    },
+    {
+        "type": "其他",
+        "dir": "comic22"
+    }
+]

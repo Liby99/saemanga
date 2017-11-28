@@ -20,7 +20,7 @@ module.exports = {
      * @param  {Function} callback with array of manga id
      * @throw error when internet connection error
      */
-    getHotManga: function (callback) {
+    getHotManga (callback) {
         
         // Get the base url
         Request.get(BASE_URL, function ($) {
