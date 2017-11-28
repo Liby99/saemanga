@@ -2,14 +2,11 @@
  * Populate Script
  */
 
-// Start a keeling server to access database
-var keeling = require("keeling-js");
-var config = require("../data/config.json");
-config.debug = false;
-var server = keeling.createServer(config);
+const assert = require("assert");
+const Mongo = require("keeling-js/lib/mongo");
+const config = require("../data/mongo.json");
 
-// Start server and start populate
-server.start(function () {
+function populate() {
     
     // Put all populate functions here!!!
     var list = [
@@ -19,4 +16,14 @@ server.start(function () {
     // Iterate through populate list
     var id = 0, exit = () => process.exit(1);
     list[id](() => ++id < list.length ? list[id]() : exit(), exit);
-});
+}
+
+function start() {
+    console.log("Connecting to MongoDB...");
+    Mongo.init(config, function () {
+        console.log("Success!");
+        populate();
+    });
+}
+
+start();
