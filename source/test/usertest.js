@@ -1,6 +1,6 @@
+const assert = require("assert");
 const Mongo = require("keeling-js/lib/mongo");
 const config = require("../data/mongo.json");
-const assert = require("assert");
 
 const USERNAME_1 = "scripttest_1";
 const USERNAME_2 = "scripttest_2";
@@ -41,7 +41,7 @@ function testUser() {
                         User.login(USERNAME_1, WRONG_PASSWORD, function (success) {
                             assert.equal(success, false);
                             console.log("Passed");
-                        })
+                        });
                     });
                 });
             });

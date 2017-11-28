@@ -1,7 +1,6 @@
 const request = require("request");
+const cheerio = require("cheerio");
 const http = require("http");
-const jquery = require("jquery");
-const { JSDOM } = require("jsdom");
 const iconv = require("iconv-lite");
 const BufferHelper = require("bufferhelper");
 
@@ -23,11 +22,6 @@ function parseUrl(url) {
     }
 }
 
-function toWindow(body) {
-    var dom = new JSDOM(body);
-    return jquery(dom.window);
-}
-
 module.exports = {
     get: function (url, success, error) {
         request({
@@ -39,7 +33,7 @@ module.exports = {
             }
             else {
                 var cbody = iconv.decode(body, "Big5");
-                success(toWindow(cbody));
+                success(cheerio.load(cbody));
             }
         });
     },
