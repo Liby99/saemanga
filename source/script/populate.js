@@ -14,8 +14,10 @@ function populate() {
     ];
     
     // Iterate through populate list
-    var id = 0, exit = () => process.exit(1);
-    list[id](() => ++id < list.length ? list[id]() : exit(), exit);
+    var exit = Mongo.close;
+    (function p(i) {
+        i < list.length ? list[i](() => p(i + 1), exit) : exit()
+    })(0);
 }
 
 function start() {
