@@ -1,6 +1,5 @@
-const ObjectID = require('mongodb').ObjectID;
 const Cartoonmad = require("./cartoonmad");
-const MangaType = require("./mangaType");
+const Genre = require("./genre");
 const Debug = require("keeling-js/lib/debug");
 const Mongo = require("keeling-js/lib/mongo");
 const HotMangas = Mongo.db.collection("hot_manga");
@@ -10,7 +9,6 @@ module.exports = {
     /**
      * Refresh the database of hot mangas. Basically clean up the database and
      * then fetch all the data and insert them into database
-     * @return {[type]} [description]
      */
     refresh (callback) {
         this.clear();
@@ -25,12 +23,12 @@ module.exports = {
     },
     
     /**
-     * Fetch the latest hot manga ids and latest mangas of each types
+     * Fetch the latest hot manga ids and latest mangas of each genre
      */
     fetch (callback) {
         var self = this;
         self.fetchLatest(function () {
-            self.fetchAllTypes(callback);
+            self.fetchAllGenres(callback);
         });
     },
     
@@ -43,11 +41,11 @@ module.exports = {
             HotMangas.insertMany(ids.map((id) => {
                 return {
                     "dmk_id": id,
-                    "type_dir": ""
+                    "genre_dir": ""
                 }
             }), function (err) {
                 if (err) {
-                    Debug.error(err);
+                    throw new Error(err);
                 }
                 else {
                     callback();
@@ -56,23 +54,23 @@ module.exports = {
         });
     },
     
-    fetchAllTypes (callback) {
-        var self = this, ts = MangaType.get();
+    fetchAllGenres (callback) {
+        var self = this, gs = Genres.get();
         (function p(i) {
-            i < ts.length ? self.fetchType(ts[i], () => p(i + 1)) : callback();
+            i < gs.length ? self.fetchGenre(gs[i], () => p(i + 1)) : callback();
         })(0);
     },
     
-    fetchType (type, callback) {
-        Cartoonmad.getHotMangaOfType(type.dir, function (ids) {
+    fetchGenre (genre, callback) {
+        Cartoonmad.getHotMangaOfGenre(genre.dir, function (ids) {
             HotMangas.insertMany(ids.map((id) => {
                 return {
                     "dmk_id": id,
-                    "type_dir": type.dir
+                    "genre_dir": genre.dir
                 };
             }), function (err) {
                 if (err) {
-                    Debug.error(err);
+                    throw new Error(err);
                 }
                 else {
                     callback();
@@ -82,17 +80,21 @@ module.exports = {
     },
     
     getLatestIds (callback) {
-        this.getIdsOfType("", callback);
+        this.getIdsOfGenre("", callback);
     },
     
-    getIdsOfType (typeDir, callback) {
+    getIdsOfGenre (genreDir, callback) {
         HotMangas.find({
-            "type_dir": typeDir
+            "genre_dir": genreDir
         }, {
             "fields": { "dmk_id": 1 }
         }).toArray(function (err, ids) {
-            if (err) Debug.error(err);
-            else callback(ids.map((obj) => obj["dmk_id"]));
+            if (err) {
+                throw new Error(err);
+            }
+            else {
+                callback(ids.map((obj) => obj["dmk_id"]));
+            }
         });
     }
 }

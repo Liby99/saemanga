@@ -1,7 +1,7 @@
 const assert = require("assert");
 const Mongo = require("keeling-js/lib/mongo");
 const config = require("../data/mongo.json");
-const MangaType = require("../api/mangaType");
+const Type = require("../api/type");
 const Cartoonmad = require("../api/cartoonmad");
 
 var testList = [

@@ -4,7 +4,7 @@
  * @date 2017/11/28
  */
 
-const Request = require("./request");
+const Request = require("./lib/request");
 const Debug = require("keeling-js/lib/debug");
 
 // Url lists
@@ -12,12 +12,12 @@ const BASE_URL = "http://cartoonmad.com/";
 
 // Regex lists
 const COMIC_URL_REG = /^comic\/(\d+)\.html$/;
-const COMIC_TYPE_REG = /^\/(comic\d\d).html$/;
+const COMIC_GENRE_REG = /^\/(comic\d\d).html$/;
 const NUM_REG = /\d+/;
 const COMIC_IMG_SRC_REG = /^http:\/\/(web\d)\.cartoonmad\.com\/([\w|\d]+)\//;
 
 function getMangaUrl(id) {
-    return "http://www.cartoonmad.com/comic/" + id + ".html";
+    return BASE_URL + "comic/" + id + ".html";
 }
 
 function getEpisodeList($rs) {
@@ -28,7 +28,12 @@ function getEpisodeList($rs) {
             var $e = $ds.eq(j);
             var _epi = $e.text().trim();
             var _mepi = _epi.match(NUM_REG);
-            if (_mepi) arr.push(parseInt(_mepi[0]));
+            if (_mepi) {
+                arr.push(parseInt(_mepi[0]));
+            }
+            else {
+                throw new Error("Error matching episode list");
+            }
         }
     }
     return arr;
@@ -55,11 +60,11 @@ function extractHotMangaId($) {
                 ids.push(m[1]);
             }
             else {
-                Debug.error("Error when matching id");
+                throw new Error("Error when matching id");
             }
         }
         else {
-            Debug.error("Error finding manga href");
+            throw new Error("Error finding manga href");
         }
     });
     
@@ -68,7 +73,7 @@ function extractHotMangaId($) {
         return ids;
     }
     else {
-        Debug.error("No hot manga id found");
+        throw new Error("No hot manga id found");
     }
 }
 
@@ -85,22 +90,22 @@ module.exports = {
         Request.get(BASE_URL, function ($) {
             callback(extractHotMangaId($));
         }, function (err) {
-            Debug.error("Internet connection error");
+            throw new Error("Internet connection error");
         });
     },
     
     /**
-     * Get the hot manga of a certain type (latest update) id array
+     * Get the hot manga of a certain genre (latest update) id array
      * @param  {Function} callback with array of manga id
      * @throw error when internet connection error
      */
-    getHotMangaOfType (typeDir, callback) {
+    getHotMangaOfGenre (genreDir, callback) {
         
         // Get the base url
-        Request.get(BASE_URL + typeDir + ".html", function ($) {
+        Request.get(BASE_URL + genreDir + ".html", function ($) {
             callback(extractHotMangaId($));
         }, function (err) {
-            Debug.error("Internet connection error");
+            throw new Error("Internet connection error");
         });
     },
     
@@ -115,7 +120,7 @@ module.exports = {
         Request.get(url, function ($) {
             
             // Precache info
-            var info = { "dmk_id": dmkId };
+            var manga = { "dmk_id": dmkId, "info": {} };
             
             // Traverse
             var $ps = $("body").children("table").children("tbody")
@@ -124,7 +129,7 @@ module.exports = {
                      
             // Get the header
             var $h = $ps.eq(2).children("td").eq(1).children("a").last();
-            info.title = $h.text();
+            manga.info.title = $h.text();
             
             // Go to the main section
             var $m = $ps.eq(3).children("td").children("table")
@@ -133,37 +138,34 @@ module.exports = {
             
             // Get author
             var $t1 = $m.eq(0).children("tbody").children("tr");
-            var _t = $t1.eq(2).children("td").children("a").eq(0).attr("href");
-            var _tm = _t.match(COMIC_TYPE_REG);
-            info.type_dir = _tm ? _tm[1] : "";
+            var _g = $t1.eq(2).children("td").children("a").eq(0).attr("href");
+            var _gm = _t.match(COMIC_GENRE_REG);
+            manga.info.genre_dir = _tm ? _tm[1] : "";
             var _as = $t1.eq(4).children("td").text().trim().split(" ");
-            info.author = _as[_as.length - 1];
+            manga.info.author = _as[_as.length - 1];
             var $tags = $t1.eq(12).children("td").children("a");
             var _ta = Array.apply(1, { length: $tags.length });
-            info.tags = _ta.map((n, i) => $tags.eq(i).text());
-            var _imgsrc = $t1.eq(6).find("img").last().attr("src");
-            info.ended = _imgsrc.indexOf("9") > 0 ? true : false;
+            manga.info.tags = _ta.map((n, i) => $tags.eq(i).text());
+            var _src = $t1.eq(6).find("img").last().attr("src");
+            manga.info.ended = _src && (_src.indexOf("9") > 0 ? true : false);
             
             // Get Description
             var $t2 = $m.eq(1).find("tbody tr td fieldset table tbody tr td");
-            info.description = $t2.text().trim();
+            manga.info.description = $t2.text().trim();
             
             // Get books and episodes
             var $t3 = $m.eq(2).find("tbody tr td fieldset table");
             if ($t3.length == 1) {
-                var $rs = $t3.eq(0).find("tbody tr");
-                info.episodes = getEpisodeList($rs);
+                manga.episodes = getEpisodeList($t3.eq(0).find("tbody tr"));
             }
             else {
-                var $rs1 = $t3.eq(0).find("tbody tr");
-                var $rs2 = $t3.eq(1).find("tbody tr");
-                info.books = getEpisodeList($rs1);
-                info.episodes = getEpisodeList($rs2);
+                manga.books = getEpisodeList($t3.eq(0).find("tbody tr"));
+                manga.episodes = getEpisodeList($t3.eq(1).find("tbody tr"));
             }
             
             // Get manga ids
             var epiurl = $t3.eq(0).find("tbody tr").eq(1).children("td").eq(1)
-                         .children("a").attr("href");
+                         .children("a").attr("href").substring(1);
             Request.get(BASE_URL + epiurl, function ($) {
                 var src = $("body > table > tbody > tr").eq(4).children("td")
                           .children("table").children("tbody").children("tr")
@@ -171,12 +173,12 @@ module.exports = {
                           .children("img").attr("src");
                 var msrc = src.match(COMIC_IMG_SRC_REG);
                 if (msrc) {
-                    info.dmk_id_web = msrc[1];
-                    info.dmk_id_gen = msrc[2];
-                    callback(info);
+                    manga.dmk_id_web = msrc[1];
+                    manga.dmk_id_gen = msrc[2];
+                    callback(manga);
                 }
                 else {
-                    Debug.error("Img src info extraction error");
+                    throw new Error("Img src info extraction error");
                 }
             });
         });
