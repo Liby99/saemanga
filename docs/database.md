@@ -1,6 +1,6 @@
 # Database Schema Design
 
-## `manga`
+## Collection `manga`
 
 ``` js
 {
@@ -22,9 +22,7 @@
 }
 ```
 
----
-
-## `hot`
+## Collection `hot`
 
 ``` js
 {
@@ -34,9 +32,7 @@
 }
 ```
 
----
-
-## `user`
+## Collection `user`
 
 ``` js
 {
@@ -49,9 +45,7 @@
 }
 ```
 
----
-
-## `follow`
+## Collection `follow`
 
 ``` js
 {
