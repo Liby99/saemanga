@@ -13,6 +13,10 @@ const BASE_URL = "http://cartoonmad.com/";
 // Regex lists
 const COMIC_URL_REG = /^comic\/(\d+)\.html$/;
 
+function getMangaUrl(id) {
+    return "http://www.cartoonmad.com/comic/" + id + ".html";
+}
+
 module.exports = {
     
     /**
@@ -111,5 +115,9 @@ module.exports = {
         }, function (err) {
             Debug.error("Internet connection error");
         });
+    },
+    
+    getMangaInfo (dmkId, callback) {
+        var url = getMangaUrl(dmkId);
     }
 }
