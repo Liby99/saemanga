@@ -38,8 +38,8 @@ function testUser() {
                         console.log("Passed");
                         
                         console.log("Testing Wrong Password Login... ");
-                        User.login(USERNAME_1, WRONG_PASSWORD, function (success) {
-                            assert.equal(success, false);
+                        User.login(USERNAME_1, WRONG_PASSWORD, function (s) {
+                            assert.equal(s, false);
                             console.log("Passed");
                         });
                     });
