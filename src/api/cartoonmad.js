@@ -34,6 +34,44 @@ function getEpisodeList($rs) {
     return arr;
 }
 
+function extractHotMangaId($) {
+    
+    // First get $r, all the hot mangas
+    var $rs = $("body").children("table").children("tbody")
+              .children("tr").eq(0).children("td").eq(1)
+              .children("table").children("tbody").children("tr").eq(3)
+              .children("td").children("table").children("tbody")
+              .children("tr").eq(1).children("td").eq(1)
+              .children("table").children("tbody").children("tr");
+    var $r = $rs.eq(2).append($rs.eq(4).children()).children();
+    var ids = [];
+    
+    // Go through every element to get the id and append to ids
+    $r.each(function () {
+        var href = $(this).children("a").attr("href");
+        if (href) {
+            var m = href.match(COMIC_URL_REG);
+            if (m) {
+                ids.push(m[1]);
+            }
+            else {
+                Debug.error("Error when matching id");
+            }
+        }
+        else {
+            Debug.error("Error finding manga href");
+        }
+    });
+    
+    // Check if there is id
+    if (ids.length) {
+        return ids;
+    }
+    else {
+        Debug.error("No hot manga id found");
+    }
+}
+
 module.exports = {
     
     /**
@@ -45,41 +83,7 @@ module.exports = {
         
         // Get the base url
         Request.get(BASE_URL, function ($) {
-            
-            // First get $r, all the hot mangas
-            var $rs = $("body").children("table").children("tbody")
-                      .children("tr").eq(0).children("td").eq(1)
-                      .children("table").children("tbody").children("tr").eq(3)
-                      .children("td").children("table").children("tbody")
-                      .children("tr").eq(1).children("td").eq(1)
-                      .children("table").children("tbody").children("tr");
-            var $r = $rs.eq(2).append($rs.eq(4).children()).children();
-            var ids = [];
-            
-            // Go through every element to get the id and append to ids
-            $r.each(function () {
-                var href = $(this).children("a").attr("href");
-                if (href) {
-                    var m = href.match(COMIC_URL_REG);
-                    if (m) {
-                        ids.push(m[1]);
-                    }
-                    else {
-                        Debug.error("Error when matching id");
-                    }
-                }
-                else {
-                    Debug.error("Error finding manga href");
-                }
-            });
-            
-            // Check if there is id
-            if (ids.length) {
-                callback(ids);
-            }
-            else {
-                Debug.error("No hot manga id found");
-            }
+            callback(extractHotMangaId($));
         }, function (err) {
             Debug.error("Internet connection error");
         });
@@ -94,46 +98,18 @@ module.exports = {
         
         // Get the base url
         Request.get(BASE_URL + typeDir + ".html", function ($) {
-            
-            // First get $r, all the hot mangas
-            var $rs = $("body").children("table").children("tbody")
-                      .children("tr").eq(0).children("td").eq(1)
-                      .children("table").children("tbody").children("tr").eq(3)
-                      .children("td").children("table").children("tbody")
-                      .children("tr").eq(1).children("td").eq(1)
-                      .children("table").children("tbody").children("tr");
-            var $r = $rs.eq(2).append($rs.eq(4).children()).children();
-            var ids = [];
-            
-            // Go through every element to get the id and append to ids
-            $r.each(function () {
-                var href = $(this).children("a").attr("href");
-                if (href) {
-                    var m = href.match(COMIC_URL_REG);
-                    if (m) {
-                        ids.push(m[1]);
-                    }
-                    else {
-                        Debug.error("Error when matching id");
-                    }
-                }
-                else {
-                    Debug.error("Error finding manga href");
-                }
-            });
-            
-            // Check if there is id
-            if (ids.length) {
-                callback(ids);
-            }
-            else {
-                Debug.error("No hot manga id found");
-            }
+            callback(extractHotMangaId($));
         }, function (err) {
             Debug.error("Internet connection error");
         });
     },
     
+    /**
+     * Get manga info using dmk_id.
+     * @param  {string|integer}   dmkId    id of dmk
+     * @param  {Function} callback callback
+     * @return {object}            manga info
+     */
     getMangaInfo (dmkId, callback) {
         var url = getMangaUrl(dmkId);
         Request.get(url, function ($) {

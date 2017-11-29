@@ -1,6 +1,7 @@
 const assert = require("assert");
 const Mongo = require("keeling-js/lib/mongo");
 const config = require("../data/mongo.json");
+const MangaType = require("../api/mangaType");
 const Cartoonmad = require("../api/cartoonmad");
 
 var testList = [
@@ -25,20 +26,18 @@ var testList = [
      */
     function testGetType (callback) {
         console.log("-----Testing Getting Manga of Type-----");
-        const MangaType = require("../api/mangaType");
-        MangaType.get(function (types) {
-            (function p(i) {
-                if (i < types.length) {
-                    Cartoonmad.getHotMangaOfType(types[i].dir, function (ids) {
-                        console.log(types[i].type + ": [" + ids + "]");
-                        p(i + 1);
-                    });
-                }
-                else {
-                    callback();
-                }
-            })(0);
-        });
+        var types = MangaType.get();
+        (function p(i) {
+            if (i < types.length) {
+                Cartoonmad.getHotMangaOfType(types[i].dir, function (ids) {
+                    console.log(types[i].type + ": [" + ids + "]");
+                    p(i + 1);
+                });
+            }
+            else {
+                callback();
+            }
+        })(0);
     },
     
     /**
@@ -65,8 +64,8 @@ var testList = [
         const HotManga = require("../api/hotManga");
         HotManga.getLatestIds(function (ids) {
             console.log("Latest: [" + ids + "]");
-            HotManga.getIdsOfType("5a1df0ec880bd215441c6dd0", function (ids) {
-                console.log("Zhan Guo: [" + ids + "]");
+            HotManga.getIdsOfType("comic04", function (ids) {
+                console.log("Comic 04: [" + ids + "]");
                 callback();
             });
         });
