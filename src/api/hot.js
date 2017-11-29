@@ -2,7 +2,7 @@ const Cartoonmad = require("./cartoonmad");
 const Genre = require("./genre");
 const Debug = require("keeling-js/lib/debug");
 const Mongo = require("keeling-js/lib/mongo");
-const HotMangas = Mongo.db.collection("hot_manga");
+const Hots = Mongo.db.collection("hot");
 
 module.exports = {
     
@@ -19,7 +19,7 @@ module.exports = {
      * Clear up the hot manga database
      */
     clear () {
-        HotMangas.remove({});
+        Hots.remove({});
     },
     
     /**
@@ -38,7 +38,7 @@ module.exports = {
      */
     fetchLatest (callback) {
         Cartoonmad.getHotManga(function (ids) {
-            HotMangas.insertMany(ids.map((id) => {
+            Hots.insertMany(ids.map((id) => {
                 return {
                     "dmk_id": id,
                     "genre_dir": ""
@@ -63,7 +63,7 @@ module.exports = {
     
     fetchGenre (genre, callback) {
         Cartoonmad.getHotMangaOfGenre(genre.dir, function (ids) {
-            HotMangas.insertMany(ids.map((id) => {
+            Hots.insertMany(ids.map((id) => {
                 return {
                     "dmk_id": id,
                     "genre_dir": genre.dir
@@ -84,7 +84,7 @@ module.exports = {
     },
     
     getIdsOfGenre (genreDir, callback) {
-        HotMangas.find({
+        Hots.find({
             "genre_dir": genreDir
         }, {
             "fields": { "dmk_id": 1 }

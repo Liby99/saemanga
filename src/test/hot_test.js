@@ -47,8 +47,8 @@ var testList = [
      */
     function testAPIFetch (callback) {
         console.log("-----Test Fetching-----");
-        const HotManga = require("../api/hotManga");
-        HotManga.refresh(function () {
+        const Hot = require("../api/hot");
+        Hot.refresh(function () {
             console.log("Successfully Fetched All Hot Manga");
             callback();
         });
@@ -61,8 +61,8 @@ var testList = [
      */
     function testGetFromDB (callback) {
         console.log("-----Test Getting From DB-----");
-        const HotManga = require("../api/hotManga");
-        HotManga.getLatestIds(function (ids) {
+        const Hot = require("../api/hot");
+        Hot.getLatestIds(function (ids) {
             console.log("Latest: [" + ids + "]");
             HotManga.getIdsOfType("comic04", function (ids) {
                 console.log("Comic 04: [" + ids + "]");
