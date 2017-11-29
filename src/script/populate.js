@@ -10,7 +10,7 @@ function populate() {
     
     // Put all populate functions here!!!
     var list = [
-        require("../api/mangaType").populate
+        // require("../api/mangaType").populate
     ];
     
     // Iterate through populate list

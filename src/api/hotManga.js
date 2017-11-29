@@ -43,7 +43,7 @@ module.exports = {
             HotMangas.insertMany(ids.map((id) => {
                 return {
                     "dmk_id": id,
-                    "type": "latest"
+                    "type_dir": ""
                 }
             }), function (err) {
                 if (err) {
@@ -57,14 +57,10 @@ module.exports = {
     },
     
     fetchAllTypes (callback) {
-        var self = this;
-        MangaType.get(function (types) {
-            (function p(i) {
-                i < types.length ?
-                    self.fetchType(types[i], () => p(i + 1)) :
-                    callback()
-            })(0);
-        });
+        var self = this, ts = MangaType.get();
+        (function p(i) {
+            i < ts.length ? self.fetchType(ts[i], () => p(i + 1)) : callback();
+        })(0);
     },
     
     fetchType (type, callback) {
@@ -72,7 +68,7 @@ module.exports = {
             HotMangas.insertMany(ids.map((id) => {
                 return {
                     "dmk_id": id,
-                    "type": type["_id"]
+                    "type_dir": type.dir
                 };
             }), function (err) {
                 if (err) {
@@ -86,32 +82,17 @@ module.exports = {
     },
     
     getLatestIds (callback) {
+        this.getIdsOfType("", callback);
+    },
+    
+    getIdsOfType (typeDir, callback) {
         HotMangas.find({
-            "type": "latest"
+            "type_dir": typeDir
         }, {
-            "fields": {
-                "dmk_id": 1
-            }
+            "fields": { "dmk_id": 1 }
         }).toArray(function (err, ids) {
             if (err) Debug.error(err);
             else callback(ids.map((obj) => obj["dmk_id"]));
-        });
-    },
-    
-    getIdsOfType (typeId, callback) {
-        HotMangas.find({
-            "type": ObjectID(typeId)
-        }, {
-            "fields": {
-                "dmk_id": 1
-            }
-        }).toArray(function (err, ids) {
-            if (err) {
-                Debug.error(err);
-            }
-            else {
-                callback(ids.map((obj) => obj["dmk_id"]));
-            }
         });
     }
 }
