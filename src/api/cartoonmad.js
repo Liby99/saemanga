@@ -17,7 +17,7 @@ const SEARCH_URL = BASE_URL + "search.html";
 const COMIC_URL_REG = /^comic\/(\d+)\.html$/;
 const COMIC_GENRE_REG = /^\/(comic\d\d).html$/;
 const NUM_REG = /\d+/;
-const COMIC_IMG_SRC_REG = /^http:\/\/(web\d)\.cartoonmad\.com\/([\w|\d]+)\//;
+const COMIC_IMG_SRC_REG = /^http:\/\/(web\d?)\.cartoonmad\.com\/([\w|\d]+)\//;
 
 function getMangaUrl(id) {
     return BASE_URL + "comic/" + id + ".html";
@@ -80,8 +80,8 @@ function extractHotMangaId($) {
     }
 }
 
-function getHotMangaWithUrl(url, success, error) {
-    Request.get(url, function ($) {
+function getHotMangaWithUrl(url, callback, error) {
+    Request.get(url, function (res, $) {
         try {
             var extracted = extractHotMangaId($);
         }
@@ -136,7 +136,12 @@ module.exports = {
      * @return {object}            manga info
      */
     getMangaInfo (dmkId, callback, error) {
-        Request.get(getMangaUrl(dmkId), function ($) {
+        Request.get(getMangaUrl(dmkId), function (res, $) {
+            
+            if (res["connection"]["_httpMessage"]["path"] === "/") {
+                error("Manga " + dmkId + " not found");
+                return;
+            }
             
             // Precache info
             var manga = { "dmk_id": dmkId, "info": {} };
@@ -191,7 +196,7 @@ module.exports = {
             // Get manga ids
             var epiurl = $t3.eq(0).find("tbody tr").eq(1).children("td").eq(1)
                          .children("a").attr("href").substring(1);
-            Request.get(BASE_URL + epiurl, function ($) {
+            Request.get(BASE_URL + epiurl, function (res, $) {
                 var src = $("body > table > tbody > tr").eq(4).children("td")
                           .children("table").children("tbody").children("tr")
                           .eq(0).children("td").eq(0).children("a")
@@ -203,6 +208,7 @@ module.exports = {
                     callback(manga);
                 }
                 else {
+                    console.log(src);
                     error(new Error("Img src info extraction error"));
                 }
             }, error);
@@ -220,7 +226,7 @@ module.exports = {
         var query = getSearchQuery(Chinese.traditionalize(str.trim()));
         
         // Then go to the search request
-        Request.post(SEARCH_URL, query, function ($) {
+        Request.post(SEARCH_URL, query, function (res, $) {
             
             // First go to the table
             var $rs = $("body").children("table").children("tbody")

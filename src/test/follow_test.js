@@ -1,9 +1,6 @@
 const assert = require("assert");
 const MongoUnitTest = require("./lib/mongo_unit_test");
-const Mongo = require("keeling-js/lib/mongo");
 const Genre = require("../api/genre");
-
-const ObjectID = require('mongodb').ObjectID;
 
 var Follow, User, Manga;
 var username = "test_user_1", userId, mangaId;

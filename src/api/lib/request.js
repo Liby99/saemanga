@@ -33,7 +33,7 @@ module.exports = {
             }
             else {
                 var cbody = iconv.decode(body, "Big5");
-                success(cheerio.load(cbody));
+                success(response, cheerio.load(cbody));
             }
         });
     },

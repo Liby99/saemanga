@@ -1,49 +1,58 @@
 const assert = require("assert");
-const config = require("../data/mongo.json");
-const Mongo = require("keeling-js/lib/mongo");
+const MongoUnitTest = require("./lib/mongo_unit_test");
 const Cartoonmad = require("../api/cartoonmad");
 
-var testList = [
-    
-    /**
-     * [testGet description]
-     * @param  {Function} callback [description]
-     * @return {[type]}            [description]
-     */
-    function testScrapper (callback) {
-        console.log("-----Testing Get Manga-----");
-        Cartoonmad.getMangaInfo(5967, function (info) {
-            console.log(info);
-            callback();
-        });
-    },
-    
-    /**
-     * [testGetType description]
-     * @param  {Function} callback [description]
-     * @return {[type]}            [description]
-     */
-    function testFetch (callback) {
-        console.log("-----Testing Fetch-----");
-        const Manga = require("../api/manga");
-        Manga.fetch(5967, callback);
-    },
-    
-    function testUpdate (callback) {
-        console.log("-----Testing Update-----");
-        const Manga = require("../api/manga");
-        Manga.fetch(5967, callback);
-    }
-];
+var Manga;
 
-function start() {
-    console.log("Connecting to MongoDB...");
-    Mongo.init(config, function () {
-        console.log("Success!");
-        (function p(i) {
-            i < testList.length ? testList[i](() => p(i + 1)) : Mongo.close()
-        })(0);
-    });
-}
-
-start();
+MongoUnitTest({
+    
+    begin (next) {
+        
+        Manga = require("../api/manga");
+        next();
+    },
+    tests: [
+        
+        function (next, error) {
+            console.log("-----Testing Scrapper Get Non Existing Manga-----");
+            Cartoonmad.getMangaInfo(11, error, function (err) {
+                console.log("Error thrown. Passed");
+                next();
+            });
+        },
+        
+        function (next, error) {
+            console.log("-----Testing Scrapper Get Manga 5967-----");
+            Cartoonmad.getMangaInfo(5967, function (info) {
+                console.log(info);
+                next();
+            }, error);
+        },
+            
+        function (next, error) {
+            console.log("-----Testing Scrapper Get Manga 1152-----");
+            Cartoonmad.getMangaInfo(1152, function (info) {
+                console.log(info);
+                next();
+            }, error);
+        },
+        
+        function (next, error) {
+            console.log("-----Testing Fetch-----");
+            const Manga = require("../api/manga");
+            Manga.fetch(5967, function (id) {
+                console.log(id);
+                next();
+            }, error);
+        },
+        
+        function (next, error) {
+            console.log("-----Testing Update-----");
+            const Manga = require("../api/manga");
+            Manga.fetch(5967, function (id) {
+                console.log(id);
+                next();
+            }, error);
+        }
+    ]
+});
