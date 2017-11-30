@@ -77,6 +77,21 @@ function extractHotMangaId($) {
     }
 }
 
+function getHotMangaWithUrl(url, success, error) {
+    Request.get(url, function ($) {
+        try {
+            var extracted = extractHotMangaId($);
+        }
+        catch (err) {
+            error(err);
+            return;
+        }
+        callback(extracted);
+    }, function (err) {
+        error(new Error("Internet connection error"));
+    });
+}
+
 module.exports = {
     
     /**
@@ -84,14 +99,8 @@ module.exports = {
      * @param  {Function} callback with array of manga id
      * @throw error when internet connection error
      */
-    getHotManga (callback) {
-        
-        // Get the base url
-        Request.get(BASE_URL, function ($) {
-            callback(extractHotMangaId($));
-        }, function (err) {
-            throw new Error("Internet connection error");
-        });
+    getHotManga (callback, error) {
+        getHotMangaWithUrl(BASE_URL, callback, error);
     },
     
     /**
@@ -99,14 +108,8 @@ module.exports = {
      * @param  {Function} callback with array of manga id
      * @throw error when internet connection error
      */
-    getHotMangaOfGenre (genreDir, callback) {
-        
-        // Get the base url
-        Request.get(BASE_URL + genreDir + ".html", function ($) {
-            callback(extractHotMangaId($));
-        }, function (err) {
-            throw new Error("Internet connection error");
-        });
+    getHotMangaOfGenre (genreDir, callback, error) {
+        getHotMangaWithUrl(BASE_URL + genreDir + ".html", callback, error);
     },
     
     /**
@@ -115,9 +118,8 @@ module.exports = {
      * @param  {Function} callback callback
      * @return {object}            manga info
      */
-    getMangaInfo (dmkId, callback) {
-        var url = getMangaUrl(dmkId);
-        Request.get(url, function ($) {
+    getMangaInfo (dmkId, callback, error) {
+        Request.get(getMangaUrl(dmkId), function ($) {
             
             // Precache info
             var manga = { "dmk_id": dmkId, "info": {} };
@@ -154,13 +156,19 @@ module.exports = {
             manga.info.description = $t2.text().trim();
             
             // Get books and episodes
-            var $t3 = $m.eq(2).find("tbody tr td fieldset table");
-            if ($t3.length == 1) {
-                manga.episodes = getEpisodeList($t3.eq(0).find("tbody tr"));
+            try {
+                var $t3 = $m.eq(2).find("tbody tr td fieldset table");
+                if ($t3.length == 1) {
+                    manga.episodes = getEpisodeList($t3.eq(0).find("tbody tr"));
+                }
+                else {
+                    manga.books = getEpisodeList($t3.eq(0).find("tbody tr"));
+                    manga.episodes = getEpisodeList($t3.eq(1).find("tbody tr"));
+                }
             }
-            else {
-                manga.books = getEpisodeList($t3.eq(0).find("tbody tr"));
-                manga.episodes = getEpisodeList($t3.eq(1).find("tbody tr"));
+            catch (err) {
+                error(err);
+                return;
             }
             
             // Get manga ids
@@ -178,9 +186,9 @@ module.exports = {
                     callback(manga);
                 }
                 else {
-                    throw new Error("Img src info extraction error");
+                    error(new Error("Img src info extraction error"));
                 }
-            });
-        });
+            }, error);
+        }, error);
     }
 }
