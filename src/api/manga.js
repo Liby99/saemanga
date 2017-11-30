@@ -9,18 +9,22 @@ module.exports = {
     REFRESH_TIME: 30, // In Minutes
     FULL_REFRESH_RATE: 120, // In Minutes
     
-    update (callback) {
+    update (callback, error) {
         Mangas.find({
             "ended": false
         }, {
             "sort": { "update_date": 1 }
         }).toArray(function (err, mangas) {
             if (err) {
-                throw new Error(err);
+                error(err);
             }
             else {
-                var portion = REFRESH_TIME / FULL_REFRESH_RATE;
-                var count = Math.floor(portion * mangas.length);
+                
+                // Only update a portion of all
+                // var portion = REFRESH_TIME / FULL_REFRESH_RATE;
+                // var count = Math.floor(portion * mangas.length);
+                
+                var count = mangas.length;
                 (function p(i) {
                     if (i < count) {
                         var oi = mangas[i];
@@ -31,12 +35,19 @@ module.exports = {
                                 Mangas.update({
                                     "dmk_id": dmkId
                                 }, ni, function (err) {
-                                    if (err) {
-                                        Debug.error(err);
-                                    }
+                                    
+                                    if (err)
+                                        Debug.error("Error updating manga " + dmkId + ": " + err);
+                                    
+                                    // Continue regardless of error
                                     p(i + 1);
                                 });
                             }
+                        }, function (err) {
+                            
+                            // When getting error, continue
+                            Debug.error("Error getting manga " + dmkId + ": " + err);
+                            p(i + 1);
                         });
                     }
                     else {
@@ -48,18 +59,30 @@ module.exports = {
         });
     },
     
-    hasUpdate (dmkId, callback) {
+    hasUpdate (dmkId, callback, error) {
         this.get(dmkId, function (oldInfo) {
             Cartoonmad.getMangaInfo(dmkId, function (newInfo) {
                 callback(newInfo.episodes.length > oldInfo.episodes.length);
-            });
-        });
+            }, error);
+        }, error);
     },
     
-    fetchAll (ids, callback) {
+    fetchAll (ids, callback, error) {
         var self = this;
         (function p(i) {
-            i < ids.length ? self.fetch(ids[i], () => p(i + 1)) : callback()
+            if (i < ids.length) {
+                self.fetch(ids[i], () => {
+                    p(i + 1);
+                }, (err) => {
+                    
+                    // Continue without handling error
+                    Debug.error(err);
+                    p(i + 1);
+                });
+            }
+            else {
+                callback();
+            }
         })(0);
     },
     
@@ -71,7 +94,7 @@ module.exports = {
      * @param  {Function} callback
      * @return {void|string}       <mangaId>
      */
-    fetch (dmkId, callback) {
+    fetch (dmkId, callback, error) {
         Cartoonmad.getMangaInfo(dmkId, function (manga) {
             manga["update_date"] = new Date();
             Mangas.findOneAndUpdate({
@@ -81,7 +104,7 @@ module.exports = {
                 "new": true
             }, function (err, ret) {
                 if (err) {
-                    throw err;
+                    error(err);
                 }
                 else {
                     var leo = ret["lastErrorObject"];
@@ -93,13 +116,13 @@ module.exports = {
                     }
                 }
             });
-        });
+        }, error);
     },
     
-    get (dmkId, callback) {
+    get (dmkId, callback, error) {
         Mangas.findOne({ "dmk_id": dmkId }, function (err, manga) {
             if (err) {
-                throw new Error(err);
+                error(err);
             }
             else {
                 callback(manga);
@@ -107,12 +130,12 @@ module.exports = {
         });
     },
     
-    getByObjId (mangaId, callback) {
+    getByObjId (mangaId, callback, error) {
         Mangas.findOne({
             "_id": ObjectID(mangaId)
         }, function (err, manga) {
             if (err) {
-                throw new Error(err);
+                error(err);
             }
             else {
                 callback(manga);
