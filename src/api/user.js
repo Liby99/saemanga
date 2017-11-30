@@ -10,12 +10,12 @@ module.exports = {
      * @param {Function} callback Callback that takes a boolean of whether the
      * user existed
      */
-    hasUser (username, callback) {
+    hasUser (username, callback, error) {
         Users.findOne({
             "username": username
         }, function (err, user) {
             if (err) {
-                throw new Error("Error checking user " + username + " existence: " + err);
+                error(new Error("Error checking user " + username + " existence: " + err));
             }
             else {
                 if (user) {
@@ -36,20 +36,20 @@ module.exports = {
      * @param {Function} callback Callback function takes a boolean indicating
      * whether the add is successful
      */
-    addUser (username, password, callback) {
+    addUser (username, password, callback, error) {
         Users.findOne({
             "username": username
         }, function (err, user) {
             if (err) {
-                throw new Error("Error fetching user info: " + err);
+                error(new Error("Error fetching user info: " + err));
             }
             else {
                 if (user) {
-                    callback(false);
+                    error(new Error("Username " + username + " has already existed"));
                 }
                 else {
                     var encrypted = Crypto.genEncrypted(password);
-                    Users.insert({
+                    Users.insertOne({
                         "username": username,
                         "password": encrypted,
                         "register_date_time": new Date(),
@@ -57,12 +57,12 @@ module.exports = {
                         "visit_amount": 1,
                         "following": [],
                         "love": []
-                    }, function (err, userId) {
+                    }, function (err, res) {
                         if (err) {
-                            throw new Error("Error inserting new user " + username + ": " + err);
+                            error(new Error("Error inserting new user " + username + ": " + err));
                         }
                         else {
-                            callback(true);
+                            callback(res["insertedId"]);
                         }
                     });
                 }
@@ -76,11 +76,16 @@ module.exports = {
      * @param {Function} callback Callback function takes a boolean of whether
      * the remove is successful
      */
-    removeUser (username, callback) {
-        Users.findOne({
+    removeUser (username, callback, error) {
+        Users.remove({
             "username": username
-        }, function (err, user) {
-            
+        }, function (err, ret) {
+            if (err) {
+                error(new Error("Error when removing user " + username + ": " + err));
+            }
+            else {
+                callback(ret.result.n != 0);
+            }
         });
     },
     
@@ -93,12 +98,12 @@ module.exports = {
      * @param {Function} callback takes a boolean indicates whether the change
      * password is success or not.
      */
-    changePassword (username, oldPassword, newPassword, callback) {
+    changePassword (username, oldPassword, newPassword, callback, error) {
         Users.findOne({
             "username": username
         }, function (err, user) {
             if (err) {
-                throw new Error("Error when fetching user " + username + " info: " + err);
+                error(new Error("Error when fetching user " + username + " info: " + err));
             }
             else {
                 if (Crypto.match(oldPassword, user.password)) {
@@ -111,7 +116,7 @@ module.exports = {
                         }
                     }, function (err, result) {
                         if (err) {
-                            throw new Error("Error when updating user " + username + " password: " + err);
+                            error(new Error("Error when updating user " + username + " password: " + err));
                         }
                         else {
                             callback(true);
@@ -134,12 +139,12 @@ module.exports = {
      * @param {Function} callback Callback takes a boolean indicate whether
      * the login is successful
      */
-    login (username, password, callback) {
+    login (username, password, callback, error) {
         Users.findOne({
             "username": username
         }, function (err, user) {
             if (err) {
-                throw new Error("Error when fetching user " + username + " info: " + err);
+                error(new Error("Error when fetching user " + username + " info: " + err));
             }
             else {
                 if (user) {
@@ -155,7 +160,7 @@ module.exports = {
                             }
                         }, function (err, result) {
                             if (err) {
-                                throw new Error("Error when updating user login info: " + err);
+                                error(new Error("Error when updating user login info: " + err));
                             }
                             else {
                                 callback(true);
