@@ -8,7 +8,7 @@ module.exports = function (obj) {
                     t(i + 1);
                 }, (err) => {
                     console.error(err);
-                    t(i + 1);
+                    afterTest();
                 });
             }
             else {
