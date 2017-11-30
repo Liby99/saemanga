@@ -54,6 +54,7 @@
     manga_id: <ObjectId>,
     start_date: <Date>,
     current_episode: <Number>,
+    max_episode: <Number>,
     update_date: <Date>,
     up_to_date: <Boolean>
 }

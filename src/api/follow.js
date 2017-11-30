@@ -62,29 +62,45 @@ module.exports = {
                             "start_date": new Date(),
                             "update_date": new Date(),
                             "up_to_date": isUpToDate,
-                            "current_episode": currentEpisode
+                            "current_episode": currentEpisode,
+                            "max_episode": currentEpisode
                         }, function (err, followId) {
                             if (err) {
                                 error(err);
                             }
                             else {
-                                callback(followId);
+                                callback(followId["insertedId"]);
                             }
                         });
                     }
                     else {
                         error(new Error("Manga " + mangaId + " not found"));
                     }
-                });
+                }, error);
             }
         }, error);
     },
     
-    unfollow (userId, mangaId, callback) {
-        
+    unfollow (userId, mangaId, callback, error) {
+        Follows.removeOne({
+            "user_id": ObjectID(userId),
+            "manga_id": ObjectID(mangaId)
+        }, function (err, ret) {
+            if (err) {
+                error(err);
+            }
+            else {
+                if (ret.result.n) {
+                    callback();
+                }
+                else {
+                    error(new Error("User has not followed this manga"));
+                }
+            }
+        });
     },
     
-    updateAllFollowOfManga (mangaId, callback) {
+    updateAllFollowOfManga (mangaId, callback, error) {
         Manga.getByObjId(mangaId, function (manga) {
             if (manga) {
                 Follows.updateMany({ "manga_id": mangaId }, {
@@ -107,7 +123,41 @@ module.exports = {
         });
     },
     
-    read (userId, mangaId, episode, callback) {
-        
+    read (userId, mangaId, episode, callback, error) {
+        var self = this;
+        Manga.getByObjId(mangaId, function (manga) {
+            var latestEpisode = manga.episodes[manga.episodes.length - 1];
+            self.getFollow(userId, mangaId, function (follow) {
+                if (follow) {
+                    var maxEpisode = Math.max(episode, follow["max_episode"]);
+                    var isUpToDate = maxEpisode == latestEpisode;
+                    Follows.updateOne({
+                        "user_id": userId,
+                        "manga_id": mangaId
+                    }, {
+                        $set: {
+                            "current_episode": episode,
+                            "max_episode": maxEpisode,
+                            "up_to_date": isUpToDate
+                        }
+                    }, function (err, ret) {
+                        if (err) {
+                            error(err);
+                        }
+                        else {
+                            if (ret.result.n) {
+                                callback();
+                            }
+                            else {
+                                error(new Error("Error updating follow " + follow["_id"]));
+                            }
+                        }
+                    });
+                }
+                else {
+                    error(new Error("User " + userId + " has not followed manga " + mangaId + " yet."));
+                }
+            }, error);
+        }, error);
     }
 }
