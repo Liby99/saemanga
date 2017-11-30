@@ -139,8 +139,8 @@ module.exports = {
             // Get author
             var $t1 = $m.eq(0).children("tbody").children("tr");
             var _g = $t1.eq(2).children("td").children("a").eq(0).attr("href");
-            var _gm = _t.match(COMIC_GENRE_REG);
-            manga.info.genre_dir = _tm ? _tm[1] : "";
+            var _gm = _g.match(COMIC_GENRE_REG);
+            manga.info.genre_dir = _gm ? _gm[1] : "";
             var _as = $t1.eq(4).children("td").text().trim().split(" ");
             manga.info.author = _as[_as.length - 1];
             var $tags = $t1.eq(12).children("td").children("a");

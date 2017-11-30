@@ -27,6 +27,12 @@ var testList = [
         console.log("-----Testing Fetch-----");
         const Manga = require("../api/manga");
         Manga.fetch(5967, callback);
+    },
+    
+    function testUpdate (callback) {
+        console.log("-----Testing Update-----");
+        const Manga = require("../api/manga");
+        Manga.fetch(5967, callback);
     }
 ];
 

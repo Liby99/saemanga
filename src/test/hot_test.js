@@ -1,7 +1,7 @@
 const assert = require("assert");
 const Mongo = require("keeling-js/lib/mongo");
-const config = require("../data/mongo.json");
-const Type = require("../api/type");
+const config = require("../data/mongo");
+const Genre = require("../api/genre");
 const Cartoonmad = require("../api/cartoonmad");
 
 var testList = [
@@ -26,11 +26,11 @@ var testList = [
      */
     function testGetType (callback) {
         console.log("-----Testing Getting Manga of Type-----");
-        var types = MangaType.get();
+        var gs = Genre.get();
         (function p(i) {
-            if (i < types.length) {
-                Cartoonmad.getHotMangaOfType(types[i].dir, function (ids) {
-                    console.log(types[i].type + ": [" + ids + "]");
+            if (i < gs.length) {
+                Cartoonmad.getHotMangaOfGenre(gs[i].dir, function (ids) {
+                    console.log(gs[i].type + ": [" + ids + "]");
                     p(i + 1);
                 });
             }
@@ -64,7 +64,7 @@ var testList = [
         const Hot = require("../api/hot");
         Hot.getLatestIds(function (ids) {
             console.log("Latest: [" + ids + "]");
-            HotManga.getIdsOfType("comic04", function (ids) {
+            Hot.getIdsOfGenre("comic04", function (ids) {
                 console.log("Comic 04: [" + ids + "]");
                 callback();
             });

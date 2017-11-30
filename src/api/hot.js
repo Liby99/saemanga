@@ -27,8 +27,10 @@ module.exports = {
      */
     fetch (callback) {
         var self = this;
-        self.fetchLatest(function () {
-            self.fetchAllGenres(callback);
+        self.fetchLatest(function (ids1) {
+            self.fetchAllGenres(function (ids2) {
+                callback(ids1.concat(ids2));
+            });
         });
     },
     
@@ -48,16 +50,19 @@ module.exports = {
                     throw new Error(err);
                 }
                 else {
-                    callback();
+                    callback(ids);
                 }
             });
         });
     },
     
     fetchAllGenres (callback) {
-        var self = this, gs = Genres.get();
+        var self = this, gs = Genre.get(), ids = [];
         (function p(i) {
-            i < gs.length ? self.fetchGenre(gs[i], () => p(i + 1)) : callback();
+            i < gs.length ? self.fetchGenre(gs[i], (gids) => {
+                ids = ids.concat(gids);
+                p(i + 1);
+            }) : callback(ids);
         })(0);
     },
     
@@ -73,9 +78,22 @@ module.exports = {
                     throw new Error(err);
                 }
                 else {
-                    callback();
+                    callback(ids);
                 }
             });
+        });
+    },
+    
+    getAll (callback) {
+        Hots.find({}, {
+            "fields": { "dmk_id": 1 }
+        }).toArray(function (err, ids) {
+            if (err) {
+                throw err;
+            }
+            else {
+                callback(ids.map((obj) => obj["dmk_id"]));
+            }
         });
     },
     

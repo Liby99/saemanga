@@ -3,27 +3,6 @@ const Mongo = require("keeling-js/lib/mongo");
 const Mangas = Mongo.db.collection("manga");
 const Cartoonmad = require("./cartoonmad");
 
-/**
- * Manga Schema
- *  {
- *      _id: <ObjectId>,
- *      update_time: <Time>,
- *      dmk_id: <Int>,
- *      dmk_id_gen: <String>,
- *      dmk_id_web: <String>,
- *      books: [ <Int> ],
- *      episodes: [ <Int> ],
- *      info: {
- *          title: <String>,
- *          author: <String>,
- *          description: <String>,
- *          ended: <Boolean>,
- *          genre_dir: <String>,
- *          tags: [ <String> ]
- *      }
- *  }
- */
-
 module.exports = {
     
     REFRESH_TIME: 30, // In Minutes
@@ -33,7 +12,7 @@ module.exports = {
         Mangas.find({
             "ended": false
         }, {
-            "sort": { "update_time": 1 }
+            "sort": { "update_date": 1 }
         }).toArray(function (err, mangas) {
             if (err) {
                 throw new Error(err);
@@ -47,7 +26,7 @@ module.exports = {
                         var dmkId = oi["dmk_id"];
                         Cartoonmad.getMangaInfo(dmkId, function (ni) {
                             if (oi.episodes.length < ni.episodes.length) {
-                                ni["update_time"] = new Date();
+                                ni["update_date"] = new Date();
                                 Mangas.update({
                                     "dmk_id": dmkId
                                 }, ni, function (err) {
@@ -85,7 +64,7 @@ module.exports = {
     
     fetch (dmkId, callback) {
         Cartoonmad.getMangaInfo(dmkId, function (manga) {
-            manga["update_time"] = new Date();
+            manga["update_date"] = new Date();
             Mangas.update({
                 "dmk_id": dmkId
             }, manga, {
@@ -103,6 +82,17 @@ module.exports = {
     
     get (dmkId, callback) {
         Mangas.findOne({ "dmk_id": dmkId }, function (err, manga) {
+            if (err) {
+                throw new Error(err);
+            }
+            else {
+                callback(manga);
+            }
+        });
+    },
+    
+    getByObjId (mangaId, callback) {
+        Manga.findOne({ "_id": ObjectId(mangaId) }, function (err, manga) {
             if (err) {
                 throw new Error(err);
             }
