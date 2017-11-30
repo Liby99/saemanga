@@ -6,9 +6,12 @@
 
 const Request = require("./lib/request");
 const Debug = require("keeling-js/lib/debug");
+const Iconv = require("iconv-lite");
+const Chinese = require("./lib/chinese");
 
 // Url lists
 const BASE_URL = "http://cartoonmad.com/";
+const SEARCH_URL = BASE_URL + "search.html";
 
 // Regex lists
 const COMIC_URL_REG = /^comic\/(\d+)\.html$/;
@@ -90,6 +93,20 @@ function getHotMangaWithUrl(url, success, error) {
     }, function (err) {
         error(new Error("Internet connection error"));
     });
+}
+
+function toByteString(str) {
+    var buf = Iconv.encode(str, "Big5");
+    var hex = buf.toString("hex");
+    var ret = "";
+    for (var i = 0; i < hex.length; i += 2) {
+        ret += "%" + hex[i].toUpperCase() + hex[i + 1].toUpperCase();
+    }
+    return ret;
+}
+
+function getSearchQuery(str) {
+    return "keyword=" + toByteString(str) + "&searchtype=all";
 }
 
 module.exports = {
@@ -190,5 +207,57 @@ module.exports = {
                 }
             }, error);
         }, error);
+    },
+    
+    search (str, callback, error) {
+        
+        // First process the string and get the query arguments
+        str = str.trim();
+        if (!str || !str.trim().length) {
+            error(new Error("Search text cannot be empty"));
+            return;
+        }
+        var query = getSearchQuery(Chinese.traditionalize(str.trim()));
+        
+        // Then go to the search request
+        Request.post(SEARCH_URL, query, function ($) {
+            
+            // First go to the table
+            var $rs = $("body").children("table").children("tbody")
+                      .children("tr").eq(0).children("td").eq(1)
+                      .children("table").children("tbody").children("tr").eq(3)
+                      .children("td").children("table").children("tbody")
+                      .children("tr").eq(1).children("td").eq(1)
+                      .children("table").children("tbody").children("tr");
+            var $r = $rs.eq(2);
+            
+            // Check if
+            if ($r.text().indexOf("抱歉，資料庫找不到該漫畫。") >= 0) {
+                callback([]);
+            }
+            else {
+                var ids = [];
+                for (var i = 4; i < $rs.length; i += 2) {
+                    $r.append($rs.eq(i).children());
+                }
+                $r = $r.children();
+                $r.each(function () {
+                    var href = $(this).children("a").attr("href");
+                    if (href) {
+                        var m = href.match(COMIC_URL_REG);
+                        if (m) {
+                            ids.push(m[1]);
+                        }
+                        else {
+                            error(new Error("Error when matching id"));
+                        }
+                    }
+                    else {
+                        error(new Error("Error finding manga href"));
+                    }
+                });
+                callback(ids);
+            }
+        }, error)
     }
 }

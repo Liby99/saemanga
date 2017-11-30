@@ -39,7 +39,6 @@ module.exports = {
     },
     post: function (url, data, success, error) {
         var parsedUrl = parseUrl(url);
-        console.log(parsedUrl);
         var request = http.request({
             host: parsedUrl.host,
             path: parsedUrl.path,
@@ -55,8 +54,8 @@ module.exports = {
                 bufferhelper.concat(chunk);
             });
             res.on('end', function () {
-                var decoded = iconv.decode(bufferhelper.toBuffer(), "Big5");
-                success(toWindow(decoded));
+                var cbody = iconv.decode(bufferhelper.toBuffer(), "Big5");
+                success(cheerio.load(cbody));
             });
         });
         request.on("error", function (err) {
