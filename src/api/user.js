@@ -77,7 +77,7 @@ module.exports = {
      * the remove is successful
      */
     removeUser (username, callback, error) {
-        Users.remove({
+        Users.removeOne({
             "username": username
         }, function (err, ret) {
             if (err) {
