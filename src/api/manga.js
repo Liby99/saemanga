@@ -1,3 +1,4 @@
+const ObjectID = require("./lib/object_id");
 const Debug = require("keeling-js/lib/debug");
 const Mongo = require("keeling-js/lib/mongo");
 const Mangas = Mongo.db.collection("manga");
@@ -62,19 +63,34 @@ module.exports = {
         })(0);
     },
     
+    /**
+     * Fetch the manga info from scrapper and put the data into database.
+     * If the manga is already in the database then return void,
+     * If not then return the newly inserted <mangaId>
+     * @param  {Number}   dmkId    dmk_id
+     * @param  {Function} callback
+     * @return {void|string}       <mangaId>
+     */
     fetch (dmkId, callback) {
         Cartoonmad.getMangaInfo(dmkId, function (manga) {
             manga["update_date"] = new Date();
-            Mangas.update({
+            Mangas.findOneAndUpdate({
                 "dmk_id": dmkId
             }, manga, {
-                upsert: true
-            }, function (err) {
+                "upsert": true,
+                "new": true
+            }, function (err, ret) {
                 if (err) {
-                    throw new Error(err);
+                    throw err;
                 }
                 else {
-                    callback();
+                    var leo = ret["lastErrorObject"];
+                    if (leo["updatedExisting"]) {
+                        callback(ret["value"]["_id"]);
+                    }
+                    else {
+                        callback(leo["upserted"]);
+                    }
                 }
             });
         });
@@ -92,7 +108,9 @@ module.exports = {
     },
     
     getByObjId (mangaId, callback) {
-        Manga.findOne({ "_id": ObjectId(mangaId) }, function (err, manga) {
+        Mangas.findOne({
+            "_id": ObjectID(mangaId)
+        }, function (err, manga) {
             if (err) {
                 throw new Error(err);
             }
