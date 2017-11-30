@@ -10,9 +10,9 @@ module.exports = {
      * Refresh the database of hot mangas. Basically clean up the database and
      * then fetch all the data and insert them into database
      */
-    refresh (callback) {
+    refresh (callback, error) {
         this.clear();
-        this.fetch(callback);
+        this.fetch(callback, error);
     },
     
     /**
@@ -25,20 +25,20 @@ module.exports = {
     /**
      * Fetch the latest hot manga ids and latest mangas of each genre
      */
-    fetch (callback) {
+    fetch (callback, error) {
         var self = this;
         self.fetchLatest(function (ids1) {
             self.fetchAllGenres(function (ids2) {
                 callback(ids1.concat(ids2));
-            });
-        });
+            }, error);
+        }, error);
     },
     
     /**
      * Fetch the latest manga
      * @param  {Function} callback function when succeeded
      */
-    fetchLatest (callback) {
+    fetchLatest (callback, error) {
         Cartoonmad.getHotManga(function (ids) {
             Hots.insertMany(ids.map((id) => {
                 return {
@@ -47,26 +47,28 @@ module.exports = {
                 }
             }), function (err) {
                 if (err) {
-                    throw new Error(err);
+                    error(err);
                 }
                 else {
                     callback(ids);
                 }
             });
-        });
+        }, error);
     },
     
-    fetchAllGenres (callback) {
+    fetchAllGenres (callback, error) {
         var self = this, gs = Genre.get(), ids = [];
         (function p(i) {
             i < gs.length ? self.fetchGenre(gs[i], (gids) => {
                 ids = ids.concat(gids);
                 p(i + 1);
+            }, (err) => {
+                error(err);
             }) : callback(ids);
         })(0);
     },
     
-    fetchGenre (genre, callback) {
+    fetchGenre (genre, callback, error) {
         Cartoonmad.getHotMangaOfGenre(genre.dir, function (ids) {
             Hots.insertMany(ids.map((id) => {
                 return {
@@ -75,21 +77,21 @@ module.exports = {
                 };
             }), function (err) {
                 if (err) {
-                    throw new Error(err);
+                    error(err);
                 }
                 else {
                     callback(ids);
                 }
             });
-        });
+        }, error);
     },
     
-    getAll (callback) {
+    getAll (callback, error) {
         Hots.find({}, {
             "fields": { "dmk_id": 1 }
         }).toArray(function (err, ids) {
             if (err) {
-                throw err;
+                error(err);
             }
             else {
                 callback(ids.map((obj) => obj["dmk_id"]));
@@ -97,18 +99,18 @@ module.exports = {
         });
     },
     
-    getLatestIds (callback) {
-        this.getIdsOfGenre("", callback);
+    getLatestIds (callback, error) {
+        this.getIdsOfGenre("", callback, error);
     },
     
-    getIdsOfGenre (genreDir, callback) {
+    getIdsOfGenre (genreDir, callback, error) {
         Hots.find({
             "genre_dir": genreDir
         }, {
             "fields": { "dmk_id": 1 }
         }).toArray(function (err, ids) {
             if (err) {
-                throw new Error(err);
+                error(err);
             }
             else {
                 callback(ids.map((obj) => obj["dmk_id"]));
