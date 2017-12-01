@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <title>Saemanga - Home</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <script src="js/lib/jquery.js"></script>
+        <script src="js/lib/template.js"></script>
+        <link rel="stylesheet" href="css/lib/font-awesome.min.css" />
+        <link rel="stylesheet" href="css/color.css" />
+        <link rel="stylesheet" href="css/basic.css" />
+        <link rel="stylesheet" href="css/index.css" />
+    </head>
+    <body>
+        <main>
+            <section id="index-header-section">
+                <center>
+                    <h1>冴え漫画 の 書架</h1>
+                    <p style="margin-top: 0px;">欢迎回来，Liby99</p>
+                </center>
+            </section>
+            <section id="index-search-section">
+                <div id="index-search-form-outer" class="wrapper">
+                    <form id="index-search-form">
+                        <i class="fa fa-search"></i>
+                        <input type="text" name="search" id="index-search" placeholder="请在这里输入想要搜索的漫画" autocomplete="off" />
+                        <div>
+                            <img id="index-search-loading" src="img/loading.svg" hidden="hidden" />
+                            <span id="index-search-clear" hidden="hidden" onclick="Search.clear()">
+                                <i class="fa fa-times"></i>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <div id="index-search-result-outer" class="scroll-x wrapper" hidden="hidden">
+                    <div id="index-search-result">
+                        <!-- Template below fill this result -->
+                    </div>
+                    <template name="search-manga">
+                        <a class="manga search" data-href="data.href">
+                            <div class="cover" data-css="data.css"></div>
+                            <h4 class="title" data-text="data.title"></h4>
+                        </a>
+                    </template>
+                </div>
+            </section>
+            <!-- <section id="index-discover-section">
+                <div id="index-discover-header" class="wrapper">
+                    <h3 id="index-discover-title">发现</h3>
+                    <div id="index-discover-tags-holder" class="scroll-x right">
+                        <div id="index-discover-tags">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="scroll-x">
+                    <div id="index-discover-content">
+                        <div class="manga">
+                            <div class="cover">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section> -->
+        </main>
+        <script src="js/index.js"></script>
+    </body>
+</html>

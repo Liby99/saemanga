@@ -1,0 +1,127 @@
+#index-header-section {
+    padding: 60px 0 30px;
+}
+
+#index-search-form {
+    transition: all 0.1s;
+    height: 40px;
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    display: flex;
+    overflow: hidden;
+    cursor: text;
+}
+
+#index-search-form > i {
+    transition: all 0.1s;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    color: var(--light-text);
+}
+
+#index-search {
+    width: calc(100% - 80px);
+    border: none;
+    background-color: transparent;
+    font-size: 14px;
+}
+
+#index-search-form.focus {
+    border: 1px solid var(--pink);
+}
+
+#index-search-form.focus > i {
+    color: var(--pink);
+}
+
+#index-search-loading {
+    position: absolute;
+    width: 20px;
+    height: 40px;
+    padding: 0 10px;
+}
+
+#index-search-clear {
+    position: absolute;
+    margin-left: 0;
+    margin: 10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--light-text);
+    color: var(--white);
+    text-align: center;
+    cursor: pointer;
+}
+
+#index-search-clear i {
+    font-size: 12px;
+    line-height: 20px;
+}
+
+#index-search-result-outer {
+    padding-top: 0;
+}
+
+#index-search-result {
+    display: flex;
+    flex-flow: nowrap;
+}
+
+.manga {
+    transition: all 0.2s;
+    text-align: center;
+    padding: 20px;
+}
+
+.manga:hover {
+    background-color: var(--hover-white);
+}
+
+.manga:active {
+    background-color: var(--active-white);
+}
+
+.manga .cover {
+    background-position: center;
+    background-size: cover;
+}
+
+.manga .title {
+    
+}
+
+.manga.search .cover {
+    width: 120px;
+    height: 160px;
+}
+
+.manga.search .title {
+    margin-top: 10px;
+}
+
+#index-discover-header {
+    display: flex;
+}
+
+#index-discover-title {
+    width: 50px;
+}
+
+#index-discover-tags-holder {
+    width: calc(100% - 50px);
+}
+
+#index-discover-tags {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+#index-discover-tags .tag {
+    font-size: 10px;
+    height: 20px;
+    line-height: 20px;
+    margin-left: 5px;
+}

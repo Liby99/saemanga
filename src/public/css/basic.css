@@ -1,0 +1,79 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    font-size: 14px;
+}
+
+main {
+    max-width: 768px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+main > section {
+    border-bottom: 1px solid var(--line);
+}
+
+a, a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    color: var(--deep-text);
+}
+
+p, span {
+    color: var(--light-text);
+}
+
+input, textarea {
+    outline: none;
+}
+
+form {
+    margin: 0;
+}
+
+.wrapper {
+    padding: 15px;
+}
+
+.scroll-x {
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.scroll-x.right {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.btn {
+    transition: all 0.1s;
+    padding: 0 10px;
+    color: var(--pink);
+    border: 1px solid var(--pink);
+    border-radius: 2px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.btn.rounded {
+    border-radius: 9999px;
+}
+
+.btn:hover {
+    background-color: var(--pink-10);
+}
+
+.btn:active {
+    background-color: var(--pink-20);
+}
+
+.btn.active {
+    background-color: var(--pink);
+    color: var(--white);
+}
