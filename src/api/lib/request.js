@@ -55,7 +55,7 @@ module.exports = {
             });
             res.on('end', function () {
                 var cbody = iconv.decode(bufferhelper.toBuffer(), "Big5");
-                success(cheerio.load(cbody));
+                success(res, cheerio.load(cbody));
             });
         });
         request.on("error", function (err) {

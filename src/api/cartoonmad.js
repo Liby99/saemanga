@@ -248,11 +248,16 @@ module.exports = {
                 }
                 $r = $r.children();
                 $r.each(function () {
-                    var href = $(this).children("a").attr("href");
+                    $a = $(this).children("a");
+                    var href = $a.attr("href");
+                    var title = $a.text();
                     if (href) {
                         var m = href.match(COMIC_URL_REG);
                         if (m) {
-                            ids.push(m[1]);
+                            ids.push({
+                                "dmk_id": m[1],
+                                "title": title
+                            });
                         }
                         else {
                             error(new Error("Error when matching id"));
