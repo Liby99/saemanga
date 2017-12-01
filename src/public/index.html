@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
         <script src="js/lib/jquery.js"></script>
         <script src="js/lib/template.js"></script>
+        <script src="js/lib/ajax.js"></script>
         <link rel="stylesheet" href="css/lib/font-awesome.min.css" />
         <link rel="stylesheet" href="css/color.css" />
         <link rel="stylesheet" href="css/basic.css" />
@@ -43,26 +44,27 @@
                     </template>
                 </div>
             </section>
-            <!-- <section id="index-discover-section">
+            <section id="index-discover-section">
                 <div id="index-discover-header" class="wrapper">
                     <h3 id="index-discover-title">发现</h3>
                     <div id="index-discover-tags-holder" class="scroll-x right">
                         <div id="index-discover-tags">
                             
                         </div>
+                        <template name="index-discover-tag">
+                            <div class="btn rounded tag" data-id="data.genre_dir" data-text="data.name"></div>
+                        </template>
                     </div>
                 </div>
                 <div class="scroll-x">
                     <div id="index-discover-content">
-                        <div class="manga">
-                            <div class="cover">
-                                
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
-            </section> -->
+            </section>
         </main>
         <script src="js/index.js"></script>
+        <script src="js/search.js"></script>
+        <script src="js/discover.js"></script>
     </body>
 </html>
