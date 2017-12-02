@@ -1,10 +1,17 @@
 const Debug = require("keeling-js/lib/debug");
-const GENRES = require("../data/app/genre.json");
+const GENRES = require("../data/app/genre");
+const GENRES_FULL = require('../data/app/genre_full');
 
 module.exports = {
+    
     get () {
         return GENRES;
     },
+    
+    getFull () {
+        return GENRES_FULL;
+    },
+    
     getNameByDir (dir) {
         var genre = GENRES.filter((obj) => obj.dir == dir)[0];
         return genre && genre["name"];
