@@ -26,7 +26,7 @@ MongoUnitTest({
             (function p(i) {
                 if (i < gs.length) {
                     Cartoonmad.getHotMangaOfGenre(gs[i].dir, function (ids) {
-                        console.log(gs[i].type + ": [" + ids + "]");
+                        console.log(gs[i].name + ": [" + ids + "]");
                         p(i + 1);
                     }, error);
                 }
@@ -52,7 +52,10 @@ MongoUnitTest({
                 console.log("Latest: [" + ids + "]");
                 Hot.getIdsOfGenre("comic04", function (ids) {
                     console.log("Comic 04: [" + ids + "]");
-                    next();
+                    Hot.getIdsOfGenre("comic18", function (ids) {
+                        console.log("Comic 18: [" + ids + "]");
+                        next();
+                    }, error);
                 }, error);
             }, error);
         }
