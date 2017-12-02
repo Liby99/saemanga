@@ -26,7 +26,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p, span {
-    color: var(--light-text);
+    font-size: 12px;
+    color: var(--grey-text);
 }
 
 input, textarea {
@@ -45,8 +46,20 @@ form {
     display: flex;
 }
 
+.flex.nowrap {
+    flex-wrap: nowrap;
+}
+
+.flex.full {
+    flex-grow: 1;
+}
+
 .flex.right {
     flex-direction: row-reverse;
+}
+
+.flex-fill {
+    flex: 1;
 }
 
 .scroll-x {
@@ -54,9 +67,9 @@ form {
     -webkit-overflow-scrolling: touch;
 }
 
-.scroll-x.right {
-    display: flex;
-    flex-direction: row-reverse;
+.hide-scrollbar::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
 }
 
 .btn {
@@ -64,9 +77,33 @@ form {
     padding: 0 10px;
     color: var(--pink);
     border: 1px solid var(--pink);
-    border-radius: 2px;
+    border-radius: 3px;
     white-space: nowrap;
-    cursor: pointer;
+}
+
+.btn.circle {
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.btn.grey {
+    border: 1px solid var(--light-text);
+}
+
+.btn.solid {
+    border: 0;
+    background-color: var(--pink);
+    color: var(--white);
+}
+
+.btn.solid.grey {
+    background-color: var(--light-text);
+}
+
+.btn.full {
+    display: block;
 }
 
 .btn.rounded {

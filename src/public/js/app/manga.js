@@ -80,11 +80,11 @@ class Manga {
     }
     
     getSaemangaUrl () {
-        return "http://saemanga.com/manga.html?id=" + this.data.dmkId;
+        return "/manga.html?id=" + this.data.dmkId;
     }
     
     getSaemangaUrlWithEpisode (epi) {
-        return "http://saemanga.com/manga.html?id=" + this.data.dmkId + "&epi=" + epi;
+        return "/manga.html?id=" + this.data.dmkId + "&epi=" + epi;
     }
     
     lastEpisode () {

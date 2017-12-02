@@ -1,5 +1,5 @@
 .manga {
-    transition: all 0.2s;
+    transition: all 0.15s;
     text-align: center;
     padding: 20px;
 }
@@ -34,12 +34,8 @@
     margin-top: 10px;
 }
 
-#index-header-section {
-    padding: 60px 0 30px;
-}
-
 #index-search-form {
-    transition: all 0.1s;
+    transition: all 0.2s;
     height: 40px;
     border-radius: 20px;
     border: 1px solid var(--line);
@@ -49,7 +45,7 @@
 }
 
 #index-search-form > i {
-    transition: all 0.1s;
+    transition: all 0.2s;
     width: 40px;
     height: 40px;
     line-height: 40px;
@@ -83,39 +79,12 @@
     position: absolute;
     margin-left: 0;
     margin: 10px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: var(--light-text);
-    color: var(--white);
     text-align: center;
-    cursor: pointer;
 }
 
 #index-search-clear i {
     font-size: 12px;
     line-height: 20px;
-}
-
-#index-search-result-outer {
-    padding-top: 0;
-}
-
-#index-search-result {
-    display: flex;
-    flex-flow: nowrap;
-}
-
-#index-discover-header {
-    display: flex;
-}
-
-#index-discover-title {
-    width: 50px;
-}
-
-#index-discover-tags-outer {
-    width: calc(100% - 50px);
 }
 
 #index-discover-tags-toggle {
@@ -170,14 +139,25 @@
     width: calc(100% - 32px);
 }
 
-#index-discover-tags {
-    display: flex;
-    flex-wrap: nowrap;
-}
-
 #index-discover-tags .tag {
     font-size: 12px;
     height: 20px;
     line-height: 20px;
     margin-left: 5px;
+}
+
+#index-following-menu a {
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+}
+
+#index-following-menu a + a {
+    margin-right: 10px;
+}
+
+#index-following-menu a i {
+    line-height: 22px;
+    font-size: 16px;
 }

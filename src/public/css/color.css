@@ -18,7 +18,8 @@
     /* Text colors */
     --deep-text: rgba(44, 44, 44, 1);
     --normal-text: rgba(80, 80, 80, 1);
-    --light-text: rgba(150, 150, 150, 1);
+    --grey-text: rgba(135, 135, 135, 1);
+    --light-text: rgba(170, 170, 170, 1);
     --fade-text: rgba(200, 200, 200, 1);
     --bright-text: rgba(230, 230, 230, 1);
     

@@ -16,10 +16,13 @@
     </head>
     <body>
         <main>
-            <section id="index-header-section">
+            <section id="index-header-section" style="padding: 60px 0 30px">
                 <center>
                     <h1>冴え漫画 の 書架</h1>
-                    <p style="margin-top: 0px;">欢迎回来，Liby99</p>
+                    <p style="margin-top: 0px;">
+                        <span>欢迎回来，</span>
+                        <a href="#">Liby99</a>
+                    </p>
                 </center>
             </section>
             <section id="index-search-section">
@@ -29,28 +32,28 @@
                         <input type="text" name="search" id="index-search" placeholder="请在这里输入想要搜索的漫画" autocomplete="off" />
                         <div>
                             <img id="index-search-loading" src="img/loading.svg" hidden="hidden" />
-                            <span id="index-search-clear" hidden="hidden" onclick="Search.clear()">
+                            <a id="index-search-clear" class="btn circle grey solid" href="#" hidden="hidden" onclick="Search.clear()">
                                 <i class="fa fa-times"></i>
-                            </span>
+                            </a>
                         </div>
                     </form>
                 </div>
-                <div id="index-search-result-outer" class="scroll-x wrapper" hidden="hidden">
-                    <div id="index-search-result">
+                <div id="index-search-result-outer" class="scroll-x wrapper" style="padding-top: 0" hidden="hidden">
+                    <div id="index-search-result" class="flex nowrap">
                         <!-- Template discover-manga -->
                     </div>
                 </div>
             </section>
             <section id="index-discover-section">
-                <div id="index-discover-header" class="wrapper">
-                    <h3 id="index-discover-title">发现</h3>
-                    <div id="index-discover-tags-outer" class="flex right">
+                <div class="flex wrapper">
+                    <h3>发现</h3>
+                    <div class="flex-fill flex right nowrap">
                         <a href="#" id="index-discover-tags-toggle">
                             <i class="fa fa-bars active"></i>
                             <i class="fa fa-angle-left"></i>
                         </a>
-                        <div id="index-discover-tags-holder" class="scroll-x right">
-                            <div id="index-discover-tags">
+                        <div id="index-discover-tags-holder" class="scroll-x flex right hide-scrollbar">
+                            <div id="index-discover-tags" class="flex nowrap">
                                 <!-- Template genre-tag -->
                             </div>
                         </div>
@@ -62,6 +65,27 @@
                     </div>
                 </div>
             </section>
+            <section id="index-following-section">
+                <div class="flex wrapper stick-top">
+                    <h3>正在追的</h3>
+                    <div id="index-following-menu" class="flex-fill flex right">
+                        <a href="#">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fa fa-filter"></i>
+                        </a>
+                    </div>
+                </div>
+            </section>
+            <footer>
+                <center>
+                    <p>
+                        &copy; 2017 Saemanga.com. Developed by Liby.
+                        <a href="#">帮助 & 关于</a>
+                    </p>
+                </center>
+            </footer>
         </main>
         <template name="genre-tag">
             <a class="btn rounded tag" data-id="data.dir" data-text="data.name" href="#"></a>
