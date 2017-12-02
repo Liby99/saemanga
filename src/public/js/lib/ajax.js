@@ -1,4 +1,14 @@
 function ajax(obj) {
+    
+    function error(err) {
+        if (obj.error) {
+            obj.error(err);
+        }
+        else {
+            throw err;
+        }
+    }
+    
     $.ajax({
         url: obj.url,
         type: obj.type,
@@ -10,15 +20,15 @@ function ajax(obj) {
                     obj.success(data["content"]);
                 }
                 else {
-                    throw new Error("Err " + data["code"] + ": " + data["msg"]);
+                    error(new Error(data["code"] + ": " + data["msg"]));
                 }
             }
             catch (err) {
-                obj.error(err);
+                error(err);
             }
         },
         error: function () {
-            obj.error(new Error("Internet Connection Error"));
+            error(new Error("Internet Connection Error"));
         }
     });
 }
