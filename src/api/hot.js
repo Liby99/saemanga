@@ -4,6 +4,12 @@ const Debug = require("keeling-js/lib/debug");
 const Mongo = require("keeling-js/lib/mongo");
 const Hots = Mongo.db.collection("hot");
 
+function unique(a) {
+    return a.sort().filter(function(item, pos, ary) {
+        return !pos || item != ary[pos - 1];
+    });
+}
+
 module.exports = {
     
     /**
@@ -29,7 +35,7 @@ module.exports = {
         var self = this;
         self.fetchLatest(function (ids1) {
             self.fetchAllGenres(function (ids2) {
-                callback(ids1.concat(ids2));
+                callback(unique(ids1.concat(ids2)));
             }, error);
         }, error);
     },

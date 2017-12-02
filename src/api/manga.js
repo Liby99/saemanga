@@ -12,9 +12,9 @@ module.exports = {
     update (callback, error) {
         Mangas.find({
             "ended": false
-        }, {
+        }/*, {
             "sort": { "update_date": 1 }
-        }).toArray(function (err, mangas) {
+        }*/).toArray(function (err, mangas) {
             if (err) {
                 error(err);
             }
@@ -139,6 +139,21 @@ module.exports = {
             }
             else {
                 callback(manga);
+            }
+        });
+    },
+    
+    getAll (dmkIds, callback, error) {
+        Mangas.find({
+            "dmk_id": {
+                $in: dmkIds
+            }
+        }).toArray(function (err, mangas) {
+            if (err) {
+                error(err);
+            }
+            else {
+                callback(mangas);
             }
         });
     }

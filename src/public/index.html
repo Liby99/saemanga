@@ -6,6 +6,9 @@
         <script src="js/lib/jquery.js"></script>
         <script src="js/lib/template.js"></script>
         <script src="js/lib/ajax.js"></script>
+        <script src="js/lib/camel.js"></script>
+        <script src="js/lib/clone.js"></script>
+        <script src="js/app/manga.js"></script>
         <link rel="stylesheet" href="css/lib/font-awesome.min.css" />
         <link rel="stylesheet" href="css/color.css" />
         <link rel="stylesheet" href="css/basic.css" />
@@ -34,35 +37,47 @@
                 </div>
                 <div id="index-search-result-outer" class="scroll-x wrapper" hidden="hidden">
                     <div id="index-search-result">
-                        <!-- Template below fill this result -->
+                        <!-- Template discover-manga -->
                     </div>
-                    <template name="search-manga">
-                        <a class="manga search" data-href="data.href">
-                            <div class="cover" data-css="data.css"></div>
-                            <h4 class="title" data-text="data.title"></h4>
-                        </a>
-                    </template>
                 </div>
             </section>
             <section id="index-discover-section">
                 <div id="index-discover-header" class="wrapper">
                     <h3 id="index-discover-title">发现</h3>
-                    <div id="index-discover-tags-holder" class="scroll-x right">
-                        <div id="index-discover-tags">
-                            
+                    <div id="index-discover-tags-outer" class="flex right">
+                        <a href="#" id="index-discover-tags-toggle">
+                            <i class="fa fa-bars active"></i>
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                        <div id="index-discover-tags-holder" class="scroll-x right">
+                            <div id="index-discover-tags">
+                                <!-- Template genre-tag -->
+                            </div>
                         </div>
-                        <template name="index-discover-tag">
-                            <div class="btn rounded tag" data-id="data.genre_dir" data-text="data.name"></div>
-                        </template>
                     </div>
                 </div>
-                <div class="scroll-x">
-                    <div id="index-discover-content">
-                        
+                <div id="index-discover-outer" class="scroll-x wrapper" style="padding-top: 0">
+                    <div id="index-discover-content" class="flex">
+                        <!-- Template discover-manga -->
                     </div>
                 </div>
             </section>
         </main>
+        <template name="genre-tag">
+            <a class="btn rounded tag" data-id="data.dir" data-text="data.name" href="#"></a>
+        </template>
+        <template name="search-manga">
+            <a class="manga search" data-href="data.href">
+                <div class="cover" data-css="data.css"></div>
+                <h4 class="title" data-text="data.title"></h4>
+            </a>
+        </template>
+        <template name="discover-manga">
+            <a class="manga discover" data-id="data.id" data-href="data.href">
+                <div class="cover" data-css="data.css"></div>
+                <h4 class="title" data-text="data.title"></h4>
+            </a>
+        </template>
         <script src="js/index.js"></script>
         <script src="js/search.js"></script>
         <script src="js/discover.js"></script>

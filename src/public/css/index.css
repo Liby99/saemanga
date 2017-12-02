@@ -1,3 +1,39 @@
+.manga {
+    transition: all 0.2s;
+    text-align: center;
+    padding: 20px;
+}
+
+.manga:hover {
+    background-color: var(--hover-white);
+}
+
+.manga:active {
+    background-color: var(--active-white);
+}
+
+.manga .cover {
+    background-position: center;
+    background-size: cover;
+}
+
+.manga .title {
+    white-space: nowrap;
+    width: 120px;
+    overflow: hidden;
+}
+
+.manga.search .cover,
+.manga.discover .cover {
+    width: 120px;
+    height: 160px;
+}
+
+.manga.search .title,
+.manga.discover .title {
+    margin-top: 10px;
+}
+
 #index-header-section {
     padding: 60px 0 30px;
 }
@@ -70,38 +106,6 @@
     flex-flow: nowrap;
 }
 
-.manga {
-    transition: all 0.2s;
-    text-align: center;
-    padding: 20px;
-}
-
-.manga:hover {
-    background-color: var(--hover-white);
-}
-
-.manga:active {
-    background-color: var(--active-white);
-}
-
-.manga .cover {
-    background-position: center;
-    background-size: cover;
-}
-
-.manga .title {
-    
-}
-
-.manga.search .cover {
-    width: 120px;
-    height: 160px;
-}
-
-.manga.search .title {
-    margin-top: 10px;
-}
-
 #index-discover-header {
     display: flex;
 }
@@ -110,8 +114,60 @@
     width: 50px;
 }
 
-#index-discover-tags-holder {
+#index-discover-tags-outer {
     width: calc(100% - 50px);
+}
+
+#index-discover-tags-toggle {
+    display: block;
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    line-height: 22px;
+}
+
+#index-discover-tags-toggle i {
+    left: 0;
+    top: 0;
+    position: relative;
+    width: inherit;
+    height: inherit;
+    transition: all 0.4s;
+    transform: rotate(0);
+    opacity: 0;
+    line-height: inherit;
+}
+
+#index-discover-tags-toggle i.active {
+    opacity: 1;
+}
+
+#index-discover-tags-toggle i.fa-bars {
+    font-size: 16px;
+}
+
+#index-discover-tags-toggle i.fa-bars.active {
+    transform: rotate(180deg);
+}
+
+#index-discover-tags-toggle i.fa-angle-left {
+    top: 1px;
+    font-size: 20px;
+    margin-top: -22px;
+}
+
+#index-discover-tags-toggle i.fa-angle-left.active {
+    transform: rotate(-180deg);
+}
+
+#index-discover-tags-holder {
+    transition: all 0.4s;
+    width: 0;
+}
+
+#index-discover-tags-holder.active {
+    padding-right: 10px;
+    width: calc(100% - 32px);
 }
 
 #index-discover-tags {
@@ -120,7 +176,7 @@
 }
 
 #index-discover-tags .tag {
-    font-size: 10px;
+    font-size: 12px;
     height: 20px;
     line-height: 20px;
     margin-left: 5px;

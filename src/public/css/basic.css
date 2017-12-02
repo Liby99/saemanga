@@ -17,7 +17,7 @@ main > section {
 
 a, a:visited {
     text-decoration: none;
-    color: inherit;
+    color: var(--pink);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -39,6 +39,14 @@ form {
 
 .wrapper {
     padding: 15px;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex.right {
+    flex-direction: row-reverse;
 }
 
 .scroll-x {

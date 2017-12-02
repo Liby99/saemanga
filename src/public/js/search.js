@@ -55,18 +55,16 @@ var Search = {
     parseResult: function (ids) {
         var self = this;
         return ids.map((obj) => {
+            obj.info = { title: obj.title };
+            var manga = new Manga(obj);
             return {
-                dmkId: obj["dmk_id"],
-                href: "manga.html?id=" + obj["dmk_id"],
+                href: manga.getSaemangaUrl(),
+                title: manga.title(),
                 css: {
-                    "background-image": "url('" + self.getCoverUrl(obj["dmk_id"]) + "')"
-                },
-                title: obj["title"]
-            }
+                    "background-image": "url('" + manga.getCoverUrl() + "')"
+                }
+            };
         });
-    },
-    getCoverUrl: function (dmkId) {
-        return "http://img.cartoonmad.com/ctimg/" + dmkId + ".jpg";
     },
     renderResult: function (data) {
         this.$result.render("search-manga", data);
