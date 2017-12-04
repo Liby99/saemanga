@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    Sidebar.initiate();
     Search.initiate();
     Genre.initiate(function () {
         Discover.initiate();

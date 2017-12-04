@@ -1,7 +1,7 @@
 <html>
     <head>
-        <title>Saemanga - Home</title>
         <%- include("view/header.html") %>
+        <title>Saemanga - Home</title>
         <link rel="stylesheet" href="css/index.css" />
     </head>
     <body>
@@ -29,7 +29,7 @@
                         </div>
                     </form>
                 </div>
-                <div id="index-search-result-outer" class="scroll-x wrapper" style="padding-top: 0" hidden="hidden">
+                <div id="index-search-result-outer" class="scroll x wrapper" style="padding-top: 0" hidden="hidden">
                     <div id="index-search-result" class="flex nowrap">
                         <!-- Template discover-manga -->
                     </div>
@@ -43,7 +43,7 @@
                             <i class="fa fa-bars"></i>
                             <i class="fa fa-angle-right"></i>
                         </a>
-                        <div id="index-discover-tags-holder" class="scroll-x flex right hide-scrollbar">
+                        <div id="index-discover-tags-holder" class="scroll x flex right hide-scrollbar">
                             <div id="index-discover-tags" class="flex nowrap">
                                 <!-- Template genre-tag -->
                             </div>
@@ -51,7 +51,7 @@
                         <!-- <a id="feeling-lucky" class="nowrap btn rounded full" href="#">手气不错</a> -->
                     </div>
                 </div>
-                <div id="index-discover-outer" class="scroll-x wrapper" style="padding-top: 0">
+                <div id="index-discover-outer" class="scroll x wrapper" style="padding-top: 0">
                     <div id="index-discover-content" class="flex">
                         <!-- Template discover-manga -->
                     </div>
@@ -94,11 +94,6 @@
                 <div class="cover" data-css="data.css"></div>
                 <h4 class="title" data-text="data.title"></h4>
             </a>
-        </template>
-        <template name="filter-genre">
-            <li>
-                <a href="#" class="index-filter index-filter-genre" data-id="data.id" data-text="data.name"></a>
-            </li>
         </template>
         <template name="following-manga">
             <a class="manga following" data-id="data.id" data-href="data.href">

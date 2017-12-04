@@ -97,7 +97,6 @@
 
 #feeling-lucky {
     line-height: 21px;
-    font-size: 12px;
     height: 20px;
     margin: 0 10px;
 }
@@ -119,7 +118,6 @@
 }
 
 #index-discover-tags .tag {
-    font-size: 12px;
     height: 20px;
     line-height: 21px;
     margin-left: 5px;
@@ -133,9 +131,4 @@
 
 #index-following-menu a + a {
     margin-right: 10px;
-}
-
-#index-following-menu a span {
-    line-height: 20px;
-    font-size: 12px;
 }

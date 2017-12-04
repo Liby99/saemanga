@@ -32,4 +32,9 @@
     
     /* Background */
     --black-background: rgba(60, 60, 60, 0.8);
+    --white-background: rgba(255, 255, 255, 0.95);
+    
+    /* Masks and Shadows */
+    --mask: rgba(0, 0, 0, 0.3);
+    --shadow: rgba(0, 0, 0, 0.3);
 }

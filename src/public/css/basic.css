@@ -1,3 +1,11 @@
+/**
+ * All the basic styles
+ * @author Liby99
+ * @date 2017/12/04
+ */
+
+/* -------------------- basics -------------------- */
+
 body {
     margin: 0;
     padding: 0;
@@ -11,7 +19,7 @@ main {
     margin: 0 auto;
 }
 
-main > section {
+section:not(.no-border) {
     border-bottom: 1px solid var(--line);
 }
 
@@ -48,6 +56,33 @@ form {
     margin: 0;
 }
 
+/* -------------------- inputs -------------------- */
+
+input, textarea {
+    transition: all 0.2s;
+    display: block;
+    margin-bottom: 5px;
+    width: 100%;
+    padding: 6px 15px;
+    line-height: 18px;
+    background-color: transparent;
+    border: 1px solid var(--line);
+}
+
+input {
+    border-radius: 9999px;
+}
+
+input:hover {
+    border: 1px solid var(--pink-80);
+}
+
+input:focus, input:active {
+    border: 1px solid var(--pink);
+}
+
+/* -------------------- coordinating element styles -------------------- */
+
 .nowrap {
     white-space: nowrap;
 }
@@ -55,6 +90,29 @@ form {
 .wrapper {
     padding: 15px;
 }
+
+.center {
+    text-align: center;
+}
+
+.scroll {
+    -webkit-overflow-scrolling: touch;
+}
+
+.scroll.x {
+    overflow-x: scroll;
+}
+
+.scroll.y {
+    overflow-y: scroll;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+
+/* -------------------- flex related styles -------------------- */
 
 .flex {
     display: flex;
@@ -81,23 +139,20 @@ form {
     flex: 1;
 }
 
-.scroll-x {
-    overflow-x: scroll;
-    -webkit-overflow-scrolling: touch;
-}
+/* -------------------- buttons -------------------- */
 
-.hide-scrollbar::-webkit-scrollbar {
-    width: 0px;
-    height: 0px;
+.btn,
+.select {
+    transition: all 0.2s;
+    color: var(--pink);
+    border: 1px solid var(--pink);
+    border-radius: 4px;
+    white-space: nowrap;
+    font-size: 12px;
 }
 
 .btn {
-    transition: all 0.2s;
     padding: 0 10px;
-    color: var(--pink);
-    border: 1px solid var(--pink);
-    border-radius: 3px;
-    white-space: nowrap;
 }
 
 .btn.circle {
@@ -125,22 +180,115 @@ form {
     display: block;
 }
 
+.btn.big {
+    line-height: 26px;
+}
+
 .btn.rounded {
     border-radius: 9999px;
 }
 
-.btn:hover {
+.btn:hover,
+.select a:hover,
+.zoom a:hover {
     background-color: var(--pink-10);
 }
 
-.btn:active {
+.btn:active,
+.select a:active,
+.zoom a:active {
     background-color: var(--pink-20);
 }
 
-.btn.active {
+.btn.active,
+.select a.active,
+.zoom a.active {
     background-color: var(--pink);
     color: var(--white);
 }
+
+.btn.disabled,
+.select a.disabled,
+.zoom a.disabled {
+    background-color: var(--active-white);
+    color: var(--grey-text);
+    border-color: var(--grey-text);
+    cursor: not-allowed;
+}
+
+.select, .zoom {
+    display: flex;
+    overflow: hidden;
+    align-items: stretch;
+    line-height: 24px;
+}
+
+.select a, .zoom > * {
+    transition: all 0.2s;
+    display: block;
+    text-align: center;
+}
+
+.select a {
+    width: 50%;
+}
+
+.zoom {
+    transition: all 0.2s;
+    color: var(--pink);
+    white-space: nowrap;
+    font-size: 12px;
+}
+
+.zoom .minus, .zoom .plus {
+    width: 16px;
+    padding: 0 4px;
+    font-size: 10px;
+}
+
+.zoom > * > i {
+    line-height: 24px;
+}
+
+.zoom .data {
+    border-top: 1px solid var(--pink);
+    border-bottom: 1px solid var(--pink);
+    flex-grow: 1;
+}
+
+.zoom .data:before {
+    content: "缩放：";
+}
+
+.zoom .data:after {
+    content: "%";
+}
+
+.zoom .minus {
+    border-radius: 4px 0 0 4px;
+    border: 1px solid var(--pink);
+}
+
+.zoom .plus {
+    border-radius: 0 4px 4px 0;
+    border: 1px solid var(--pink);
+}
+
+/* -------------------- shadows -------------------- */
+
+.drop-shadow {
+    box-shadow: 0 0 10px var(--shadow);
+}
+
+.text-drop-shadow {
+    text-shadow: 0 0 5px var(--shadow);
+}
+
+.text-drop-shadow.pink {
+    text-shadow: 0 0 5px var(--pink-50);
+}
+
+/* -------------------- rotation toggle -------------------- */
 
 .fa-rotation-toggle {
     display: inline-flex;
@@ -169,14 +317,23 @@ form {
     margin-left: -22px;
 }
 
-.fa-rotation-toggle.active i,
-.btn.active .fa-rotation-toggle i {
+.fa-rotation-toggle.active i {
     opacity: 0;
     transform: rotate(180deg);
 }
 
-.fa-rotation-toggle.active i + i,
-.btn.active .fa-rotation-toggle i + i {
+.fa-rotation-toggle.active i + i {
     opacity: 1;
     transform: rotate(0);
+}
+
+/* -------------------- mask -------------------- */
+
+.mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--mask);
 }
