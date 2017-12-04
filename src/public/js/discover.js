@@ -16,14 +16,7 @@ var Discover = {
         });
     },
     initiateTags: function () {
-        var self = this;
-        ajax({
-            url: "/ajax/genre?action=get",
-            type: "get",
-            success: function (genres) {
-                self.renderTags(genres);
-            }
-        });
+        this.renderTags(Genre.get());
     },
     loadLatest: function () {
         var self = this;
@@ -47,7 +40,10 @@ var Discover = {
     },
     renderTags: function (gs) {
         var self = this;
-        this.$tags.render("genre-tag", gs);
+        this.$tags.render("genre-tag", gs.map((o) => {
+            o.id = "tag-" + o.dir;
+            return o;
+        }));
         this.$tags.children(".tag").click(function () {
             var $this = $(this);
             if ($this.hasClass("active")) {
@@ -59,7 +55,7 @@ var Discover = {
             }
             else {
                 $this.addClass("active").siblings().removeClass("active");
-                self.loadGenre($this.attr("id"));
+                self.loadGenre($this.attr("id").split("-")[1]);
             }
         });
     },
@@ -68,13 +64,13 @@ var Discover = {
     },
     showTags: function () {
         this.clearTagHolderCss();
-        this.$toggle.children(".fa-angle-left").addClass("active").siblings().removeClass("active");
+        this.$toggle.addClass("active");
         this.$holder.addClass("active");
         this.tagScrollToRight();
     },
     hideTags: function () {
         var self = this;
-        this.$toggle.children(".fa-bars").addClass("active").siblings().removeClass("active");
+        this.$toggle.removeClass("active");
         this.$holder.removeClass("active");
         var $active = this.$tags.children(".tag.active");
         if ($active.length) {

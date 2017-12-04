@@ -1,6 +1,9 @@
 $(document).ready(function () {
     Search.initiate();
-    Discover.initiate();
+    Genre.initiate(function () {
+        Discover.initiate();
+        Follow.initiate();
+    });
 });
 
 // $(".scroll-x").each(function() {

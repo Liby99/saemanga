@@ -23,14 +23,22 @@
     overflow: hidden;
 }
 
+.manga.following {
+    width: 33.3333%;
+}
+
 .manga.search .cover,
 .manga.discover .cover {
     width: 120px;
     height: 160px;
 }
 
-.manga.search .title,
-.manga.discover .title {
+.manga.following .cover {
+    width: 140px;
+    height: 200px;
+}
+
+.manga .title {
     margin-top: 10px;
 }
 
@@ -87,46 +95,16 @@
     line-height: 20px;
 }
 
-#index-discover-tags-toggle {
-    display: block;
-    width: 22px;
-    height: 22px;
-    text-align: center;
-    line-height: 22px;
+#feeling-lucky {
+    line-height: 21px;
+    font-size: 12px;
+    height: 20px;
+    margin: 0 10px;
 }
 
-#index-discover-tags-toggle i {
-    left: 0;
-    top: 0;
-    position: relative;
-    width: inherit;
-    height: inherit;
-    transition: all 0.4s;
-    transform: rotate(0);
-    opacity: 0;
-    line-height: inherit;
-}
-
-#index-discover-tags-toggle i.active {
-    opacity: 1;
-}
-
-#index-discover-tags-toggle i.fa-bars {
-    font-size: 16px;
-}
-
-#index-discover-tags-toggle i.fa-bars.active {
-    transform: rotate(180deg);
-}
-
-#index-discover-tags-toggle i.fa-angle-left {
-    top: 1px;
-    font-size: 20px;
-    margin-top: -22px;
-}
-
-#index-discover-tags-toggle i.fa-angle-left.active {
-    transform: rotate(-180deg);
+#index-discover-tags-toggle .fa-angle-right {
+    margin-top: 0px;
+    font-size: 18px;
 }
 
 #index-discover-tags-holder {
@@ -135,21 +113,21 @@
 }
 
 #index-discover-tags-holder.active {
+    margin-left: 10px;
     padding-right: 10px;
-    width: calc(100% - 32px);
+    width: calc(100% - 42px);
 }
 
 #index-discover-tags .tag {
     font-size: 12px;
     height: 20px;
-    line-height: 20px;
+    line-height: 21px;
     margin-left: 5px;
 }
 
 #index-following-menu a {
-    width: 22px;
+    display: block;
     height: 22px;
-    line-height: 22px;
     text-align: center;
 }
 
@@ -157,7 +135,7 @@
     margin-right: 10px;
 }
 
-#index-following-menu a i {
-    line-height: 22px;
-    font-size: 16px;
+#index-following-menu a span {
+    line-height: 20px;
+    font-size: 12px;
 }
