@@ -1,0 +1,19 @@
+nav {
+    
+}
+
+#sidebar-toggle {
+    position: fixed;
+    display: block;
+    right: 30px;
+    top: 30px;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 18px;
+}
+
+#sidebar-toggle i {
+    line-height: inherit;
+    font-size: inherit;
+}

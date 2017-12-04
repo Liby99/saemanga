@@ -20,6 +20,10 @@ a, a:visited {
     color: var(--pink);
 }
 
+a.black {
+    color: var(--normal-text);
+}
+
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
     color: var(--deep-text);
