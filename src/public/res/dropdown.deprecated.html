@@ -1,4 +1,39 @@
+(function ($) {
 
+    function down($toggle, $list) {
+        $toggle.addClass("on");
+        $list.slideDown(200);
+        var $input = $("<input style='position: absolute; opacity: 0; top: -10000px; left: -10000px' />");
+        $input.on("blur", function () {
+            up($toggle, $list);
+        });
+        $input.appendTo($toggle);
+        $input.focus();
+    }
+
+    function up($toggle, $list) {
+        $toggle.removeClass("on");
+        $list.slideUp(200);
+        $toggle.children("input").remove();
+    }
+
+    function toggle($toggle, $list) {
+        if ($list.css("display") === "none")
+            down($toggle, $list);
+        else
+            up($toggle, $list);
+    }
+    
+    $.fn.dropdown = function () {
+        var $elem = $(this);
+        $elem.width($elem.children(".dropdown-wrap").width());
+        $elem.find(".dropdown-toggle").click(function () {
+            var $toggle = $(this);
+            var $list = $($toggle.attr("for"));
+            toggle($toggle, $list);
+        });
+    };
+})(jQuery);
 
 <a id="index-following-manage" href="#" class="btn rounded flex" style="padding-right: 5px">
     <span>管理</span>
