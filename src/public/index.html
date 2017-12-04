@@ -1,21 +1,11 @@
 <html>
     <head>
         <title>Saemanga - Home</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-        <script src="js/lib/jquery.js"></script>
-        <script src="js/lib/template.js"></script>
-        <script src="js/lib/ajax.js"></script>
-        <script src="js/lib/camel.js"></script>
-        <script src="js/lib/clone.js"></script>
-        <script src="js/lib/dropdown.js"></script>
-        <script src="js/app/manga.js"></script>
-        <link rel="stylesheet" href="css/lib/font-awesome.min.css" />
-        <link rel="stylesheet" href="css/color.css" />
-        <link rel="stylesheet" href="css/basic.css" />
+        <%- include("view/header.html") %>
         <link rel="stylesheet" href="css/index.css" />
     </head>
     <body>
+        <%- include("view/sidebar.html") %>
         <main>
             <section id="index-header-section" style="padding: 60px 0 30px">
                 <center>
@@ -118,6 +108,7 @@
             </a>
         </template>
         <script src="js/index.js"></script>
+        <script src="js/sidebar.js"></script>
         <script src="js/search.js"></script>
         <script src="js/genre.js"></script>
         <script src="js/discover.js"></script>
