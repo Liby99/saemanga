@@ -29,7 +29,7 @@ a, a:visited {
 }
 
 a.black {
-    color: var(--normal-text);
+    color: var(--deep-text);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -191,7 +191,7 @@ button.btn {
 }
 
 .btn.big {
-    line-height: 30px;
+    line-height: 26px;
 }
 
 .btn.rounded {

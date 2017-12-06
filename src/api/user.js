@@ -6,6 +6,34 @@ const ObjectID = require('mongodb').ObjectID;
 const usernameReg = /^[A-Za-z0-9@\-\_\.\#\*]{4,16}$/;
 const passwordReg = /^[A-Za-z0-9@\-\_\.\#\*]{8,32}$/;
 
+function validateUsername(username) {
+    
+    if (!username) {
+        throw new Error("Username not specified");
+        return;
+    }
+    
+    var um = username.match(usernameReg);
+    if (!um) {
+        throw new Error("Username not meeting criteria");
+        return;
+    }
+}
+
+function validatePassword(password) {
+    
+    if (!password) {
+        throw new Error("Password not specified");
+        return;
+    }
+    
+    var pm = password.match(passwordReg);
+    if (!pm) {
+        throw new Error("Password not meeting criteria");
+        return;
+    }
+}
+
 function encrypt(password) {
     return Crypto.genEncrypted(password);
 }
@@ -49,6 +77,19 @@ module.exports = {
         });
     },
     
+    getUser (username, callback, error) {
+        Users.findOne({
+            "username": username
+        }, function (err, user) {
+            if (err) {
+                error(new Error("Error checking user " + username + " existence: " + err));
+            }
+            else {
+                callback(user);
+            }
+        });
+    },
+    
     /**
      * Add a new user to the database specified by username and password. Will
      * abort if the username is already existed.
@@ -59,29 +100,15 @@ module.exports = {
      */
     addUser (username, password, callback, error) {
         
-        // First check if username and password exists
-        if (!username) {
-            error(new Error("Username not specified"));
-            return;
+        try {
+            validateUsername(username);
+            validatePassword(password);
         }
-        if (!password) {
-            error(new Error("Password not specified"));
-            return;
-        }
-        
-        // Then check if username and password meets criteria
-        var um = username.match(usernameReg);
-        if (!um) {
-            error(new Error("Username not meeting criteria"));
-            return;
-        }
-        var pm = password.match(passwordReg);
-        if (!pm) {
-            error(new Error("Password not meeting criteria"));
+        catch (err) {
+            error(err);
             return;
         }
         
-        // Finally start searching for username existence
         Users.findOne({
             "username": username
         }, function (err, user) {
@@ -179,6 +206,16 @@ module.exports = {
      * the login is successful
      */
     login (username, password, callback, error) {
+        
+        try {
+            validateUsername(username);
+            validatePassword(password);
+        }
+        catch (err) {
+            error(err);
+            return;
+        }
+        
         Users.findOne({
             "username": username
         }, function (err, user) {
@@ -188,14 +225,12 @@ module.exports = {
             else {
                 if (user) {
                     if (Crypto.match(password, user.password)) {
-                        var sessionId = ObjectID();
                         Users.update({
                             "username": username
                         }, {
                             $set: {
                                 "last_login": new Date(),
-                                "last_visit": new Date(),
-                                "session_id": sessionId
+                                "last_visit": new Date()
                             },
                             $inc: {
                                 "login_amount": 1,
@@ -206,7 +241,7 @@ module.exports = {
                                 error(new Error("Error when updating user login info: " + err));
                             }
                             else {
-                                callback(true, sessionId.toString());
+                                callback(true);
                             }
                         });
                     }
@@ -216,31 +251,6 @@ module.exports = {
                 }
                 else {
                     callback(false);
-                }
-            }
-        });
-    },
-    
-    getUserWithSessionId: function (sessionId, callback, error) {
-        Users.findOneAndUpdate({
-            "session_id": ObjectID(sessionId)
-        }, {
-            $set: {
-                "last_visit": new Date(),
-            },
-            $inc: {
-                "visit_amount": 1
-            }
-        }, function (err, user) {
-            if (err) {
-                error(new Error("Error when fetching user with session id " + sessionId));
-            }
-            else {
-                if (user) {
-                    callback(user);
-                }
-                else {
-                    error(new Error("User with session id " + sessionId + " not found"));
                 }
             }
         });

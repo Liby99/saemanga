@@ -3,14 +3,11 @@
     $.kajax = function (obj) {
         
         function error(err) {
-            if (obj.error) {
+            if (obj.error)
                 obj.error(err);
-            }
-            else {
-                if (err) {
+            else
+                if (err)
                     throw err;
-                }
-            }
         }
         
         $.ajax({

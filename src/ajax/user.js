@@ -1,16 +1,32 @@
 const User = require("../api/user");
 const Debug = require("keeling-js/lib/debug");
 
-const usernameReg = /^[A-Za-z0-9@\-\_\.\#\*]{4,16}$/;
-const passwordReg = /^[A-Za-z0-9@\-\_\.\#\*]{8,32}$/;
-
 const expires = 1000 * 60 * 60 * 24 * 365;
 
 module.exports = {
+    get: function (req, res) {
+        var username = req.cookies.username;
+        if (username) {
+            User.getUser(username, function (user) {
+                if (user) {
+                    res.success(user);
+                }
+                else {
+                    res.error(3, "对不起，用户未找到");
+                }
+            }, function (err) {
+                res.error(2, err.toString());
+            });
+        }
+        else {
+            res.error(1, "对不起，您尚未登陆");
+        }
+    },
     register: function (req, res) {
         
     },
     login: function (req, res) {
+        var { username, password } = req.body;
         User.login(username, password, function (success) {
             if (success) {
                 res.cookie("username", username, {
@@ -23,7 +39,11 @@ module.exports = {
             }
         }, function (err) {
             Debug.errro(err);
-            res.error(1, err);
+            res.error(1, err.toString());
         });
+    },
+    logout: function (req, res) {
+        res.clearCookie("username");
+        res.success();
     }
 }

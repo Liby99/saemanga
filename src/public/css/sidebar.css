@@ -40,3 +40,23 @@ nav {
 #sidebar-mask {
     z-index: 127;
 }
+
+ul.sidebar-btn-list {
+    padding-left: 0;
+    list-style: none;
+}
+
+ul.sidebar-btn-list li {
+    transition: all 0.2s;
+    font-size: 12px;
+    padding: 0 15px;
+    line-height: 40px;
+}
+
+ul.sidebar-btn-list li:hover {
+    background-color: var(--hover-white);
+}
+
+ul.sidebar-btn-list li:active {
+    background-color: var(--active-white);
+}

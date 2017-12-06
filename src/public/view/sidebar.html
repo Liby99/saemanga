@@ -1,22 +1,36 @@
 <nav>
-    <a id="sidebar-toggle" class="black" href="#">
+    <a id="sidebar-toggle" class="black" href="#" onclick="Sidebar.toggle()">
         <i class="fa-rotation-toggle">
             <i class="fa fa-bars"></i>
             <i class="fa fa-angle-right"></i>
         </i>
     </a>
-    <div id="sidebar-mask" class="mask" hidden="hidden" onclick="Sidebar.hideSidebar()"></div>
+    <div id="sidebar-mask" class="mask" hidden="hidden" onclick="Sidebar.hide()"></div>
     <div id="sidebar" class="scroll y drop-shadow">
         <div class="wrapper">
             <section class="wrapper">
                     <h4>菜单</h4>
             </section>
-            <section class="wrapper">
+            <section class="wrapper" id="sidebar-login-section">
                 <form id="login-form">
                     <input name="username" placeholder="用户名" required />
                     <input name="password" type="password" placeholder="密码" required />
                     <button href="#" class="btn rounded full big center" type="submit">登陆</button>
                 </form>
+            </section>
+            <section id="sidebar-user-section">
+                <ul class="sidebar-btn-list">
+                    <li class="flex">
+                        <a href="#" class="black" class="username">Liby99</a>
+                        <span class="flex-fill flex right">
+                            <a href="#" onclick="User.logout()">登出</a>
+                            <a href="#" id="change-pwd-btn" style="margin-right: 10px">更改密码</a>
+                        </span>
+                    </li>
+                    <li>
+                        帮助 & 关于
+                    </li>
+                </ul>
             </section>
             <section class="wrapper">
                 <div class="select" style="margin-bottom: 10px">

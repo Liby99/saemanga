@@ -12,8 +12,14 @@
                 <center>
                     <h1>冴え漫画 の 書架</h1>
                     <p style="margin-top: 0px;">
-                        <span>欢迎回来，</span>
-                        <a href="#">Liby99</a>
+                        <span hidden="hidden" id="index-header-user">
+                            <span>欢迎回来，</span>
+                            <a href="#" class="username">Liby99</a>
+                        </span>
+                        <span id="index-header-login">
+                            <span>欢迎光临，</span>
+                            <a href="#" onclick="Sidebar.show()">点此登陆</a>
+                        </span>
                     </p>
                 </center>
             </section>
@@ -31,7 +37,7 @@
                     </form>
                 </div>
                 <div id="index-search-result-outer" class="scroll x wrapper" style="padding-top: 0" hidden="hidden">
-                    <div id="index-search-result" class="flex nowrap">
+                    <div id="index-search-result" class="flex">
                         <!-- Template discover-manga -->
                     </div>
                 </div>
@@ -39,13 +45,13 @@
             <section id="index-discover-section">
                 <div class="flex full wrapper">
                     <h3>发现</h3>
-                    <div class="flex-fill flex right nowrap">
+                    <div class="flex-fill flex right">
                         <a href="#" id="index-discover-tags-toggle" class="fa-rotation-toggle">
                             <i class="fa fa-bars"></i>
                             <i class="fa fa-angle-right"></i>
                         </a>
                         <div id="index-discover-tags-holder" class="scroll x flex right hide-scrollbar">
-                            <div id="index-discover-tags" class="flex nowrap">
+                            <div id="index-discover-tags" class="flex">
                                 <!-- Template genre-tag -->
                             </div>
                         </div>
@@ -78,6 +84,136 @@
                 </div>
                 <div id="index-following-list" class="flex wrap wrapper" style="padding-top: 0">
                     <!-- Template following-manga -->
+                    <div>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        v
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        <p>
+                            asdfasdf
+                        </p>
+                        
+                    </div>
                 </div>
             </section>
             <footer>
@@ -111,6 +247,9 @@
                 <h4 class="title" data-text="data.title"></h4>
             </a>
         </template>
+        <script>
+            $("a[href=#]").click((e) => e.preventDefault());
+        </script>
         <script src="js/index.js"></script>
         <script src="js/sidebar.js"></script>
         <script src="js/user.js"></script>
