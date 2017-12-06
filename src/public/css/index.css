@@ -132,3 +132,12 @@
 #index-following-menu a + a {
     margin-right: 10px;
 }
+
+#index-following-header-inner {
+    transition: all 0.2s;
+}
+
+#index-following-header-inner.stick {
+    background-color: var(--white);
+    border-bottom: 1px solid var(--line);
+}

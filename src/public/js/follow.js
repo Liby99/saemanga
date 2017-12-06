@@ -1,7 +1,20 @@
 var Follow = {
+    $header: $("#index-following-header"),
+    $headerInner: $("#index-following-header-inner"),
     $manage: $("#index-following-manage"),
     initiate: function () {
+        this.initiateHeader();
         this.initiateManage();
+    },
+    initiateHeader: function () {
+        var self = this;
+        this.$header.stickToTop();
+        this.$header.on("stick", function () {
+            self.$headerInner.addClass("stick");
+        });
+        this.$header.on("release", function () {
+            self.$headerInner.removeClass("stick");
+        });
     },
     initiateManage: function () {
         var self = this;
