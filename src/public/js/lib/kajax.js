@@ -7,7 +7,9 @@
                 obj.error(err);
             }
             else {
-                throw err;
+                if (err) {
+                    throw err;
+                }
             }
         }
         
@@ -18,15 +20,15 @@
             success: function (result) {
                 try {
                     var data = JSON.parse(result);
-                    if (data && data["code"] == 0) {
-                        obj.success(data["content"]);
-                    }
-                    else {
-                        error(new Error(data["code"] + ": " + data["msg"]));
-                    }
                 }
                 catch (err) {
                     error(err);
+                }
+                if (data && data["code"] == 0) {
+                    obj.success(data["content"]);
+                }
+                else {
+                    error(new Error(data["msg"]));
                 }
             },
             error: function () {

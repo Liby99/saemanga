@@ -7,7 +7,9 @@ module.exports = function (obj) {
                 obj.tests[i](() => {
                     t(i + 1);
                 }, (err) => {
-                    console.error(err);
+                    if (err) {
+                        console.error(err);
+                    }
                     afterTest();
                 });
             }
