@@ -61,12 +61,16 @@ form {
 input, textarea {
     transition: all 0.2s;
     display: block;
-    margin-bottom: 5px;
-    width: 100%;
+    margin-bottom: 10px;
+    width: calc(100% - 32px);
     padding: 6px 15px;
     line-height: 18px;
     background-color: transparent;
     border: 1px solid var(--line);
+}
+
+textarea {
+    border-radius: 4px;
 }
 
 input {
@@ -118,8 +122,8 @@ input:focus, input:active {
     display: flex;
 }
 
-.flex.nowrap {
-    flex-wrap: nowrap;
+.flex.wrap {
+    flex-wrap: wrap;
 }
 
 .flex.full {
@@ -187,7 +191,7 @@ button.btn {
 }
 
 .btn.big {
-    line-height: 26px;
+    line-height: 30px;
 }
 
 .btn.rounded {

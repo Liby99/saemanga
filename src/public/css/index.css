@@ -29,8 +29,16 @@
 
 .manga.search .cover,
 .manga.discover .cover {
+    transition: all 0.2s;
     width: 120px;
     height: 160px;
+}
+
+.manga.search:hover .cover,
+.manga.discover:hover .cover {
+    margin: -5px;
+    width: 130px;
+    height: 170px;
 }
 
 .manga.following .cover {
@@ -39,13 +47,19 @@
 }
 
 .manga .title {
+    transition: all 0.2s;
     margin-top: 10px;
+    margin-bottom: -5px;
 }
+
+/*.manga:hover .title {
+    margin-top: 0px;
+}*/
 
 #index-search-form {
     transition: all 0.2s;
-    height: 40px;
-    border-radius: 20px;
+    height: 36px;
+    border-radius: 18px;
     border: 1px solid var(--line);
     display: flex;
     overflow: hidden;
@@ -54,18 +68,20 @@
 
 #index-search-form > i {
     transition: all 0.2s;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
+    width: 36px;
+    height: inherit;
+    line-height: 36px;
     text-align: center;
     color: var(--light-text);
 }
 
 #index-search {
-    width: calc(100% - 80px);
+    width: calc(100% - 72px);
+    padding: 0;
+    margin: 0;
     border: none;
     background-color: transparent;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 #index-search-form.focus {
@@ -79,14 +95,13 @@
 #index-search-loading {
     position: absolute;
     width: 20px;
-    height: 40px;
-    padding: 0 10px;
+    height: 36px;
+    padding: 0 8px;
 }
 
 #index-search-clear {
     position: absolute;
-    margin-left: 0;
-    margin: 10px;
+    margin: 8px;
     text-align: center;
 }
 
