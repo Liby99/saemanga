@@ -1,9 +1,11 @@
 $(document).ready(function () {
     Sidebar.initiate();
-    Search.initiate();
-    Genre.initiate(function () {
-        Discover.initiate();
-        Follow.initiate();
+    User.initiate(function () {
+        Search.initiate();
+        Genre.initiate(function () {
+            Discover.initiate();
+            Follow.initiate();
+        });
     });
 });
 

@@ -151,6 +151,12 @@ input:focus, input:active {
     font-size: 12px;
 }
 
+button.btn {
+    background-color: transparent;
+    width: 100%;
+    cursor: pointer;
+}
+
 .btn {
     padding: 0 10px;
 }

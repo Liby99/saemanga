@@ -55,7 +55,6 @@ module.exports = {
                         "register_date_time": new Date(),
                         "last_login": new Date(),
                         "visit_amount": 1,
-                        "following": [],
                         "love": []
                     }, function (err, res) {
                         if (err) {
