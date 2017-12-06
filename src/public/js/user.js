@@ -1,6 +1,6 @@
 var User = {
     $form: $("#login-form"),
-    usernameReg: /^[A-Za-z0-9@\-\_\.\#\*]{4,16}$/
+    usernameReg: /^[A-Za-z0-9@\-\_\.\#\*]{4,16}$/,
     passwordReg: /^[A-Za-z0-9@\-\_\.\#\*]{8,32}$/,
     initiate: function (callback) {
         this.initiateForm();
@@ -13,8 +13,8 @@ var User = {
                 var obj = $(this).formData();
                 var um = obj.username.match(self.usernameReg);
                 var pm = obj.password.match(self.passwordReg);
-                ajax({
-                    
+                $.kajax({
+                    url: ""
                 });
             }
             catch (err) {

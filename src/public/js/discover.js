@@ -20,7 +20,7 @@ var Discover = {
     },
     loadLatest: function () {
         var self = this;
-        ajax({
+        $.kajax({
             url: "/ajax/hot?action=get_latest",
             type: "get",
             success: function (mangas) {
@@ -30,7 +30,7 @@ var Discover = {
     },
     loadGenre: function (genreDir) {
         var self = this;
-        ajax({
+        $.kajax({
             url: "/ajax/hot?action=get_genre&genre_dir=" + genreDir,
             type: "get",
             success: function (mangas) {

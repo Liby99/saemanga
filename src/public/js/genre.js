@@ -2,7 +2,7 @@ var Genre = {
     _cache: undefined,
     initiate: function (callback) {
         var self = this;
-        ajax({
+        $.kajax({
             url: "/ajax/genre?action=get",
             type: "get",
             success: function (genres) {

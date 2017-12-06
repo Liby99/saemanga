@@ -105,7 +105,7 @@ var Search = {
     },
     search: function (val) {
         var self = this;
-        ajax({
+        $.kajax({
             url: "/ajax/manga?action=search",
             type: "POST",
             data: { "query": val },
