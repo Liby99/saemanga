@@ -7,7 +7,6 @@ var Discover = {
     initiate: function () {
         this.initiateToggle();
         this.initiateTags();
-        this.loadLatest();
     },
     initiateToggle: function () {
         var self = this;

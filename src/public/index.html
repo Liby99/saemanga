@@ -53,7 +53,6 @@
                         </a>
                         <div id="index-discover-tags-holder" class="scroll x flex right hide-scrollbar">
                             <div id="index-discover-tags" class="flex">
-                                <!-- Template genre-tag -->
                                 <% genres.forEach(function (genre, i) { %>
                                     <a class="btn rounded tag" id="<%= genre.dir %>" href="#"><%= genre.name %></a>
                                 <% }) %>
@@ -64,7 +63,12 @@
                 </div>
                 <div id="index-discover-outer" class="scroll x wrapper" style="padding-top: 0">
                     <div id="index-discover-content" class="flex">
-                        <!-- Template discover-manga -->
+                        <% latests.forEach(function (manga, i) { %>
+                            <a class="manga discover" href="/manga.html?id=<%= manga.dmk_id %>" id="<%= manga._id %>">
+                                <div class="cover" style="background-image: url('http://img.cartoonmad.com/ctimg/<%= manga.dmk_id %>.jpg')"></div>
+                                <h4 class="title"><%= manga.info.title %></h4>
+                            </a>
+                        <% }) %>
                     </div>
                 </div>
             </section>
@@ -135,7 +139,6 @@
         <script src="js/sidebar.js"></script>
         <script src="js/user.js"></script>
         <script src="js/search.js"></script>
-        <script src="js/genre.js"></script>
         <script src="js/discover.js"></script>
         <script src="js/follow.js"></script>
     </body>
