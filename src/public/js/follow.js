@@ -49,7 +49,7 @@ var Follow = {
         
         var self = this;
         
-        $(".manga .cover .remove").click(function (e) {
+        $(".following.manga .cover .remove").click(function (e) {
             var $manga = $(this).parent().parent();
             var id = $manga.attr("id");
             var title = $manga.children("center").children(".title").text();

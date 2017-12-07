@@ -23,6 +23,10 @@ section:not(.no-border) {
     border-bottom: 1px solid var(--line);
 }
 
+::selection {
+    background: var(--pink-20);
+}
+
 a, a:visited {
     text-decoration: none;
     color: var(--pink);
