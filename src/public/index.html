@@ -94,29 +94,39 @@
                 </div>
                 <div id="index-following-list" class="flex wrap wrapper" style="padding-top: 0">
                     <% if (loggedIn) { %>
-                        <% follows.forEach(function (follow, i) { %>
-                            <a class="manga following" id="<%= follow.manga._id %>" href="/manga.html?id=<%= follow.manga.dmk_id %>">
-                                <div class="cover" style="background-image: url('http://img.cartoonmad.com/ctimg/<%= follow.manga.dmk_id %>.jpg')">
-                                    <span class="badge <%= follow.hasUpdate ? '' : 'hidden' %>"></span>
-                                    <span class="remove btn circle grey solid">
-                                        <i class="fa fa-times"></i>
-                                    </span>
-                                </div>
+                        <% if (follows.length) { %>
+                            <% follows.forEach(function (follow, i) { %>
+                                <a class="manga following" id="<%= follow.manga._id %>" href="/manga.html?id=<%= follow.manga.dmk_id %>">
+                                    <div class="cover" style="background-image: url('http://img.cartoonmad.com/ctimg/<%= follow.manga.dmk_id %>.jpg')">
+                                        <span class="badge <%= follow.hasUpdate ? '' : 'hidden' %>"></span>
+                                        <span class="remove btn circle grey solid">
+                                            <i class="fa fa-times"></i>
+                                        </span>
+                                    </div>
+                                    <center>
+                                        <p class="episode">
+                                            已读<%= follow.max_episode %>话，
+                                            <% if (follow.manga.info.ended) { %>
+                                                共<%= follow.manga.lastEpisode %>话，已完结
+                                            <% } else if (follow.hasUpdate) { %>
+                                                更新至<%= follow.manga.lastEpisode %>话
+                                            <% } else { %>
+                                                未更新
+                                            <% } %>
+                                        </p>
+                                        <h4 class="title"><%= follow.manga.info.title %></h4>
+                                    </center>
+                                </a>
+                            <% }) %>
+                        <% } else { %>
+                            <div class="flex-fill wrapper">
                                 <center>
-                                    <p class="episode">
-                                        已读<%= follow.max_episode %>话，
-                                        <% if (follow.manga.info.ended) { %>
-                                            共<%= follow.manga.lastEpisode %>话，已完结
-                                        <% } else if (follow.hasUpdate) { %>
-                                            更新至<%= follow.manga.lastEpisode %>话
-                                        <% } else { %>
-                                            未更新
-                                        <% } %>
+                                    <p>
+                                        您还没有关注任何漫画呢！
                                     </p>
-                                    <h4 class="title"><%= follow.manga.info.title %></h4>
                                 </center>
-                            </a>
-                        <% }) %>
+                            </div>
+                        <% } %>
                     <% } else { %>
                         <div class="flex-fill wrapper">
                             <center>
@@ -141,9 +151,6 @@
                 </center>
             </footer>
         </main>
-        <template name="genre-tag">
-            <a class="btn rounded tag" data-id="data.id" data-text="data.name" href="#"></a>
-        </template>
         <template name="search-manga">
             <a class="manga search" data-href="data.href">
                 <div class="cover" data-css="data.css"></div>
@@ -156,23 +163,15 @@
                 <h4 class="title" data-text="data.title"></h4>
             </a>
         </template>
-        <template name="following-manga">
-            <a class="manga following" data-id="data.id" data-href="data.href">
-                <div class="cover" data-css="data.css">
-                    <span class="badge" data-class="data.hasUpdate ? '' : 'hidden'"></span>
-                    <span class="remove btn circle grey solid">
-                        <i class="fa fa-times"></i>
-                    </span>
-                </div>
+        <template name="no-following-manga">
+            <div class="flex-fill wrapper">
                 <center>
-                    <p class="episode" data-text="data.epi"></p>
-                    <h4 class="title" data-text="data.title"></h4>
+                    <p>
+                        您还没有关注任何漫画呢！
+                    </p>
                 </center>
-            </a>
+            </div>
         </template>
-        <script>
-            $("a[href=#]").click((e) => e.preventDefault());
-        </script>
         <script src="js/index.js"></script>
         <script src="js/sidebar.js"></script>
         <script src="js/user.js"></script>

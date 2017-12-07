@@ -1,5 +1,7 @@
 $(document).ready(function () {
-    Sidebar.initiate();
+    
+    $("a[href=#]").click((e) => e.preventDefault());
+    
     User.initiate();
     Search.initiate();
     Discover.initiate();

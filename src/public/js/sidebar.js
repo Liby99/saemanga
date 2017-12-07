@@ -2,9 +2,6 @@ var Sidebar = {
     $toggle: $("#sidebar-toggle"),
     $mask: $("#sidebar-mask"),
     $sidebar: $("#sidebar"),
-    initiate: function () {
-        
-    },
     toggle: function () {
         if (this.isShowing())
             this.hide();

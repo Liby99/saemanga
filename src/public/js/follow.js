@@ -46,6 +46,9 @@ var Follow = {
         $(".following.manga").removeClass("managing");
     },
     initiateFollows: function () {
+        
+        var self = this;
+        
         $(".manga .cover .remove").click(function (e) {
             var $manga = $(this).parent().parent();
             var id = $manga.attr("id");
@@ -54,12 +57,11 @@ var Follow = {
                 $.kajax({
                     url: "/ajax/manga?action=unfollow",
                     type: "post",
-                    data: {
-                        id: id
-                    },
+                    data: { id: id },
                     success: function () {
                         $manga.fadeOut(500, function () {
                             $(this).remove();
+                            self.checkEmptyFollow();
                         });
                     }
                 })
@@ -72,5 +74,11 @@ var Follow = {
                 "animation-delay": -Math.random() + "s"
             });
         });
+    },
+    checkEmptyFollow: function () {
+        if (this.$mangas.children().length === 0) {
+            this.completeManage();
+            this.$mangas.render("no-following-manga");
+        }
     }
 }
