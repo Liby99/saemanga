@@ -6,14 +6,14 @@
         <link rel="stylesheet" href="css/index.css" />
     </head>
     <body>
-        <%- include("view/sidebar.html", { loggedIn: loggedIn, user: user }) %>
+        <%- include("view/sidebar.html", { user: user }) %>
         <main>
             <section id="index-header-section" style="padding: 60px 0 30px">
                 <center>
                     <h1>冴え漫画 の 書架</h1>
                     <p style="margin-top: 0px;">
                         <span>
-                            <% if (loggedIn) { %>
+                            <% if (user) { %>
                                 <span>欢迎回来，</span>
                                 <a href="#"><%= user.username %></a>
                             <% } else { %>
@@ -39,7 +39,7 @@
                 </div>
                 <div id="index-search-result-outer" class="scroll x wrapper" style="padding-top: 0" hidden="hidden">
                     <div id="index-search-result" class="flex">
-                        <!-- Template discover-manga -->
+                        <!-- Template search-manga -->
                     </div>
                 </div>
             </section>
@@ -54,6 +54,9 @@
                         <div id="index-discover-tags-holder" class="scroll x flex right hide-scrollbar">
                             <div id="index-discover-tags" class="flex">
                                 <!-- Template genre-tag -->
+                                <% genres.forEach(function (genre, i) { %>
+                                    <a class="btn rounded tag" id="<%= genre.dir %>" href="#"><%= genre.name %></a>
+                                <% }) %>
                             </div>
                         </div>
                         <!-- <a id="feeling-lucky" class="nowrap btn rounded full" href="#">手气不错</a> -->

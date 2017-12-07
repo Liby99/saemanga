@@ -1,25 +1,37 @@
+const Genre = require("../api/genre");
 const User = require("../api/user");
 
-module.exports = function (req, res, callback) {
+function getGenre(req, res, callback) {
+    var gs = Genre.get();
+    callback(gs);
+}
+
+function getUser(req, res, hasUser, noUser) {
     var username = req.cookies.username;
     var loggedIn = username != undefined;
     if (loggedIn) {
         User.getUser(username, function (user) {
-            callback({
-                loggedIn: loggedIn,
-                user: user
-            });
+            hasUser(user);
         }, function () {
-            callback({
-                loggedIn: loggedIn,
-                user: {}
-            });
+            res.error(403, "User " + username + " not exists");
         });
     }
     else {
-        callback({
-            loggedIn: loggedIn,
-            user: {}
-        });
+        noUser();
     }
+}
+
+module.exports = function (req, res, callback) {
+    getGenre(req, res, function (gs) {
+        getUser(req, res, function hasUser (user) {
+            callback({
+                genres: gs,
+                user: user
+            });
+        }, function noUser () {
+            callabck({
+                genres: gs
+            });
+        });
+    });
 };

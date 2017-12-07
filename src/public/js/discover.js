@@ -15,9 +15,6 @@ var Discover = {
             self.toggleTags();
         });
     },
-    initiateTags: function () {
-        this.renderTags(Genre.get());
-    },
     loadLatest: function () {
         var self = this;
         $.kajax({
@@ -38,12 +35,8 @@ var Discover = {
             }
         });
     },
-    renderTags: function (gs) {
+    initiateTags: function (gs) {
         var self = this;
-        this.$tags.render("genre-tag", gs.map((o) => {
-            o.id = "tag-" + o.dir;
-            return o;
-        }));
         this.$tags.children(".tag").click(function () {
             var $this = $(this);
             if ($this.hasClass("active")) {
@@ -55,7 +48,7 @@ var Discover = {
             }
             else {
                 $this.addClass("active").siblings().removeClass("active");
-                self.loadGenre($this.attr("id").split("-")[1]);
+                self.loadGenre($this.attr("id"));
             }
         });
     },

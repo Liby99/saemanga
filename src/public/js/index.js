@@ -2,10 +2,10 @@ $(document).ready(function () {
     Sidebar.initiate();
     User.initiate();
     Search.initiate();
-    Genre.initiate(function () {
-        Discover.initiate();
-        Follow.initiate();
-    });
+    // Genre.initiate();
+    Discover.initiate();
+    // Follow.initiate();
+    
 });
 
 // $(".scroll-x").each(function() {
