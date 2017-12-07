@@ -37,5 +37,26 @@ module.exports = {
         }, function (err) {
             res.error(1, err);
         });
+    },
+    "unfollow": function (req, res) {
+        if (req.body.id) {
+            if (req.cookies.username) {
+                User.getUser(req.cookies.username, function (user) {
+                    Follow.unfollow(user["_id"], req.body.id, function () {
+                        res.success();
+                    }, function (err) {
+                        res.error(4, err);
+                    });
+                }, function (err) {
+                    res.error(3, err);
+                });
+            }
+            else {
+                res.error(2, "You have not logged in yet");
+            }
+        }
+        else {
+            res.error(1, "Please specify the id of the manga");
+        }
     }
 }

@@ -80,7 +80,7 @@ var Follow = {
                 var total = "未更新";
             }
             return {
-                id: m.dmkId(),
+                id: m.id(),
                 href: m.getSaemangaUrl(),
                 css: {
                     "background-image": "url('" + m.getCoverUrl() + "')"
@@ -92,7 +92,23 @@ var Follow = {
         }));
         
         $(".manga .cover .remove").click(function (e) {
-            $(this).parent().parent().attr("id");
+            var $manga = $(this).parent().parent();
+            var id = $manga.attr("id");
+            var title = $manga.children("center").children(".title").text();
+            if (confirm("您确定要取消关注 " + title + " 吗？")) {
+                $.kajax({
+                    url: "/ajax/manga?action=unfollow",
+                    type: "post",
+                    data: {
+                        id: id
+                    },
+                    success: function () {
+                        $manga.fadeOut(500, function () {
+                            $(this).remove();
+                        });
+                    }
+                })
+            }
             e.preventDefault();
         });
         
