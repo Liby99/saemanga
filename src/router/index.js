@@ -16,11 +16,11 @@ function getLatestMangas(req, res, callback) {
             callback(mangas);
         }, function (err) {
             Debug.error(err);
-            res.error(500, "Error getting mangas");
+            res.error(500, err);
         });
     }, function (err) {
         Debug.error(err);
-        res.error(500, "Error getting hot manga ids");
+        res.error(500, err);
     });
 }
 
@@ -31,7 +31,7 @@ function getUser(req, res, hasUser, noUser) {
         User.getUser(username, function (user) {
             hasUser(user);
         }, function () {
-            res.error(403, "User " + username + " not exists");
+            res.error(403, "用户 " + username + " 不存在");
         });
     }
     else {

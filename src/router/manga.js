@@ -24,14 +24,14 @@ function getMangaInfo(req, res, callback) {
                 callback(manga);
             }
             else {
-                res.error(404, "Manga not found");
+                res.error(404, "未找到该漫画 " + req.query.id);
             }
         }, function (err) {
             res.error(500, err);
         });
     }
     else {
-        res.error(403, "Please specify manga id");
+        res.error(403, "未指定漫画ID");
     }
 }
 
@@ -43,7 +43,7 @@ function getUser(req, res, hasUser, noUser) {
             }
             else {
                 res.clearCookie("username");
-                res.error(403, "User not found");
+                res.error(403, "用户未找到");
             }
         }, function (err) {
             res.error(500, err);
@@ -73,7 +73,7 @@ function checkEpisode(req, res, user, manga, hasEpisode, noEpisode) {
             hasEpisode();
         }
         else {
-            res.error(404, "Invalid Episode");
+            res.error(404, "该章节不存在");
         }
     }
     else {
