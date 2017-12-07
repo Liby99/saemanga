@@ -1,3 +1,4 @@
 {
-    "ignore": [ "public/*" ]
+    "ignore": [ "public/*" ],
+    "delay": "3000"
 }

@@ -8,6 +8,7 @@ module.exports = {
         Cartoonmad.search(req.body.query, function (ids) {
             res.success(ids);
         }, function (err) {
+            Debug.error(err);
             res.error(1, err);
         });
     },
@@ -25,9 +26,11 @@ module.exports = {
                             return f;
                         }));
                     }, function (err) {
+                        Debug.error(err);
                         res.error(3, err);
                     });
                 }, function (err) {
+                    Debug.error(err);
                     res.error(2, err);
                 });
             }
@@ -35,6 +38,7 @@ module.exports = {
                 res.error(2, "User " + req.cookies.username + " not found");
             }
         }, function (err) {
+            Debug.error(err);
             res.error(1, err);
         });
     },
@@ -45,9 +49,11 @@ module.exports = {
                     Follow.unfollow(user["_id"], req.body.id, function () {
                         res.success();
                     }, function (err) {
+                        Debug.error(err);
                         res.error(4, err);
                     });
                 }, function (err) {
+                    Debug.error(err);
                     res.error(3, err);
                 });
             }
@@ -57,6 +63,24 @@ module.exports = {
         }
         else {
             res.error(1, "Please specify the id of the manga");
+        }
+    },
+    "get_info": function (req, res) {
+        if (req.body.id) {
+            Manga.get(req.body.id, function (manga) {
+                if (manga) {
+                    res.success(manga);
+                }
+                else {
+                    res.error(3, "Manga with id " + req.body.id + " not found");
+                }
+            }, function (err) {
+                Debug.error(error);
+                res.error(2, err);
+            });
+        }
+        else {
+            res.error(1, "Please specityasd fasd asdfa afd");
         }
     }
 }
