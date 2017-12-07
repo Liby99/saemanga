@@ -191,7 +191,12 @@ button.btn {
 }
 
 .btn.big {
+    display: inline-block;
     line-height: 26px;
+}
+
+.btn.large {
+    line-height: 30px;
 }
 
 .btn.rounded {
@@ -202,6 +207,14 @@ button.btn {
 .select a:hover,
 .zoom a:hover {
     background-color: var(--pink-10);
+}
+
+.btn.solid:hover {
+    background-color: var(--hover-pink);
+}
+
+.btn.solid:active {
+    background-color: var(--active-pink);
 }
 
 .btn:active,

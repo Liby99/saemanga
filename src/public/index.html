@@ -2,23 +2,23 @@
 <html>
     <head>
         <%- include("view/header.html") %>
-        <title>Saemanga - Home</title>
+        <title>SaeManga - Home</title>
         <link rel="stylesheet" href="css/index.css" />
     </head>
     <body>
-        <%- include("view/sidebar.html", { user: user }) %>
+        <%- include("view/sidebar.html", { loggedIn: loggedIn, user: user }) %>
         <main>
             <section id="index-header-section" style="padding: 60px 0 30px">
                 <center>
                     <h1>冴え漫画 の 書架</h1>
                     <p style="margin-top: 0px;">
                         <span>
-                            <% if (user) { %>
+                            <% if (loggedIn) { %>
                                 <span>欢迎回来，</span>
                                 <a href="#"><%= user.username %></a>
                             <% } else { %>
                                 <span>欢迎光临，</span>
-                                <a href="#" onclick="Sidebar.show()">点此登陆</a>
+                                <a href="#" onclick="User.showLogin()">点此登陆</a>
                             <% } %>
                         </span>
                     </p>
@@ -78,20 +78,58 @@
                     <div class="content" id="index-following-header-content">
                         <div id="index-following-header-inner" class="flex wrapper">
                             <h3>正在追的</h3>
-                            <div id="index-following-menu" class="flex-fill flex right">
-                                <a id="index-following-manage" href="#" class="btn rounded" style="padding-right: 5px">
-                                    <span>管理</span>
-                                    <i class="fa-rotation-toggle">
-                                        <i class="fa fa-pencil"></i>
-                                        <i class="fa fa-check"></i>
-                                    </i>
-                                </a>
-                            </div>
+                            <% if (loggedIn) { %>
+                                <div id="index-following-menu" class="flex-fill flex right">
+                                    <a id="index-following-manage" href="#" class="btn rounded" style="padding-right: 5px">
+                                        <span>管理</span>
+                                        <i class="fa-rotation-toggle">
+                                            <i class="fa fa-pencil"></i>
+                                            <i class="fa fa-check"></i>
+                                        </i>
+                                    </a>
+                                </div>
+                            <% } %>
                         </div>
                     </div>
                 </div>
                 <div id="index-following-list" class="flex wrap wrapper" style="padding-top: 0">
-                    <!-- Template following-manga -->
+                    <% if (loggedIn) { %>
+                        <% follows.forEach(function (follow, i) { %>
+                            <a class="manga following" id="<%= follow.manga._id %>" href="/manga.html?id=<%= follow.manga.dmk_id %>">
+                                <div class="cover" style="background-image: url('http://img.cartoonmad.com/ctimg/<%= follow.manga.dmk_id %>.jpg')">
+                                    <span class="badge <%= follow.hasUpdate ? '' : 'hidden' %>"></span>
+                                    <span class="remove btn circle grey solid">
+                                        <i class="fa fa-times"></i>
+                                    </span>
+                                </div>
+                                <center>
+                                    <p class="episode">
+                                        已读<%= follow.max_episode %>话，
+                                        <% if (follow.manga.info.ended) { %>
+                                            共<%= follow.manga.lastEpisode %>话，已完结
+                                        <% } else if (follow.hasUpdate) { %>
+                                            更新至<%= follow.manga.lastEpisode %>话
+                                        <% } else { %>
+                                            未更新
+                                        <% } %>
+                                    </p>
+                                    <h4 class="title"><%= follow.manga.info.title %></h4>
+                                </center>
+                            </a>
+                        <% }) %>
+                    <% } else { %>
+                        <div class="flex-fill wrapper">
+                            <center>
+                                <p>
+                                    请登陆已有账户或注册一个新账户以开启储存您正在关注的漫画的功能
+                                </p>
+                                <p>
+                                    <a class="btn solid rounded big" href="#" onclick="User.showLogin()">登录已有账户</a>
+                                    <a class="btn rounded big" href="#" onclick="User.showRegister()">注册新账户</a>
+                                </p>
+                            </center>
+                        </div>
+                    <% } %>
                 </div>
             </section>
             <footer>

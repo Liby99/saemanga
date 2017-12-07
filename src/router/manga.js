@@ -110,7 +110,7 @@ function follow(req, res, user, manga, success) {
     });
 }
 
-function redirectToFirst(req, res, user, manga) {
+function redirectToFirst(req, res, manga) {
     res.redirect("manga.html?id=" + req.query.id + "&epi=" + getFirstEpisode(manga));
 }
 
@@ -149,7 +149,7 @@ module.exports = function (req, res, callback) {
                             renderPageWithUser(req, res, user, manga, callback);
                         });
                     }, function () {
-                        redirectToFirst(req, res, user, manga);
+                        redirectToFirst(req, res, manga);
                     });
                 });
             });
@@ -157,7 +157,7 @@ module.exports = function (req, res, callback) {
             checkEpisode(req, res, undefined, manga, function () {
                 renderPageNoUser(req, res, manga, callback);
             }, function () {
-                redirectToFirst(req, res, user, manga);
+                redirectToFirst(req, res, manga);
             });
         });
     });

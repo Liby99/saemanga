@@ -1,5 +1,6 @@
 const Debug = require("keeling-js/lib/debug");
 const Genre = require("../api/genre");
+const Follow = require("../api/follow");
 const Hot = require("../api/hot");
 const Manga = require("../api/manga");
 const User = require("../api/user");
@@ -38,17 +39,44 @@ function getUser(req, res, hasUser, noUser) {
     }
 }
 
+function getFollows(req, res, user, callback) {
+    Follow.getAllFollow(user["_id"], function (follows) {
+        Manga.getAllByObjId(follows.map((f) => {
+            return f["manga_id"];
+        }), function (mangas) {
+            callback(follows.map((f) => {
+                f.manga = mangas.filter((m) => {
+                    return m["_id"].toString() == f["manga_id"].toString();
+                })[0];
+                f.manga.lastEpisode = f.manga.episodes[f.manga.episodes.length - 1];
+                f.hasUpdate = f.max_episode < f.manga.lastEpisode;
+                return f;
+            }));
+        }, function (err) {
+            res.error(500, err);
+        });
+    }, function (err) {
+        res.error(500, err);
+    });
+}
+
 module.exports = function (req, res, callback) {
     getGenre(req, res, function (genres) {
         getLatestMangas(req, res, function (mangas) {
             getUser(req, res, function hasUser (user) {
-                callback({
-                    genres: genres,
-                    latests: mangas,
-                    user: user
+                getFollows(req, res, user, function (follows) {
+                    callback({
+                        genres: genres,
+                        latests: mangas,
+                        loggedIn: true,
+                        user: user,
+                        follows: follows
+                    });
                 });
             }, function noUser () {
-                callabck({
+                callback({
+                    loggedIn: false,
+                    user: {},
                     genres: genres,
                     latests: mangas
                 });

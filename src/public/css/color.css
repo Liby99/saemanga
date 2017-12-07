@@ -11,6 +11,9 @@
     --pink-90: rgba(237, 104, 149, 0.9);
     --pink: rgba(237, 104, 149, 1);
     
+    --hover-pink: rgba(222, 92, 136, 1);
+    --active-pink: rgba(209, 83, 125, 1);
+    
     --red: red;
     
     /* Elem B & W Styles */
