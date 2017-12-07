@@ -156,5 +156,20 @@ module.exports = {
                 callback(mangas);
             }
         });
+    },
+    
+    getAllByObjId (mangaIds, callback, error) {
+        Mangas.find({
+            "_id": {
+                $in: mangaIds
+            }
+        }).toArray(function (err, mangas) {
+            if (err) {
+                error(err);
+            }
+            else {
+                callback(mangas);
+            }
+        });
     }
 }

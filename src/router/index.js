@@ -1,19 +1,25 @@
 const User = require("../api/user");
 
-module.exports = function (req, res, cb) {
+module.exports = function (req, res, callback) {
     var username = req.cookies.username;
     var loggedIn = username != undefined;
     if (loggedIn) {
         User.getUser(username, function (user) {
-            cb({
+            callback({
                 loggedIn: loggedIn,
                 user: user
             });
         }, function () {
-            cb({ loggedIn: loggedIn });
+            callback({
+                loggedIn: loggedIn,
+                user: {}
+            });
         });
     }
     else {
-        cb({ loggedIn: loggedIn });
+        callback({
+            loggedIn: loggedIn,
+            user: {}
+        });
     }
 };

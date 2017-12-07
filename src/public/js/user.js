@@ -116,5 +116,8 @@ var User = {
                 }
             });
         }
+    },
+    hasLoggedIn: function () {
+        return window.cookie.get("username") != undefined;
     }
 }

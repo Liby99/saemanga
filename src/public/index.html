@@ -68,7 +68,7 @@
             <section id="index-following-section">
                 <div id="index-following-header" class="stick-top">
                     <div class="placeholder"></div>
-                    <div class="content">
+                    <div class="content" id="index-following-header-content">
                         <div id="index-following-header-inner" class="flex wrapper">
                             <h3>正在追的</h3>
                             <div id="index-following-menu" class="flex-fill flex right">
@@ -85,135 +85,6 @@
                 </div>
                 <div id="index-following-list" class="flex wrap wrapper" style="padding-top: 0">
                     <!-- Template following-manga -->
-                    <div>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        <p>
-                            asdfasdf
-                        </p>
-                        
-                    </div>
                 </div>
             </section>
             <footer>
@@ -242,9 +113,16 @@
         </template>
         <template name="following-manga">
             <a class="manga following" data-id="data.id" data-href="data.href">
-                <div class="cover" data-css="data.css"></div>
-                <p data-text="data."></p>
-                <h4 class="title" data-text="data.title"></h4>
+                <div class="cover" data-css="data.css">
+                    <span class="badge" data-class="data.hasUpdate ? '' : 'hidden'"></span>
+                    <span class="remove btn circle grey solid drop-shadow">
+                        <i class="fa fa-times"></i>
+                    </span>
+                </div>
+                <center>
+                    <p class="episode" data-text="data.epi"></p>
+                    <h4 class="title" data-text="data.title"></h4>
+                </center>
             </a>
         </template>
         <script>

@@ -136,6 +136,7 @@ module.exports = {
                         "manga_id": mangaId
                     }, {
                         $set: {
+                            "update_date": new Date(),
                             "current_episode": episode,
                             "max_episode": maxEpisode,
                             "up_to_date": isUpToDate
