@@ -14,7 +14,7 @@
         "nodemon": "^1.12.5"
     },
     "scripts": {
-        "dev-start": "nodemon saemanga.js",
+        "dev": "nodemon --config data/nodemon.json saemanga.js",
         "start": "node saemanga.js",
         "create-entry": "cp node_modules/keeling-js/entry.js ./app.js"
     },
