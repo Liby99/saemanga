@@ -6,19 +6,20 @@
         <link rel="stylesheet" href="css/index.css" />
     </head>
     <body>
-        <%- include("view/sidebar.html") %>
+        <%- include("view/sidebar.html", { loggedIn: loggedIn, user: user }) %>
         <main>
             <section id="index-header-section" style="padding: 60px 0 30px">
                 <center>
                     <h1>冴え漫画 の 書架</h1>
                     <p style="margin-top: 0px;">
-                        <span hidden="hidden" id="index-header-user">
-                            <span>欢迎回来，</span>
-                            <a href="#" class="username">Liby99</a>
-                        </span>
-                        <span id="index-header-login">
-                            <span>欢迎光临，</span>
-                            <a href="#" onclick="Sidebar.show()">点此登陆</a>
+                        <span>
+                            <% if (loggedIn) { %>
+                                <span>欢迎回来，</span>
+                                <a href="#"><%= user.username %></a>
+                            <% } else { %>
+                                <span>欢迎光临，</span>
+                                <a href="#" onclick="Sidebar.show()">点此登陆</a>
+                            <% } %>
                         </span>
                     </p>
                 </center>
@@ -115,7 +116,6 @@
                         <p>
                             asdfasdf
                         </p>
-                        v
                         <p>
                             asdfasdf
                         </p>

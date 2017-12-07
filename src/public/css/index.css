@@ -34,12 +34,12 @@
     height: 160px;
 }
 
-.manga.search:hover .cover,
+/*.manga.search:hover .cover,
 .manga.discover:hover .cover {
     margin: -5px;
     width: 130px;
     height: 170px;
-}
+}*/
 
 .manga.following .cover {
     width: 140px;

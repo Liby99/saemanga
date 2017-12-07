@@ -1,11 +1,10 @@
 $(document).ready(function () {
     Sidebar.initiate();
-    User.initiate(function () {
-        Search.initiate();
-        Genre.initiate(function () {
-            Discover.initiate();
-            Follow.initiate();
-        });
+    User.initiate();
+    Search.initiate();
+    Genre.initiate(function () {
+        Discover.initiate();
+        Follow.initiate();
     });
 });
 

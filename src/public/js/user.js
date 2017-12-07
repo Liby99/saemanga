@@ -11,11 +11,8 @@ var User = {
     $loginForm: $("#login-form"),
     usernameReg: /^[A-Za-z0-9@\-\_\.\#\*]{4,16}$/,
     passwordReg: /^[A-Za-z0-9@\-\_\.\#\*]{8,32}$/,
-    initiate: function (callback) {
+    initiate: function () {
         this.initiateForm();
-        this.initiateUser(function () {
-            callback();
-        });
     },
     initiateForm: function () {
         var self = this;
@@ -24,56 +21,56 @@ var User = {
             return false;
         });
     },
-    initiateUser: function (callback) {
-        var self = this;
-        var username = window.cookie.get("username");
-        if (username) {
-            this.username = username;
-            this.logged = true;
-            $.kajax({
-                url: "/ajax/user?action=get",
-                type: "post",
-                data: { username: username },
-                success: function (user) {
-                    self.showUser(user);
-                    callback();
-                },
-                error: function (err) {
-                    self.showLogin();
-                    callback();
-                }
-            });
-        }
-        else {
-            self.showLogin();
-            callback();
-        }
-    },
-    showUser: function (user) {
-        this.showUserElems(user);
-        this.hideLoginElems();
-    },
-    showLogin: function () {
-        this.showLoginElems();
-        this.hideUserElems();
-    },
-    showUserElems: function (user) {
-        for (var i = 0; i < this.userElems.length; i++)
-            this.userElems[i].show();
-        this.$username.text(user.username);
-    },
-    hideUserElems: function () {
-        for (var i = 0; i < this.userElems.length; i++)
-            this.userElems[i].hide();
-    },
-    showLoginElems: function () {
-        for (var i = 0; i < this.loginElems.length; i++)
-            this.loginElems[i].show();
-    },
-    hideLoginElems: function () {
-        for (var i = 0; i < this.loginElems.length; i++)
-            this.loginElems[i].hide();
-    },
+    // initiateUser: function (callback) {
+    //     var self = this;
+    //     var username = window.cookie.get("username");
+    //     if (username) {
+    //         this.username = username;
+    //         this.logged = true;
+    //         $.kajax({
+    //             url: "/ajax/user?action=get",
+    //             type: "post",
+    //             data: { username: username },
+    //             success: function (user) {
+    //                 self.showUser(user);
+    //                 callback();
+    //             },
+    //             error: function (err) {
+    //                 self.showLogin();
+    //                 callback();
+    //             }
+    //         });
+    //     }
+    //     else {
+    //         self.showLogin();
+    //         callback();
+    //     }
+    // },
+    // showUser: function (user) {
+    //     this.showUserElems(user);
+    //     this.hideLoginElems();
+    // },
+    // showLogin: function () {
+    //     this.showLoginElems();
+    //     this.hideUserElems();
+    // },
+    // showUserElems: function (user) {
+    //     for (var i = 0; i < this.userElems.length; i++)
+    //         this.userElems[i].show();
+    //     this.$username.text(user.username);
+    // },
+    // hideUserElems: function () {
+    //     for (var i = 0; i < this.userElems.length; i++)
+    //         this.userElems[i].hide();
+    // },
+    // showLoginElems: function () {
+    //     for (var i = 0; i < this.loginElems.length; i++)
+    //         this.loginElems[i].show();
+    // },
+    // hideLoginElems: function () {
+    //     for (var i = 0; i < this.loginElems.length; i++)
+    //         this.loginElems[i].hide();
+    // },
     login: function ($form) {
         try {
             var obj = $form.formData();
