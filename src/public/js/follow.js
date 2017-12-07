@@ -78,7 +78,7 @@ var Follow = {
     checkEmptyFollow: function () {
         if (this.$mangas.children().length === 0) {
             this.completeManage();
-            this.$mangas.render("no-following-manga");
+            this.$mangas.render("not-following-manga");
         }
     }
 }

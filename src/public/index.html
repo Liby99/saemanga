@@ -6,7 +6,11 @@
         <link rel="stylesheet" href="css/index.css" />
     </head>
     <body>
+        
+        <!-- Sidebar Nav -->
         <%- include("view/sidebar.html", { loggedIn: loggedIn, user: user }) %>
+        
+        <!-- Main Page -->
         <main>
             <section id="index-header-section" style="padding: 60px 0 30px">
                 <center>
@@ -146,32 +150,25 @@
                 <center class="wrapper">
                     <p>
                         &copy; 2017 Saemanga.com. Developed by Liby.
-                        <a href="#">帮助 & 关于</a>
+                        <a href="#" onclick="$.panel.show('about')">帮助 &amp; 关于</a>
                     </p>
                 </center>
             </footer>
         </main>
-        <template name="search-manga">
-            <a class="manga search" data-href="data.href">
-                <div class="cover" data-css="data.css"></div>
-                <h4 class="title" data-text="data.title"></h4>
-            </a>
-        </template>
-        <template name="discover-manga">
-            <a class="manga discover" data-id="data.id" data-href="data.href">
-                <div class="cover" data-css="data.css"></div>
-                <h4 class="title" data-text="data.title"></h4>
-            </a>
-        </template>
-        <template name="no-following-manga">
-            <div class="flex-fill wrapper">
-                <center>
-                    <p>
-                        您还没有关注任何漫画呢！
-                    </p>
-                </center>
-            </div>
-        </template>
+        
+        <!-- Panels -->
+        <%- include("view/panels/about.html") %>
+        <%- include("view/panels/register.html") %>
+        
+        <!-- templates -->
+        <%- include("view/templates/discover_manga.html") %>
+        <%- include("view/templates/search_manga.html") %>
+        <%- include("view/templates/not_following_manga.html") %>
+        
+        <!-- Library load after page -->
+        <script src="js/lib/panel.js"></script>
+        
+        <!-- Scripts load after page -->
         <script src="js/index.js"></script>
         <script src="js/sidebar.js"></script>
         <script src="js/user.js"></script>

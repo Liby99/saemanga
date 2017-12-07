@@ -1,0 +1,36 @@
+.panel-mask {
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.panel-scroll {
+    transition: all 0.2s;
+    padding: 0;
+}
+
+.panel.active .panel-scroll {
+    padding: 100px 0;
+}
+
+.panel-outer {
+    max-width: 768px;
+    width: calc(100% - 20px);
+    margin: 0 auto;
+    background-color: var(--white);
+    border-radius: 5px;
+    box-shadow: 0 0 10px var(--shadow);
+}
+
+.panel-head {
+    padding: 20px;
+    border-bottom: 1px solid var(--line);
+}
+
+.panel-head a i {
+    line-height: 22px;
+    color: var(--deep-text);
+}
+
+.panel-body {
+    padding: 20px;
+}
