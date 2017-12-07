@@ -37,20 +37,13 @@ var Follow = {
         this.$manage.addClass("active");
         this.$manage.children("span").text("完成");
         this.$manage.children("i").addClass("active");
-        $(".following.manga").each(function () {
-            $(this).addClass("managing")
-            $(this).children(".cover").css({
-                "animation-delay": -Math.random() + "s"
-            });
-        });
+        $(".following.manga").addClass("managing");
     },
     completeManage: function () {
         this.$manage.removeClass("active");
         this.$manage.children("span").text("管理");
         this.$manage.children("i").removeClass("active");
-        $(".following.manga").each(function () {
-            $(this).removeClass("managing");
-        });
+        $(".following.manga").removeClass("managing");
     },
     initiateFollows: function () {
         if (User.hasLoggedIn()) {
