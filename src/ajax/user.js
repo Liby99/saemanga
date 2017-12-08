@@ -4,7 +4,7 @@ const Debug = require("keeling-js/lib/debug");
 const expires = 1000 * 60 * 60 * 24 * 365;
 
 module.exports = {
-    get: function (req, res) {
+    "get": function (req, res) {
         var username = req.cookies.username;
         if (username) {
             User.getUser(username, function (user) {
@@ -22,7 +22,7 @@ module.exports = {
             res.error(1, "对不起，您尚未登陆");
         }
     },
-    register: function (req, res) {
+    "register": function (req, res) {
         var { username, password } = req.body;
         User.addUser(username, password, function (userId) {
             res.cookie("username", username, {
@@ -33,7 +33,7 @@ module.exports = {
             res.error(1, err);
         });
     },
-    login: function (req, res) {
+    "login": function (req, res) {
         var { username, password } = req.body;
         User.login(username, password, function (success) {
             if (success) {
@@ -50,8 +50,22 @@ module.exports = {
             res.error(1, err);
         });
     },
-    logout: function (req, res) {
+    "logout": function (req, res) {
         res.clearCookie("username");
         res.success();
+    },
+    "change_password": function (req, res) {
+        var { oldpwd, newpwd } = req.body;
+        var username = req.cookies.username;
+        User.changePassword(username, oldpwd, newpwd, function (success) {
+            if (success) {
+                res.success();
+            }
+            else {
+                res.error(2, "原密码不符");
+            }
+        }, function (err) {
+            res.error(1, err);
+        });
     }
 }

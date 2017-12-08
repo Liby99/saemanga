@@ -165,6 +165,16 @@ module.exports = {
      * password is success or not.
      */
     changePassword (username, oldPassword, newPassword, callback, error) {
+        
+        try {
+            validatePassword(oldPassword);
+            validatePassword(newPassword);
+        }
+        catch (err) {
+            error(err);
+            return;
+        }
+        
         Users.findOne({
             "username": username
         }, function (err, user) {
