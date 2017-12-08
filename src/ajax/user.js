@@ -15,7 +15,7 @@ module.exports = {
                     res.error(3, "对不起，用户未找到");
                 }
             }, function (err) {
-                res.error(2, err.toString());
+                res.error(2, err);
             });
         }
         else {
@@ -23,7 +23,15 @@ module.exports = {
         }
     },
     register: function (req, res) {
-        
+        var { username, password } = req.body;
+        User.addUser(username, password, function (userId) {
+            res.cookie("username", username, {
+                expires: new Date(Date.now() + expires)
+            });
+            res.success();
+        }, function (err) {
+            res.error(1, err);
+        });
     },
     login: function (req, res) {
         var { username, password } = req.body;
@@ -39,7 +47,7 @@ module.exports = {
             }
         }, function (err) {
             Debug.errro(err);
-            res.error(1, err.toString());
+            res.error(1, err);
         });
     },
     logout: function (req, res) {
