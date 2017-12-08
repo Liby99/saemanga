@@ -10,7 +10,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 main {
@@ -60,6 +60,14 @@ form {
     margin: 0;
 }
 
+blockquote {
+    border-left: 2px solid var(--pink);
+    background-color: var(--pink-10);
+    padding: 10px 15px;
+    margin: 15px 0;
+    color: var(--pink);
+}
+
 /* -------------------- inputs -------------------- */
 
 input, textarea {
@@ -97,6 +105,14 @@ input:focus, input:active {
 
 .wrapper {
     padding: 15px;
+}
+
+.wrapper.no-top {
+    padding-top: 0;
+}
+
+.wrapper.no-bottom {
+    padding-bottom: 0;
 }
 
 .center {

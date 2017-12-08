@@ -35,6 +35,13 @@
         }
     }
     
+    function resize($holder) {
+        if ($holder.hasClass("stick")) {
+            var $c = $holder.children(".content");
+            $c.css({ width: $holder.width() });
+        }
+    }
+    
     $.fn.stickToTop = function () {
         
         // First cache the holder
@@ -51,6 +58,12 @@
     $(window).scroll(function () {
         for (var i = 0; i < cache.length; i++) {
             refresh(cache[i]);
+        }
+    });
+    
+    $(window).resize(function () {
+        for (var i = 0; i < cache.length; i++) {
+            resize(cache[i]);
         }
     });
 })(jQuery);

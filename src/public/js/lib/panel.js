@@ -1,7 +1,10 @@
 (function ($) {
     
+    var cache = [];
+    
     $(".panel").each(function () {
         
+        cache.push($(this));
         var name = $(this).attr("name");
         
         $(this).find(".panel-mask").css({
@@ -24,12 +27,27 @@
         });
     });
     
+    function showPanel($panel) {
+        $panel.children(".panel-mask").fadeIn(300).addClass("active");
+    }
+    
+    function hidePanel($panel) {
+        $panel.children(".panel-mask").fadeOut(300).removeClass("active");
+    }
+    
+    function hideAll() {
+        for (var i = 0; i < cache.length; i++) {
+            hidePanel(cache[i]);
+        }
+    }
+    
     $.panel = {
         show: function (name) {
-            $(".panel[name=" + name + "]").children(".panel-mask").fadeIn(200).addClass("active");
+            hideAll();
+            showPanel($(".panel[name=" + name + "]"));
         },
         hide: function (name) {
-            $(".panel[name=" + name + "]").children(".panel-mask").fadeOut(200).removeClass("active");
+            hidePanel($(".panel[name=" + name + "]"));
         }
     }
 })(jQuery);

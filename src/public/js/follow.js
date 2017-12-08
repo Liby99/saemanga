@@ -49,7 +49,7 @@ var Follow = {
         
         var self = this;
         
-        this.mixer = mixitup(this.$mangas.attr("id"));
+        this.mixer = mixitup("#" + this.$mangas.attr("id"));
         
         $(".following.manga .cover .remove").click(function (e) {
             var $manga = $(this).parent().parent();

@@ -4,7 +4,7 @@
 }
 
 .panel-scroll {
-    transition: all 0.2s;
+    transition: all 0.3s;
     padding: 0;
 }
 
@@ -33,6 +33,10 @@
 
 .panel-body {
     padding: 20px;
+}
+
+.panel-body h4 {
+    margin-top: 10px;
 }
 
 .panel-body p {

@@ -41,7 +41,7 @@
                         </div>
                     </form>
                 </div>
-                <div id="index-search-result-outer" class="scroll x wrapper" style="padding-top: 0" hidden="hidden">
+                <div id="index-search-result-outer" class="scroll x wrapper no-top" hidden="hidden">
                     <div id="index-search-result" class="flex">
                         <!-- Template search-manga -->
                     </div>
@@ -65,7 +65,7 @@
                         <!-- <a id="feeling-lucky" class="nowrap btn rounded full" href="#">手气不错</a> -->
                     </div>
                 </div>
-                <div id="index-discover-outer" class="scroll x wrapper" style="padding-top: 0">
+                <div id="index-discover-outer" class="scroll x wrapper no-top">
                     <div id="index-discover-content" class="flex">
                         <% latests.forEach(function (manga, i) { %>
                             <a class="manga discover" href="/manga.html?id=<%= manga.dmk_id %>" id="<%= manga._id %>">
@@ -96,7 +96,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="index-following-list" class="flex wrap wrapper" style="padding-top: 0">
+                <div id="index-following-list" class="flex wrap wrapper no-top">
                     <% if (loggedIn) { %>
                         <% if (follows.length) { %>
                             <% follows.forEach(function (follow, i) { %>
@@ -135,7 +135,7 @@
                         <div class="flex-fill wrapper">
                             <center>
                                 <p>
-                                    请登陆已有账户或注册一个新账户以开启储存您正在关注的漫画的功能
+                                    请登陆已有账户或注册一个新账户，以开启<strong>储存您正在关注的漫画的功能</strong>～详情请见<a href="#" onclick="$.panel.show('help')">帮助</a>。
                                 </p>
                                 <p>
                                     <a class="btn solid rounded big" href="#" onclick="User.showLogin()">登录已有账户</a>
