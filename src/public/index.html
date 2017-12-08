@@ -147,18 +147,12 @@
                     <% } %>
                 </div>
             </section>
-            <footer>
-                <center class="wrapper">
-                    <p>
-                        &copy; 2017 Saemanga.com. Developed by Liby.
-                        <a href="#" onclick="$.panel.show('about')">帮助 &amp; 关于</a>
-                    </p>
-                </center>
-            </footer>
+            <%- include("view/footer.html") %>
         </main>
         
         <!-- Panels -->
         <%- include("view/panels/about.html") %>
+        <%- include("view/panels/help.html") %>
         <%- include("view/panels/register.html") %>
         <%- include("view/panels/change_password.html") %>
         
@@ -169,10 +163,6 @@
         
         <!-- Library load after page -->
         <script src="js/lib/panel.js"></script>
-        
-        <script>
-            var mixer = mixitup('#index-following-list');
-        </script>
         
         <!-- Scripts load after page -->
         <script src="js/index.js"></script>

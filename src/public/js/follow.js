@@ -49,6 +49,8 @@ var Follow = {
         
         var self = this;
         
+        this.mixer = mixitup(this.$mangas.attr("id"));
+        
         $(".following.manga .cover .remove").click(function (e) {
             var $manga = $(this).parent().parent();
             var id = $manga.attr("id");
@@ -59,11 +61,11 @@ var Follow = {
                     type: "post",
                     data: { id: id },
                     success: function () {
-                        mixer.remove($manga[0]).then(function () {
+                        self.mixer.remove($manga[0]).then(function () {
                             self.checkEmptyFollow();
                         });
                     }
-                })
+                });
             }
             e.preventDefault();
         });

@@ -197,6 +197,7 @@ button.btn {
 .btn.big {
     display: inline-block;
     line-height: 26px;
+    padding: 0 20px;
 }
 
 .btn.large {
