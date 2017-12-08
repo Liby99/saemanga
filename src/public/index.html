@@ -100,7 +100,7 @@
                     <% if (loggedIn) { %>
                         <% if (follows.length) { %>
                             <% follows.forEach(function (follow, i) { %>
-                                <a class="manga following" id="<%= follow.manga._id %>" href="/manga.html?id=<%= follow.manga.dmk_id %>">
+                                <a class="mix manga following" id="<%= follow.manga._id %>" href="/manga.html?id=<%= follow.manga.dmk_id %>">
                                     <div class="cover" style="background-image: url('http://img.cartoonmad.com/ctimg/<%= follow.manga.dmk_id %>.jpg')">
                                         <span class="badge <%= follow.hasUpdate ? '' : 'hidden' %>"></span>
                                         <span class="remove btn circle grey solid">
@@ -169,6 +169,10 @@
         
         <!-- Library load after page -->
         <script src="js/lib/panel.js"></script>
+        
+        <script>
+            var mixer = mixitup('#index-following-list');
+        </script>
         
         <!-- Scripts load after page -->
         <script src="js/index.js"></script>

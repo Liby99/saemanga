@@ -59,8 +59,7 @@ var Follow = {
                     type: "post",
                     data: { id: id },
                     success: function () {
-                        $manga.fadeOut(500, function () {
-                            $(this).remove();
+                        mixer.remove($manga[0]).then(function () {
                             self.checkEmptyFollow();
                         });
                     }
@@ -78,7 +77,9 @@ var Follow = {
     checkEmptyFollow: function () {
         if (this.$mangas.children().length === 0) {
             this.completeManage();
+            this.$mangas.hide(0);
             this.$mangas.render("not-following-manga");
+            this.$mangas.slideDown(300);
         }
     }
 }
