@@ -19,10 +19,10 @@
                         <span>
                             <% if (loggedIn) { %>
                                 <span>欢迎回来，</span>
-                                <a href="#"><%= user.username %></a>
+                                <a href="javascript:void(0);"><%= user.username %></a>
                             <% } else { %>
                                 <span>欢迎光临，</span>
-                                <a href="#" onclick="User.showLogin()">点此登陆</a>
+                                <a href="javascript:void(0);" onclick="User.showLogin()">点此登陆</a>
                             <% } %>
                         </span>
                     </p>
@@ -35,7 +35,7 @@
                         <input type="text" name="search" id="index-search" placeholder="请在这里输入想要搜索的漫画" autocomplete="off" />
                         <div>
                             <img id="index-search-loading" src="img/loading.svg" hidden="hidden" />
-                            <a id="index-search-clear" class="btn circle grey solid" href="#" hidden="hidden" onclick="Search.clear()">
+                            <a id="index-search-clear" class="btn circle grey solid" href="javascript:void(0);" hidden="hidden" onclick="Search.clear()">
                                 <i class="fa fa-times"></i>
                             </a>
                         </div>
@@ -51,18 +51,18 @@
                 <div class="flex full wrapper">
                     <h3>发现</h3>
                     <div class="flex-fill flex right">
-                        <a href="#" id="index-discover-tags-toggle" class="fa-rotation-toggle">
+                        <a href="javascript:void(0);" id="index-discover-tags-toggle" class="fa-rotation-toggle">
                             <i class="fa fa-bars"></i>
                             <i class="fa fa-angle-right"></i>
                         </a>
                         <div id="index-discover-tags-holder" class="scroll x flex right hide-scrollbar">
                             <div id="index-discover-tags" class="flex">
                                 <% genres.forEach(function (genre, i) { %>
-                                    <a class="btn rounded tag" id="<%= genre.dir %>" href="#"><%= genre.name %></a>
+                                    <a class="btn rounded tag" id="<%= genre.dir %>" href="javascript:void(0);"><%= genre.name %></a>
                                 <% }); %>
                             </div>
                         </div>
-                        <!-- <a id="feeling-lucky" class="nowrap btn rounded full" href="#">手气不错</a> -->
+                        <!-- <a id="feeling-lucky" class="nowrap btn rounded full" href="javascript:void(0);">手气不错</a> -->
                     </div>
                 </div>
                 <div id="index-discover-outer" class="scroll x wrapper no-top">
@@ -84,7 +84,7 @@
                             <h3>正在追的</h3>
                             <% if (loggedIn) { %>
                                 <div id="index-following-menu" class="flex-fill flex right">
-                                    <a id="index-following-manage" href="#" class="btn rounded" style="padding-right: 5px">
+                                    <a id="index-following-manage" href="javascript:void(0);" class="btn rounded" style="padding-right: 5px">
                                         <span>管理</span>
                                         <i class="fa-rotation-toggle">
                                             <i class="fa fa-pencil"></i>
@@ -135,12 +135,12 @@
                         <div class="flex-fill wrapper">
                             <center style="padding: 50px 0">
                                 <p>
-                                    请登陆已有账户或注册一个新账户，以开启<strong>储存您正在关注的漫画的功能</strong>～详情请见<a href="#" onclick="$.panel.show('help')">帮助</a>。
+                                    请登陆已有账户或注册一个新账户，以开启<strong>储存您正在关注的漫画的功能</strong>～详情请见<a href="javascript:void(0);" onclick="$.panel.show('help')">帮助</a>。
                                 </p>
                                 <p>
-                                    <a class="btn solid rounded big" href="#" onclick="User.showLogin()">登录已有账户</a>
+                                    <a class="btn solid rounded big" href="javascript:void(0);" onclick="User.showLogin()">登录已有账户</a>
                                     <span style="margin: 0 5px">或</span>
-                                    <a class="btn rounded big" href="#" onclick="User.showRegister()">注册新账户</a>
+                                    <a class="btn rounded big" href="javascript:void(0);" onclick="User.showRegister()">注册新账户</a>
                                 </p>
                             </center>
                         </div>

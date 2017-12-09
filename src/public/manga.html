@@ -2,7 +2,7 @@
 <html>
     <head>
         <% include("view/header.html"); %>
-        <title>SaeManga - <%= manga.info.title %></title>
+        <title>SaeManga - <%= manga.title() %></title>
         <link rel="stylesheet" href="css/manga.css" />
     </head>
     <body>
@@ -16,8 +16,14 @@
             <section id="manga-header-section">
                 
             </section>
-            <section id="manga-body-section">
+            <section id="manga-body-section" class="no-border">
                 
+            </section>
+            <section id="manga-navigation-section" class="flex">
+                <span class="center flex-fill">
+                    <i class="fa fa-angle-left"></i>
+                    上一话
+                </span>
             </section>
             <% include("view/footer.html"); %>
         </main>

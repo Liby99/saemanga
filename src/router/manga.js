@@ -1,6 +1,9 @@
+const fs = require("fs");
+const path = require("path");
 const User = require("../api/user");
 const Follow = require("../api/follow");
-const Manga = require("../api/manga");
+const MangaAPI = require("../api/manga");
+const Manga = require("../app/manga");
 
 function getFirstEpisode(manga) {
     return manga.books ? manga.books[0] : manga.episodes[0];
@@ -19,7 +22,7 @@ function isValidEpisode(manga, epi) {
 
 function getMangaInfo(req, res, callback) {
     if (req.query.id) {
-        Manga.get(req.query.id, function (manga) {
+        MangaAPI.get(req.query.id, function (manga) {
             if (manga) {
                 callback(manga);
             }
@@ -126,7 +129,7 @@ function renderPage(loggedIn, user, manga, episode, callback) {
     callback({
         loggedIn: loggedIn,
         user: user,
-        manga: manga,
+        manga: new Manga(manga),
         episode: episode
     });
 }

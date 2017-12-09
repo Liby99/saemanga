@@ -4,7 +4,7 @@
             <% include("partials/sidebar_user.html", { user: user }); %>
             <ul class="sidebar-btn-list">
                 <li class="full">
-                    <a href="#" class="black">取消关注该漫画</a>
+                    <a href="Page.unfollow()" class="black">取消关注该漫画</a>
                 </li>
             </ul>
         <% } else { %>
@@ -14,34 +14,34 @@
         <% } %>
         <ul class="sidebar-btn-list">
             <li class="full">
-                <a href="#" class="black">关于该漫画</a>
+                <a href="$.panel.show('info')" class="black">关于该漫画</a>
             </li>
             <li class="full">
                 <a href="index.html" class="black">回到书架</a>
             </li>
         </ul>
     </section>
-    <section>
+    <!-- <section>
         <ul class="sidebar-btn-list" style="padding: 10px 0">
             <li class="full flex">
-                <a href="#" class="black flex-fill center">
+                <a href="javascript:void(0);" class="black flex-fill center">
                     <i class="fa fa-angle-left"></i>
                     上一话
                 </a>
-                <a href="#" class="black flex-fill center">
+                <a href="javascript:void(0);" class="black flex-fill center">
                     下一话
                     <i class="fa fa-angle-right"></i>
                 </a>
             </li>
         </ul>
-    </section>
+    </section> -->
     <% include("partials/sidebar_setting.html"); %>
-    <% if (manga.books) { %>
+    <% if (manga.hasBookList()) { %>
         <section class="wrapper" style="padding-bottom: 5px;">
             <ul class="book-list">
-                <% manga.books.forEach(function (b) { %>
+                <% manga.bookList().forEach(function (b) { %>
                     <li>
-                        <a href="manga.html?id=<%= manga.dmk_id %>&epi=<%= b %>" class="btn <%= b == episode ? 'active' : '' %>">
+                        <a href="<%= manga.getSaemangaUrl(b) %>" class="btn <%= b == episode ? 'active' : '' %>">
                             第 <%= b %> 卷
                         </a>
                     </li>
@@ -51,9 +51,9 @@
     <% } %>
     <section class="wrapper no-border">
         <ul class="episode-list">
-            <% manga.episodes.forEach(function (e) { %>
+            <% manga.episodeList().forEach(function (e) { %>
                 <li>
-                    <a href="manga.html?id=<%= manga.dmk_id %>&epi=<%= e %>" class="btn <%= e == episode ? 'active' : '' %>">
+                    <a href="<%= manga.getSaemangaUrl(e) %>" class="btn <%= e == episode ? 'active' : '' %>">
                         <%= e %>
                     </a>
                 </li>
