@@ -28,3 +28,7 @@
     text-align: center;
     line-height: 20px;
 }
+
+#login-form input {
+    width: 100%;
+}
