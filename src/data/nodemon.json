@@ -1,4 +1,5 @@
 {
-    "ignore": [ "public/*" ],
-    "delay": "3000"
+    "ignore": [],
+    "delay": "3000",
+    "ext": "js json html"
 }
