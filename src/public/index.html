@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%- include("view/header.html") %>
+        <% include("view/header.html"); %>
         <title>SaeManga - Home</title>
         <link rel="stylesheet" href="css/index.css" />
     </head>
     <body>
         
         <!-- Sidebar Nav -->
-        <%- include("view/sidebar.html", { loggedIn: loggedIn, user: user }) %>
+        <% include("view/index_sidebar.html", { loggedIn: loggedIn, user: user }); %>
         
         <!-- Main Page -->
         <main>
@@ -59,7 +59,7 @@
                             <div id="index-discover-tags" class="flex">
                                 <% genres.forEach(function (genre, i) { %>
                                     <a class="btn rounded tag" id="<%= genre.dir %>" href="#"><%= genre.name %></a>
-                                <% }) %>
+                                <% }); %>
                             </div>
                         </div>
                         <!-- <a id="feeling-lucky" class="nowrap btn rounded full" href="#">手气不错</a> -->
@@ -72,7 +72,7 @@
                                 <div class="cover" style="background-image: url('http://img.cartoonmad.com/ctimg/<%= manga.dmk_id %>.jpg')"></div>
                                 <h4 class="title"><%= manga.info.title %></h4>
                             </a>
-                        <% }) %>
+                        <% }); %>
                     </div>
                 </div>
             </section>
@@ -121,7 +121,7 @@
                                         <h4 class="title"><%= follow.manga.info.title %></h4>
                                     </center>
                                 </a>
-                            <% }) %>
+                            <% }); %>
                         <% } else { %>
                             <div class="flex-fill wrapper">
                                 <center>
@@ -133,7 +133,7 @@
                         <% } %>
                     <% } else { %>
                         <div class="flex-fill wrapper">
-                            <center>
+                            <center style="padding: 50px 0">
                                 <p>
                                     请登陆已有账户或注册一个新账户，以开启<strong>储存您正在关注的漫画的功能</strong>～详情请见<a href="#" onclick="$.panel.show('help')">帮助</a>。
                                 </p>
@@ -147,19 +147,19 @@
                     <% } %>
                 </div>
             </section>
-            <%- include("view/footer.html") %>
+            <% include("view/footer.html"); %>
         </main>
         
         <!-- Panels -->
-        <%- include("view/panels/about.html") %>
-        <%- include("view/panels/help.html") %>
-        <%- include("view/panels/register.html") %>
-        <%- include("view/panels/change_password.html") %>
+        <% include("view/panels/about.html"); %>
+        <% include("view/panels/help.html"); %>
+        <% include("view/panels/register.html"); %>
+        <% include("view/panels/change_password.html"); %>
         
         <!-- templates -->
-        <%- include("view/templates/discover_manga.html") %>
-        <%- include("view/templates/search_manga.html") %>
-        <%- include("view/templates/not_following_manga.html") %>
+        <% include("view/templates/discover_manga.html"); %>
+        <% include("view/templates/search_manga.html"); %>
+        <% include("view/templates/not_following_manga.html"); %>
         
         <!-- Library load after page -->
         <script src="js/lib/panel.js"></script>

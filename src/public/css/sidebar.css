@@ -42,6 +42,7 @@ nav {
 }
 
 ul.sidebar-btn-list {
+    margin: 0;
     padding-left: 0;
     list-style: none;
 }
@@ -53,10 +54,29 @@ ul.sidebar-btn-list li {
     line-height: 40px;
 }
 
-ul.sidebar-btn-list li:hover {
+ul.sidebar-btn-list li:not(.full):hover {
     background-color: var(--hover-white);
 }
 
-ul.sidebar-btn-list li:active {
+ul.sidebar-btn-list li:not(.full):active {
+    background-color: var(--active-white);
+}
+
+ul.sidebar-btn-list li.full {
+    padding: 0;
+}
+
+ul.sidebar-btn-list li.full a {
+    transition: all 0.2s;
+    display: block;
+    padding: 0 15px;
+    line-height: 40px;
+}
+
+ul.sidebar-btn-list li.full a:hover {
+    background-color: var(--hover-white);
+}
+
+ul.sidebar-btn-list li.full a:active {
     background-color: var(--active-white);
 }

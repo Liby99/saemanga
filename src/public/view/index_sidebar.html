@@ -1,0 +1,10 @@
+<% include("sidebar.html", { content: () => { %>
+    <section style="padding: 15px 0">
+        <% if (loggedIn) { %>
+            <% include("partials/sidebar_user.html", { user: user }); %>
+        <% } else { %>
+            <% include("partials/sidebar_login.html"); %>
+        <% } %>
+    </section>
+    <% include("partials/sidebar_setting.html"); %>
+<% }}); %>

@@ -1,0 +1,44 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <% include("view/header.html"); %>
+        <title>SaeManga - <%= manga.info.title %></title>
+        <link rel="stylesheet" href="css/manga.css" />
+    </head>
+    <body>
+        <% include("view/manga_sidebar.html", {
+            loggedIn: loggedIn,
+            user: user,
+            manga: manga,
+            episode: episode
+        }); %>
+        <main>
+            <section id="manga-header-section">
+                
+            </section>
+            <section id="manga-body-section">
+                
+            </section>
+            <% include("view/footer.html"); %>
+        </main>
+        
+        <!-- Panels -->
+        <% include("view/panels/about.html"); %>
+        <% include("view/panels/help.html"); %>
+        <% include("view/panels/register.html"); %>
+        <% include("view/panels/change_password.html"); %>
+        
+        <!-- templates -->
+        <% include("view/templates/discover_manga.html"); %>
+        <% include("view/templates/search_manga.html"); %>
+        <% include("view/templates/not_following_manga.html"); %>
+        
+        <!-- Library load after page -->
+        <script src="js/lib/panel.js"></script>
+        
+        <!-- Scripts load after page -->
+        <script src="js/manga.js"></script>
+        <script src="js/sidebar.js"></script>
+        <script src="js/user.js"></script>
+    </body>
+</html>
