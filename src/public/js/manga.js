@@ -45,6 +45,18 @@ var Page = {
                 }
             }
         });
+    },
+    unfollow: function () {
+        if (confirm("您确定要取消关注 " + manga.title() + " 吗？")) {
+            $.kajax({
+                url: "/ajax/manga?action=unfollow",
+                type: "post",
+                data: { id: manga.id() },
+                success: function () {
+                    window.location.href = "index.html";
+                }
+            });
+        }
     }
 };
 
