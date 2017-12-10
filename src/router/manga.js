@@ -27,7 +27,20 @@ function getMangaInfo(req, res, callback) {
                 callback(manga);
             }
             else {
-                res.error(404, "未找到该漫画 " + req.query.id);
+                MangaAPI.fetch(req.query.id, function () {
+                    MangaAPI.get(req.query.id, function (manga) {
+                        if (manga) {
+                            callback(manga);
+                        }
+                        else {
+                            res.error(500, "获取漫画时出错");
+                        }
+                    }, function (err) {
+                        res.error(500, err);
+                    });
+                }, function (err) {
+                    res.error(404, "未找到该漫画 " + req.query.id);
+                });
             }
         }, function (err) {
             res.error(500, err);

@@ -75,12 +75,40 @@ module.exports = {
                     res.error(3, "Manga with id " + req.body.id + " not found");
                 }
             }, function (err) {
-                Debug.error(error);
+                Debug.error(err);
                 res.error(2, err);
             });
         }
         else {
-            res.error(1, "Please specityasd fasd asdfa afd");
+            res.error(1, "Please specify manga id");
+        }
+    },
+    "refresh_manga_info": function (req, res) {
+        if (req.body.id) {
+            Manga.get(req.body.id, function (om) {
+                if (om) {
+                    Cartoonmad.getMangaInfo(req.body.id, function (nm) {
+                        if (nm.dmk_id_gen == om.dmk_id_gen &&
+                            nm.dmk_id_web == om.dmk_id_web) {
+                            req.success(false);
+                        }
+                        else {
+                            
+                        }
+                    }, function (err) {
+                        res.error(4, "Cannot fetch manga with id " + req.body.id);
+                    });
+                }
+                else {
+                    res.error(3, "Manga with id " + req.body.id + " not found");
+                }
+            }, function (err) {
+                Debug.error(err);
+                res.error(2, err);
+            });
+        }
+        else {
+            res.error(1, "Please specify manga id");
         }
     }
 }

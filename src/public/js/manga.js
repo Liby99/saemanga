@@ -32,19 +32,28 @@ var Page = {
         loadImage(1);
     },
     refreshMangaInfo: function () {
-        $.kajax({
-            url: "/ajax/manga?action=refresh_manga_info",
-            type: "post",
-            data: { id: manga.dmkId() },
-            success: (hasChanged) => {
-                if (hasChanged) {
-                    
+        // var self = this;
+        // if (window.cookie.get("change")) {
+            this.alertInfoError();
+        // }
+        // else {
+            $.kajax({
+                url: "/ajax/manga?action=refresh_manga_info",
+                type: "post",
+                data: { id: manga.dmkId() },
+                success: (hasChanged) => {
+                    if (hasChanged) {
+                        window.cookie.set("change", 1);
+                    }
+                    else {
+                        self.alertInfoError();
+                    }
                 }
-                else {
-                    
-                }
-            }
-        });
+            });
+        // }
+    },
+    alertInfoError: function () {
+        alert("对不起，该漫画信息有误，请将问题汇报至管理员");
     },
     unfollow: function () {
         if (confirm("您确定要取消关注 " + manga.title() + " 吗？")) {
