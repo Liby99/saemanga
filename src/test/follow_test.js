@@ -23,10 +23,10 @@ MongoUnitTest({
     tests: [
         
         function (next, error) {
-            console.log("-----Testing Fetching Manga-----");
+            console.log("-----First Get Manga 5827-----");
             var dmkId = 5827;
-            Manga.fetch(dmkId, function (mid) {
-                mangaId = mid;
+            Manga.get(dmkId, function (manga) {
+                mangaId = manga._id;
                 next();
             }, error);
         },

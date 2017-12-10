@@ -38,10 +38,10 @@ MongoUnitTest({
         },
         
         function (next, error) {
-            console.log("-----Testing Fetch-----");
+            console.log("-----Testing Get-----");
             const Manga = require("../api/manga");
-            Manga.fetch(5967, function (id) {
-                console.log(id);
+            Manga.get(5967, function (manga) {
+                console.log(manga);
                 next();
             }, error);
         },
@@ -49,8 +49,8 @@ MongoUnitTest({
         function (next, error) {
             console.log("-----Testing Update-----");
             const Manga = require("../api/manga");
-            Manga.fetch(5967, function (id) {
-                console.log(id);
+            Manga.update(5967, function (manga) {
+                console.log(manga);
                 next();
             }, error);
         }
