@@ -1,77 +1,34 @@
-<!DOCTYPE>
-<html>
-    <head>
-        <% include("view/header.html"); %>
-        <title>SaeManga - <%= manga.title() %></title>
-        <link rel="stylesheet" href="css/manga.css" />
-        <script>
-            const manga = new Manga(<%- JSON.stringify(manga.data) %>);
-            const episode = <%- episode %>;
-        </script>
-    </head>
-    <body>
-        <% include("view/manga_sidebar.html", { loggedIn: loggedIn, user: user, manga: manga, episode: episode }); %>
-        <main>
-            <section id="manga-header-section">
-                <center class="wrapper" style="padding-top: 60px">
-                    <h1>-<%= manga.title() %>-</h1>
-                    <p style="margin-top: 0px">
-                        第 <%= episode %> <%= manga.isBook(episode) ? "卷" : "话" %>
-                    </p>
-                </center>
-            </section>
-            <section id="manga-body-section" class="no-border" style="padding-top: 15px">
-                <!-- The images will go here -->
-            </section>
-            <section id="manga-navigation-section" class="flex" style="padding: 15px 0">
-                <% if (manga.hasPrevEpisode(episode)) { %>
-                    <a href="<%= manga.prevEpisodeUrl(episode) %>" class="black center flex-fill">
-                        <i class="fa fa-angle-left"></i>
-                        上一<%= manga.prevEpisodeType(episode) %>
-                    </a>
-                <% } else { %>
-                    <a href="javascript:void(0)" class="disabled black center flex-fill">
-                        最前一<%= manga.getEpisodeType(episode) %>了哦
-                    </a>
-                <% } %>
-                <a href="index.html" class="black center flex-fill">
-                    返回书架
-                </a>
-                <% if (manga.hasNextEpisode(episode)) { %>
-                    <a href="<%= manga.nextEpisodeUrl(episode) %>" class="black center flex-fill">
-                        下一<%= manga.nextEpisodeType(episode) %>
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                <% } else { %>
-                    <a href="javascript:void(0)" class="disabled black center flex-fill">
-                        最新一<%= manga.getEpisodeType(episode) %>了哦
-                    </a>
-                <% } %>
-            </section>
-            <% include("view/footer.html"); %>
-        </main>
-        
-        <template name="manga-image">
-            <img data-id="data.id" data-src="data.src" />
-        </template>
-        
-        <!-- Panels -->
-        <% include("view/panels/about.html"); %>
-        <% include("view/panels/help.html"); %>
-        <% include("view/panels/register.html"); %>
-        <% include("view/panels/change_password.html"); %>
-        
-        <!-- templates -->
-        <% include("view/templates/discover_manga.html"); %>
-        <% include("view/templates/search_manga.html"); %>
-        <% include("view/templates/not_following_manga.html"); %>
-        
-        <!-- Library load after page -->
-        <script src="js/lib/panel.js"></script>
-        
-        <!-- Scripts load after page -->
-        <script src="js/manga.js"></script>
-        <script src="js/sidebar.js"></script>
-        <script src="js/user.js"></script>
-    </body>
-</html>
+<% include("view/layout.html", { title: () => { %>
+    SaeManga - <%= manga.title() %>
+<% }, header: () => { %>
+    <link rel="stylesheet" href="css/manga.css" />
+    <script>
+        const manga = new Manga(<%- JSON.stringify(manga.data) %>);
+        const episode = <%- episode %>;
+    </script>
+<% }, sidebar: () => { %>
+    <% include("view/manga_sidebar.html", { loggedIn: loggedIn, user: user, manga: manga, episode: episode }); %>
+<% }, main: () => { %>
+    <section id="manga-header-section">
+        <center class="wrapper" style="padding-top: 60px">
+            <h1>-<%= manga.title() %>-</h1>
+            <p style="margin-top: 0px">
+                第 <%= episode %> <%= manga.isBook(episode) ? "卷" : "话" %>
+            </p>
+        </center>
+    </section>
+    <section id="manga-body-section" class="no-border" style="padding-top: 15px">
+        <!-- The images will go here -->
+    </section>
+    <section id="manga-navigation-section" class="flex" style="padding: 15px 0">
+        <% include("view/partials/prev_episode.html", { manga: manga, episode: episode }); %>
+        <a href="index.html" class="black center flex-fill">
+            返回我的书架
+        </a>
+        <% include("view/partials/next_episode.html", { manga: manga, episode: episode }); %>
+    </section>
+<% }, templates: () => { %>
+    <% include("view/templates/manga_image.html"); %>
+<% }, scripts: () => { %>
+    <script src="js/manga.js"></script>
+<% }}); %>

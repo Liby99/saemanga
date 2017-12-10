@@ -1,0 +1,10 @@
+<% if (manga.hasNextEpisode(episode)) { %>
+    <a href="<%= manga.nextEpisodeUrl(episode) %>" class="black center flex-fill">
+        下一<%= manga.nextEpisodeType(episode) %>
+        <i class="fa fa-angle-right"></i>
+    </a>
+<% } else { %>
+    <a href="javascript:void(0)" class="disabled black center flex-fill">
+        最新一<%= manga.getEpisodeType(episode) %>了哦
+    </a>
+<% } %>

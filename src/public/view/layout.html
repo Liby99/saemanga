@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <% include("header.html"); %>
+        <title><%= title %></title>
+        <%- header %>
+    </head>
+    <body>
+        
+        <!-- Sidebar Nav -->
+        <%- sidebar %>
+        
+        <!-- Main Page -->
+        <main>
+            <%- main %>
+            <% include("footer.html"); %>
+        </main>
+        
+        <!-- Panels -->
+        <% include("panels/about.html"); %>
+        <% include("panels/help.html"); %>
+        <% include("panels/register.html"); %>
+        <% include("panels/change_password.html"); %>
+        
+        <!-- templates -->
+        <%- templates %>
+        
+        <!-- Library load after page -->
+        <script src="js/lib/panel.js"></script>
+        <script src="js/sidebar.js"></script>
+        <script src="js/user.js"></script>
+        
+        <!-- Scripts load after page -->
+        <%- scripts %>
+    </body>
+</html>

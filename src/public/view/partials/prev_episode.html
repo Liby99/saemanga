@@ -1,0 +1,10 @@
+<% if (manga.hasPrevEpisode(episode)) { %>
+    <a href="<%= manga.prevEpisodeUrl(episode) %>" class="black center flex-fill">
+        <i class="fa fa-angle-left"></i>
+        上一<%= manga.prevEpisodeType(episode) %>
+    </a>
+<% } else { %>
+    <a href="javascript:void(0)" class="disabled black center flex-fill">
+        最前一<%= manga.getEpisodeType(episode) %>了哦
+    </a>
+<% } %>

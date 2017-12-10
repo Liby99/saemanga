@@ -2,11 +2,6 @@
     <section style="padding: 15px 0">
         <% if (loggedIn) { %>
             <% include("partials/sidebar_user.html", { user: user }); %>
-            <ul class="sidebar-btn-list">
-                <li class="full">
-                    <a href="Page.unfollow()" class="black">取消关注该漫画</a>
-                </li>
-            </ul>
         <% } else { %>
             <section style="padding-bottom: 15px; margin-bottom: 15px;">
                 <% include("partials/sidebar_login.html"); %>
@@ -14,40 +9,27 @@
         <% } %>
         <ul class="sidebar-btn-list">
             <li class="full">
-                <a href="$.panel.show('info')" class="black">关于该漫画</a>
+                <a href="index.html" class="black">返回我的书架</a>
             </li>
             <li class="full">
-                <a href="index.html" class="black">返回书架</a>
+                <a href="javascript:void(0)" onclick="$.panel.show('info')" class="black">关于该漫画</a>
+            </li>
+            <% if (loggedIn) { %>
+                <li class="full">
+                    <a href="javascript:void(0)" onclick="Page.unfollow()" class="black">取消关注该漫画</a>
+                </li>
+            <% } %>
+        </ul>
+    </section>
+    <section>
+        <ul class="sidebar-btn-list" style="padding: 10px 0">
+            <li class="full flex">
+                <% include("partials/prev_episode.html", { manga: manga, episode: episode }); %>
+                <% include("partials/next_episode.html", { manga: manga, episode: episode }); %>
             </li>
         </ul>
     </section>
     <% include("partials/sidebar_setting.html"); %>
-    <section>
-        <ul class="sidebar-btn-list" style="padding: 10px 0">
-            <li class="full flex">
-                <% if (manga.hasPrevEpisode(episode)) { %>
-                    <a href="<%= manga.prevEpisodeUrl(episode) %>" class="black center flex-fill">
-                        <i class="fa fa-angle-left"></i>
-                        上一<%= manga.prevEpisodeType(episode) %>
-                    </a>
-                <% } else { %>
-                    <a href="javascript:void(0)" class="disabled black center flex-fill">
-                        最前一<%= manga.getEpisodeType(episode) %>了哦
-                    </a>
-                <% } %>
-                <% if (manga.hasNextEpisode(episode)) { %>
-                    <a href="<%= manga.nextEpisodeUrl(episode) %>" class="black center flex-fill">
-                        下一<%= manga.nextEpisodeType(episode) %>
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                <% } else { %>
-                    <a href="javascript:void(0)" class="disabled black center flex-fill">
-                        最新一<%= manga.getEpisodeType(episode) %>了哦
-                    </a>
-                <% } %>
-            </li>
-        </ul>
-    </section>
     <% if (manga.hasBookList()) { %>
         <section class="wrapper" style="padding-bottom: 5px;">
             <ul class="book-list">
