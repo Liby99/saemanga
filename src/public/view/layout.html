@@ -1,7 +1,23 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <% include("header.html"); %>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <script src="js/vendor/jquery.min.js"></script>
+        <script src="js/vendor/mixitup.min.js"></script>
+        <script src="js/lib/template.js"></script>
+        <script src="js/lib/kajax.js"></script>
+        <script src="js/lib/stick.js"></script>
+        <script src="js/lib/form.js"></script>
+        <script src="js/lib/cookie.js"></script>
+        <script src="js/lib/camel.js"></script>
+        <script src="js/lib/clone.js"></script>
+        <script src="js/app/manga.js"></script>
+        <link rel="stylesheet" href="css/vendor/font-awesome.min.css" />
+        <link rel="stylesheet" href="css/color.css" />
+        <link rel="stylesheet" href="css/basic.css" />
+        <link rel="stylesheet" href="css/sidebar.css" />
+        <link rel="stylesheet" href="css/panel.css" />
         <title><%= title %></title>
         <%- header %>
     </head>
@@ -13,7 +29,16 @@
         <!-- Main Page -->
         <main>
             <%- main %>
-            <% include("footer.html"); %>
+            <footer>
+                <center class="wrapper">
+                    <p style="margin: 5px">
+                        &copy; 2017 Saemanga.com. Developed by Liby.
+                        <a href="javascript:void(0)" onclick="$.panel.show('help')">帮助</a>
+                        &amp;
+                        <a href="javascript:void(0)" onclick="$.panel.show('about')">关于</a>
+                    </p>
+                </center>
+            </footer>
         </main>
         
         <!-- Panels -->
@@ -27,6 +52,9 @@
         
         <!-- Library load after page -->
         <script src="js/lib/panel.js"></script>
+        <script src="js/lib/select.js"></script>
+        
+        <!-- Global needed js -->
         <script src="js/sidebar.js"></script>
         <script src="js/user.js"></script>
         

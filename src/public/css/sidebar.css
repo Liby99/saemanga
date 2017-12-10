@@ -14,6 +14,24 @@ nav {
     z-index: 129;
 }
 
+nav.left #sidebar-toggle {
+    transition: all 0.4s;
+    left: 20px;
+    right: auto;
+}
+
+nav.left.active #sidebar-toggle {
+    left: 244px;
+}
+
+nav.left #sidebar-toggle .fa-angle-right {
+    transform: rotate(180deg);
+}
+
+nav.left #sidebar-toggle.active .fa-angle-right {
+    transform: rotate(0);
+}
+
 #sidebar-toggle .fa-rotation-toggle {
     margin: 7px;
 }
@@ -33,8 +51,18 @@ nav {
     z-index: 128;
 }
 
+nav.left #sidebar {
+    right: auto;
+    left: -310px;
+}
+
 #sidebar.active {
     right: 0;
+}
+
+nav.left #sidebar.active {
+    right: auto;
+    left: 0;
 }
 
 #sidebar-mask {
@@ -80,11 +108,3 @@ ul.sidebar-btn-list li.full a:hover {
 ul.sidebar-btn-list li.full a:active {
     background-color: var(--active-white);
 }
-
-/*#login-form {
-    display: table;
-}
-
-#login-form input {
-    display: table-cell;
-}*/

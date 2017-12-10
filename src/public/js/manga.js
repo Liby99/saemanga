@@ -70,6 +70,7 @@ var Page = {
 };
 
 $(function () {
+    Sidebar.initiate();
     User.initiate();
     Page.initiate();
 });
