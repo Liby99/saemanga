@@ -81,10 +81,10 @@ ul.sidebar-btn-list li.full a:active {
     background-color: var(--active-white);
 }
 
-#login-form {
+/*#login-form {
     display: table;
 }
 
 #login-form input {
     display: table-cell;
-}
+}*/

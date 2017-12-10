@@ -71,10 +71,13 @@ blockquote {
 /* -------------------- inputs -------------------- */
 
 input, textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     transition: all 0.2s;
     display: block;
     margin-bottom: 10px;
-    width: calc(100% - 32px);
+    width: 100%;
     padding: 6px 15px;
     line-height: 18px;
     background-color: transparent;

@@ -126,11 +126,12 @@ function renderPageNoUser(req, res, manga, callback) {
 }
 
 function renderPage(loggedIn, user, manga, episode, callback) {
+    manga["_id"] = manga["_id"].toString();
     callback({
         loggedIn: loggedIn,
         user: user,
         manga: new Manga(manga),
-        episode: episode
+        episode: parseInt(episode)
     });
 }
 

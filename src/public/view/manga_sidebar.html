@@ -17,25 +17,37 @@
                 <a href="$.panel.show('info')" class="black">关于该漫画</a>
             </li>
             <li class="full">
-                <a href="index.html" class="black">回到书架</a>
+                <a href="index.html" class="black">返回书架</a>
             </li>
         </ul>
     </section>
-    <!-- <section>
+    <% include("partials/sidebar_setting.html"); %>
+    <section>
         <ul class="sidebar-btn-list" style="padding: 10px 0">
             <li class="full flex">
-                <a href="javascript:void(0);" class="black flex-fill center">
-                    <i class="fa fa-angle-left"></i>
-                    上一话
-                </a>
-                <a href="javascript:void(0);" class="black flex-fill center">
-                    下一话
-                    <i class="fa fa-angle-right"></i>
-                </a>
+                <% if (manga.hasPrevEpisode(episode)) { %>
+                    <a href="<%= manga.prevEpisodeUrl(episode) %>" class="black center flex-fill">
+                        <i class="fa fa-angle-left"></i>
+                        上一<%= manga.prevEpisodeType(episode) %>
+                    </a>
+                <% } else { %>
+                    <a href="javascript:void(0)" class="disabled black center flex-fill">
+                        最前一<%= manga.getEpisodeType(episode) %>了哦
+                    </a>
+                <% } %>
+                <% if (manga.hasNextEpisode(episode)) { %>
+                    <a href="<%= manga.nextEpisodeUrl(episode) %>" class="black center flex-fill">
+                        下一<%= manga.nextEpisodeType(episode) %>
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                <% } else { %>
+                    <a href="javascript:void(0)" class="disabled black center flex-fill">
+                        最新一<%= manga.getEpisodeType(episode) %>了哦
+                    </a>
+                <% } %>
             </li>
         </ul>
-    </section> -->
-    <% include("partials/sidebar_setting.html"); %>
+    </section>
     <% if (manga.hasBookList()) { %>
         <section class="wrapper" style="padding-bottom: 5px;">
             <ul class="book-list">

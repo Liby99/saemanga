@@ -29,6 +29,33 @@
     line-height: 20px;
 }
 
-#login-form input {
+#manga-body-section img {
+    display: block;
     width: 100%;
+}
+
+#manga-body-section img + img {
+    margin-top: 10px;
+}
+
+#manga-navigation-section a {
+    transition: all 0.2s;
+    line-height: 60px;
+}
+
+#manga-navigation-section a.disabled {
+    cursor: default;
+}
+
+#manga-navigation-section a:not(.disabled):hover {
+    background-color: var(--hover-white);
+}
+
+#manga-navigation-section a:not(.disabled):active {
+    background-color: var(--active-white);
+}
+
+#manga-navigation-section a i {
+    margin: 0 10px;
+    font-size: 16px;
 }

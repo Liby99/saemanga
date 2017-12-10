@@ -79,6 +79,12 @@ module.exports = class Manga {
         }
     }
     
+    isBook (epi) {
+        if (this.hasBookList())
+            return this.data.books.indexOf(epi) >= 0;
+        return false;
+    }
+    
     episodeList () {
         return this.data.episodes;
     }
@@ -115,6 +121,15 @@ module.exports = class Manga {
         }
         else {
             return this.data.episodes[0];
+        }
+    }
+    
+    getEpisodeType (epi) {
+        if (this.data.books && this.data.books.indexOf(epi) >= 0) {
+            return "卷";
+        }
+        else {
+            return "话";
         }
     }
     
@@ -159,6 +174,14 @@ module.exports = class Manga {
         }
     }
     
+    prevEpisodeUrl (epi) {
+        return this.getSaemangaUrl(this.prevEpisodeOf(epi));
+    }
+    
+    prevEpisodeType (epi) {
+        return this.getEpisodeType(this.prevEpisodeOf(epi));
+    }
+    
     hasNextEpisode (epi) {
         try {
             this.nextEpisodeOf(epi);
@@ -193,5 +216,13 @@ module.exports = class Manga {
         else {
             throw new Error("No such episode " + epi);
         }
+    }
+    
+    nextEpisodeUrl (epi) {
+        return this.getSaemangaUrl(this.nextEpisodeOf(epi));
+    }
+    
+    nextEpisodeType (epi) {
+        return this.getEpisodeType(this.nextEpisodeOf(epi));
     }
 }
