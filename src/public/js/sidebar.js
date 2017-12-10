@@ -5,15 +5,17 @@ var Sidebar = {
     $sidebar: $("#sidebar"),
     $lightModeSelect: $("#light-mode-select"),
     $handModeSelect: $("#hand-mode-select"),
+    $zoom: $("#zoom"),
     scrollElem: "body",
     initiate: function () {
         this.initiateSetting();
     },
     initiateSetting: function () {
-        this.initiateSelectListener();
+        this.initiateListener();
         this.initiateCookieSetting();
+        this.initiateWidth();
     },
-    initiateSelectListener: function () {
+    initiateListener: function () {
         
         var self = this;
         
@@ -29,6 +31,27 @@ var Sidebar = {
                 self.setToLeftMode();
             else
                 self.setToRightMode();
+        });
+        
+        this.$zoom.children(".plus").click(function () {
+            if (!$(this).hasClass("disabled")) {
+                self.setWidth($("main").width() * 1.2);
+            }
+        });
+        
+        this.$zoom.children(".minus").click(function () {
+            if (!$(this).hasClass("disabled")) {
+                self.setWidth($("main").width() / 1.2);
+            }
+        });
+        
+        this.$zoom.children(".data").click(function () {
+            self.resetWidth();
+        });
+        
+        $(window).resize(function () {
+            self.refreshSize();
+            self.refreshZoom();
         });
     },
     initiateCookieSetting: function () {
@@ -110,5 +133,59 @@ var Sidebar = {
     setToNightMode: function () {
         this.setLightModeCookie("night");
         $("body").addClass("night");
+    },
+    refreshSize: function () {
+        this.initialWidth = Math.min($(window).width(), 768);
+        this.maxWidth = $(window).width(),
+        this.minWidth = Math.max(320, Math.min(self.initialWidth, self.maxWidth / 2));
+    },
+    initiateWidth: function () {
+        this.refreshSize();
+        var w = this.getWidthCookie() || this.initialWidth;
+        this.setWidth(w);
+    },
+    getWidthCookie: function () {
+        return window.cookie.get("width");
+    },
+    setWidthCookie: function (w) {
+        window.cookie.set("width", Math.round(w));
+    },
+    resetWidth: function () {
+        this.setWidth(this.initialWidth);
+    },
+    setWidth: function (w) {
+        var fw = Math.max(Math.min(w, this.maxWidth), this.minWidth);
+        $("main").css("max-width", fw);
+        this.refreshZoom();
+    },
+    refreshZoom: function () {
+        
+        var $m = this.$zoom.children(".minus");
+        var $p = this.$zoom.children(".plus");
+        var $d = this.$zoom.children(".data");
+        
+        var w = $("main").width();
+        
+        if (w >= this.maxWidth) {
+            $p.addClass("disabled");
+            if (w > this.maxWidth + 1) {
+                this.setWidth(this.maxWidth);
+                return;
+            }
+        }
+        else $p.removeClass("disabled");
+        
+        if (w <= this.minWidth) {
+            $m.addClass("disabled");
+            if (w < this.minWidth - 1) {
+                this.setWidth(this.minWidth);
+                return;
+            }
+        }
+        else $m.removeClass("disabled");
+        
+        this.setWidthCookie(w);
+        
+        $d.text(Math.round(w / this.initialWidth * 100));
     }
 }

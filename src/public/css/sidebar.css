@@ -108,3 +108,10 @@ ul.sidebar-btn-list li.full a:hover {
 ul.sidebar-btn-list li.full a:active {
     background-color: var(--active-white);
 }
+
+@media(max-width: 540px) {
+    #sidebar-toggle {
+        right: 8px;
+        top: 8px;
+    }
+}
