@@ -6,6 +6,10 @@ const ObjectID = require('mongodb').ObjectID;
 const usernameReg = /^[A-Za-z0-9@\-\_\.\#\*]{4,16}$/;
 const passwordReg = /^[A-Za-z0-9@\-\_\.\#\*]{8,32}$/;
 
+const defaultLightMode = "day";
+const defaultHandMode = "right";
+const defaultScale = 100;
+
 function validateUsername(username) {
     
     if (!username) {
@@ -47,7 +51,12 @@ function generateUser(username, password) {
         "last_visit": new Date(),
         "login_amount": 1,
         "visit_amount": 1,
-        "love": []
+        // "love": [],
+        // "setting": {
+        //     "light_mode": defaultLightMode,
+        //     "hand_mode": defaultHandMode,
+        //     "scale": defaultScale
+        // }
     }
 }
 

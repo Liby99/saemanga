@@ -5,6 +5,7 @@
 ``` js
 {
     _id: <ObjectId>,
+    insert_date: <Date>,
     update_date: <Date>,
     dmk_id: <Number>,
     dmk_id_gen: <String>,
