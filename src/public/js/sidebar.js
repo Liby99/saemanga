@@ -137,7 +137,7 @@ var Sidebar = {
     refreshSize: function () {
         this.initialWidth = Math.min($(window).width(), 768);
         this.maxWidth = $(window).width(),
-        this.minWidth = Math.max(320, Math.min(self.initialWidth, self.maxWidth / 2));
+        this.minWidth = Math.max(320, Math.min(this.initialWidth, this.maxWidth / 2));
     },
     initiateWidth: function () {
         this.refreshSize();
