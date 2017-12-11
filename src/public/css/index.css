@@ -194,6 +194,7 @@
 
 #index-discover-tags-holder.active {
     margin-left: 10px;
+    flex-grow: 1;
     padding-right: 10px;
     width: calc(100% - 42px);
 }
