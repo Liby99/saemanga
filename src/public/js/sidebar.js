@@ -188,8 +188,8 @@ var Sidebar = {
         }
         else $m.removeClass("disabled");
         
-        // Hack!!!!!! Make sure I change this. This should not happen
-        Follow.$header.stickRefresh();
+        // Hack!!!!!! This is BAD. Make sure I change this.
+        $("#index-following-header").stickRefresh();
         
         this.setWidthCookie(w);
         
