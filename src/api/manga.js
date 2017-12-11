@@ -188,16 +188,15 @@ module.exports = {
     
     updateOldest50 (callback, error) {
         Mangas.find({
-            ended: false
-        }, {
-            sort: {
-                "update_date": 1
-            }
+            "info.ended": false
+        }).sort({
+            "update_date": 1
         }).limit(50).toArray(function (err, mangas) {
             if (err) {
                 error(err);
             }
             else {
+                Debug.log("There are " + mangas.length + " mangas in total");
                 (function p (i) {
                     if (i < mangas.length) {
                         var oi = mangas[i];
@@ -210,6 +209,9 @@ module.exports = {
                             }, ni, function (err, result) {
                                 if (err) {
                                     Debug.error("Error inserting manga " + dmkId);
+                                }
+                                else {
+                                    Debug.log("Successfully updated manga " + dmkId);
                                 }
                                 p(i + 1);
                             });
