@@ -11,13 +11,8 @@ function getGenre(req, res, callback) {
 }
 
 function getLatestMangas(req, res, callback) {
-    Hot.getLatestIds(function (ids) {
-        Manga.getAll(ids, function (mangas) {
-            callback(mangas);
-        }, function (err) {
-            Debug.error(err);
-            res.error(500, err);
-        });
+    Hot.getLatest(function (mangas) {
+        callback(mangas);
     }, function (err) {
         Debug.error(err);
         res.error(500, err);

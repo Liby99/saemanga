@@ -46,10 +46,11 @@ module.exports = {
      */
     fetchLatest (callback, error) {
         Cartoonmad.getHotManga(function (ids) {
-            Hots.insertMany(ids.map((id) => {
+            Hots.insertMany(ids.map((id, i) => {
                 return {
                     "dmk_id": id,
-                    "genre_dir": ""
+                    "genre_dir": "",
+                    "order": i
                 }
             }), function (err) {
                 if (err) {
@@ -76,10 +77,11 @@ module.exports = {
     
     fetchGenre (genre, callback, error) {
         Cartoonmad.getHotMangaOfGenre(genre.dir, function (ids) {
-            Hots.insertMany(ids.map((id) => {
+            Hots.insertMany(ids.map((id, i) => {
                 return {
                     "dmk_id": id,
-                    "genre_dir": genre.dir
+                    "genre_dir": genre.dir,
+                    "order": i
                 };
             }), function (err) {
                 if (err) {
@@ -90,19 +92,6 @@ module.exports = {
                 }
             });
         }, error);
-    },
-    
-    getAll (callback, error) {
-        Hots.find({}, {
-            "fields": { "dmk_id": 1 }
-        }).toArray(function (err, ids) {
-            if (err) {
-                error(err);
-            }
-            else {
-                callback(ids.map((obj) => obj["dmk_id"]));
-            }
-        });
     },
     
     getLatestIds (callback, error) {
@@ -120,6 +109,38 @@ module.exports = {
             }
             else {
                 callback(ids.map((obj) => obj["dmk_id"]));
+            }
+        });
+    },
+    
+    getLatest (callback, error) {
+        this.getGenre("", callback, error);
+    },
+    
+    getGenre (genreDir, callback, error) {
+        Hots.aggregate([{
+            $match: { "genre_dir": genreDir }
+        }, {
+            $sort: { "order": 1 }
+        }, {
+            $lookup: {
+                from: "manga",
+                localField: "dmk_id",
+                foreignField: "dmk_id",
+                as: "manga"
+            }
+        }, {
+            $unwind: "$manga"
+        }, {
+            $replaceRoot: {
+                newRoot: "$manga"
+            }
+        }]).toArray(function (err, mangas) {
+            if (err) {
+                error(err);
+            }
+            else {
+                callback(mangas);
             }
         });
     }
