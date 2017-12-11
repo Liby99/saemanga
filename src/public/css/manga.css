@@ -1,3 +1,7 @@
+#manga-header-section {
+    padding-top: 45px;
+}
+
 .book-list,
 .episode-list {
     list-style: none;
@@ -35,7 +39,7 @@
 }
 
 #manga-body-section img + img {
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 #manga-navigation-section a {
@@ -58,4 +62,10 @@
 #manga-navigation-section a i {
     margin: 0 10px;
     font-size: 16px;
+}
+
+@media(max-width: 540px) {
+    #manga-header-section {
+        padding-top: 15px;
+    }
 }

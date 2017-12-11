@@ -10,7 +10,7 @@
     <% include("view/manga_sidebar.html", { loggedIn: loggedIn, user: user, manga: manga, episode: episode }); %>
 <% }, main: () => { %>
     <section id="manga-header-section">
-        <center class="wrapper" style="padding-top: 60px">
+        <center class="wrapper">
             <h1>-<%= manga.title() %>-</h1>
             <p style="margin-top: 0px">
                 第 <%= episode %> <%= manga.isBook(episode) ? "卷" : "话" %>

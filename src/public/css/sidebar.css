@@ -3,6 +3,7 @@ nav {
 }
 
 #sidebar-toggle {
+    transition: all 0.3s;
     position: fixed;
     right: 20px;
     top: 20px;
@@ -14,22 +15,37 @@ nav {
     z-index: 129;
 }
 
-nav.left #sidebar-toggle {
+body.left #sidebar-toggle {
     transition: all 0.4s;
     left: 20px;
     right: auto;
 }
 
-nav.left.active #sidebar-toggle {
-    left: 244px;
+body.left nav.active #sidebar-toggle {
+    top: 20px !important;
+    left: 244px !important;
 }
 
-nav.left #sidebar-toggle .fa-angle-right {
+body.left #sidebar-toggle .fa-angle-right {
     transform: rotate(180deg);
 }
 
-nav.left #sidebar-toggle.active .fa-angle-right {
+body.left #sidebar-toggle.active .fa-angle-right {
     transform: rotate(0);
+}
+
+body.night #sidebar-toggle {
+    border-radius: 5px;
+    background-color: rgba(30, 30, 30, 0.3);
+}
+
+body.full-width #sidebar-toggle.stick {
+    top: 8px;
+}
+
+nav.active #sidebar-toggle {
+    right: 20px !important;
+    top: 20px !important;
 }
 
 #sidebar-toggle .fa-rotation-toggle {
@@ -51,7 +67,7 @@ nav.left #sidebar-toggle.active .fa-angle-right {
     z-index: 128;
 }
 
-nav.left #sidebar {
+body.left #sidebar {
     right: auto;
     left: -310px;
 }
@@ -60,7 +76,7 @@ nav.left #sidebar {
     right: 0;
 }
 
-nav.left #sidebar.active {
+body.left #sidebar.active {
     right: auto;
     left: 0;
 }
@@ -111,7 +127,12 @@ ul.sidebar-btn-list li.full a:active {
 
 @media(max-width: 540px) {
     #sidebar-toggle {
-        right: 8px;
+        right: 9px;
+        top: 9px;
+    }
+    
+    body.left #sidebar-toggle {
         top: 8px;
+        left: 8px;
     }
 }

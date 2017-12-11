@@ -239,6 +239,14 @@
     align-content: flex-start;
 }
 
+body.full-width:not(.left) #index-following-header-inner.stick {
+    padding-right: 72px;
+}
+
+body.full-width.left #index-following-header-inner.stick {
+    padding-left: 72px;
+}
+
 @media(max-width: 540px) {
     
     #index-header-section {
@@ -270,7 +278,11 @@
         padding: 0;
     }
     
-    #index-following-header-inner.stick #index-following-menu {
-        padding-right: 36px;
+    body:not(.left) #index-following-header-inner.stick {
+        padding-right: 48px;
+    }
+    
+    body.left #index-following-header-inner.stick {
+        padding-left: 48px;
     }
 }

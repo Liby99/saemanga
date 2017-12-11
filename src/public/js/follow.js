@@ -13,9 +13,11 @@ var Follow = {
         this.$header.stickToTop();
         this.$header.on("stick", function () {
             self.$headerInner.addClass("stick");
+            Sidebar.$toggle.addClass("stick");
         });
         this.$header.on("release", function () {
             self.$headerInner.removeClass("stick");
+            Sidebar.$toggle.removeClass("stick");
         });
     },
     initiateManage: function () {

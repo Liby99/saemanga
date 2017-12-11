@@ -110,11 +110,11 @@ var Sidebar = {
     },
     setToLeftMode: function () {
         this.setHandModeCookie("left");
-        $("nav").addClass("left");
+        $("body").addClass("left");
     },
     setToRightMode: function () {
         this.setHandModeCookie("right");
-        $("nav").removeClass("left");
+        $("body").removeClass("left");
     },
     initiateLightMode: function () {
         var mode = this.getLightModeCookie() || "day";
@@ -167,13 +167,17 @@ var Sidebar = {
         var w = $("main").width();
         
         if (w >= this.maxWidth) {
+            $("body").addClass("full-width");
             $p.addClass("disabled");
             if (w > this.maxWidth + 1) {
                 this.setWidth(this.maxWidth);
                 return;
             }
         }
-        else $p.removeClass("disabled");
+        else {
+            $("body").removeClass("full-width");
+            $p.removeClass("disabled");
+        }
         
         if (w <= this.minWidth) {
             $m.addClass("disabled");
@@ -183,6 +187,9 @@ var Sidebar = {
             }
         }
         else $m.removeClass("disabled");
+        
+        // Hack!!!!!! Make sure I change this. This should not happen
+        Follow.$header.stickRefresh();
         
         this.setWidthCookie(w);
         

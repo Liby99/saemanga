@@ -42,3 +42,14 @@
 .panel-body p {
     line-height: 20px;
 }
+
+@media(max-width: 540px) {
+    .panel-scroll {
+        margin-top: -40px;
+    }
+    
+    .panel-mask.active .panel-scroll {
+        margin-top: 0;
+        padding: 20px 0;
+    }
+}

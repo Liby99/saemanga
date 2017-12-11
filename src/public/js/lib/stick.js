@@ -51,8 +51,17 @@
         initiate($holder);
         refresh($holder);
         
+        // Set the holder resize listener
+        // $holder.resize(function () {
+        //     resize($holder);
+        // });
+        
         // Push the holder to the cache
         cache.push($holder);
+    }
+    
+    $.fn.stickRefresh = function () {
+        resize($(this));
     }
     
     $(window).scroll(function () {
