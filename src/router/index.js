@@ -41,20 +41,12 @@ function getUser(req, res, hasUser, noUser) {
 
 function getFollows(req, res, user, callback) {
     Follow.getAllFollow(user["_id"], function (follows) {
-        Manga.getAllByObjId(follows.map((f) => {
-            return f["manga_id"];
-        }), function (mangas) {
-            callback(follows.map((f) => {
-                f.manga = mangas.filter((m) => {
-                    return m["_id"].toString() == f["manga_id"].toString();
-                })[0];
-                f.manga.lastEpisode = f.manga.episodes[f.manga.episodes.length - 1];
-                f.hasUpdate = f.max_episode < f.manga.lastEpisode;
-                return f;
-            }));
-        }, function (err) {
-            res.error(500, err);
-        });
+        callback(follows.map((f) => {
+            f.manga.lastEpisode = f.manga.episodes[f.manga.episodes.length - 1];
+            f.hasUpdate = f.max_episode < f.manga.lastEpisode;
+            f.showBadge = f.up_to_date && f.hasUpdate;
+            return f;
+        }));
     }, function (err) {
         res.error(500, err);
     });

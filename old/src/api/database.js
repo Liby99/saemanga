@@ -88,7 +88,11 @@ module.exports = {
         });
     },
     getFollowingManga: function (UUID, callback) {
-        mysql.query("SELECT `follow`.`dmk_id`, `manga`.`name`, `manga`.`latest_episode`, `manga`.`ended`, `follow`.`current_episode`, `follow`.`up_to_date` FROM `follow` INNER JOIN `manga` ON `manga`.`dmk_id` = `follow`.`dmk_id` WHERE `follow`.`UUID` = ? ORDER BY (`follow`.`up_to_date` * (`manga`.`latest_episode` - `follow`.`current_episode`)) DESC, `follow`.`latest_date_time` DESC", [
+        mysql.query("SELECT `follow`.`dmk_id`, `manga`.`name`, `manga`.`latest_episode`, `manga`.`ended`, `follow`.`current_episode`, `follow`.`up_to_date`" +
+            "FROM `follow` INNER JOIN `manga` ON `manga`.`dmk_id` = `follow`.`dmk_id` " +
+            "WHERE `follow`.`UUID` = ? " +
+            "ORDER BY (`follow`.`up_to_date` * (`manga`.`latest_episode` - `follow`.`current_episode`)) DESC, " +
+                "`follow`.`latest_date_time` DESC", [
             UUID
         ], function (err, result) {
             if (err) {

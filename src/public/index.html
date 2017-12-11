@@ -95,7 +95,7 @@
                     <% follows.forEach(function (follow, i) { %>
                         <a class="mix manga following" id="<%= follow.manga._id %>" href="/manga.html?id=<%= follow.manga.dmk_id %>">
                             <div class="cover" style="background-image: url('http://img.cartoonmad.com/ctimg/<%= follow.manga.dmk_id %>.jpg')">
-                                <span class="badge <%= follow.hasUpdate ? '' : 'hidden' %>"></span>
+                                <span class="badge <%= follow.showBadge ? '' : 'hidden' %>"></span>
                                 <span class="remove btn circle grey solid">
                                     <i class="fa fa-times"></i>
                                 </span>

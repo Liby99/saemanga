@@ -16,19 +16,7 @@ module.exports = {
         User.getUser(req.cookies.username, function (user) {
             if (user) {
                 Follow.getAllFollow(user["_id"], function (follows) {
-                    Manga.getAllByObjId(follows.map((f) => {
-                        return f["manga_id"];
-                    }), function (mangas) {
-                        res.success(follows.map((f) => {
-                            f.manga = mangas.filter((m) => {
-                                return m["_id"].toString() == f["manga_id"].toString();
-                            })[0];
-                            return f;
-                        }));
-                    }, function (err) {
-                        Debug.error(err);
-                        res.error(3, err);
-                    });
+                    res.success(follows);
                 }, function (err) {
                     Debug.error(err);
                     res.error(2, err);
@@ -87,7 +75,7 @@ module.exports = {
         if (req.body.id) {
             Manga.update(req.body.id, function (om) {
                 if (om) {
-                    callback(om);
+                    res.success(om);
                 }
                 else {
                     res.error(3, "Manga with id " + req.body.id + " not found");

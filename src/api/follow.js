@@ -7,14 +7,54 @@ const Follows = Mongo.db.collection("follow");
 module.exports = {
     
     getAllFollow (userId, callback, error) {
-        Follows.find({
-            "user_id": ObjectID(userId)
-        }).toArray(function (err, follows) {
+        Follows.aggregate([{
+            $match: { "user_id": ObjectID(userId) }
+        }, {
+            $lookup: {
+                from: "manga",
+                localField: "manga_id",
+                foreignField: "_id",
+                as: "manga"
+            }
+        }, { $unwind: "$manga" }, {
+            $addFields: {
+                "latest_episode": {
+                    $slice: [ "$manga.episodes", -1 ]
+                },
+                "up_to_date_int": {
+                    $cond: {
+                        "if": "$up_to_date",
+                        "then": 1,
+                        "else": 0
+                    }
+                }
+            }
+        }, { $unwind: "$latest_episode" }, {
+            $addFields: {
+                "sort_num": {
+                    $multiply: [
+                        "$up_to_date_int",
+                        { $subtract: [ "$latest_episode", "$max_episode" ] }
+                    ]
+                }
+            }
+        }, {
+            $sort: {
+                "sort_num": -1,
+                "update_date": -1
+            }
+        }, {
+            $project: {
+                "sort_num": 0,
+                "latest_episode": 0,
+                "up_to_date_int": 0
+            }
+        }]).toArray(function (err, arr) {
             if (err) {
                 error(err);
             }
             else {
-                callback(follows);
+                callback(arr);
             }
         });
     },
@@ -137,8 +177,8 @@ module.exports = {
                     }, {
                         $set: {
                             "update_date": new Date(),
-                            "current_episode": episode,
-                            "max_episode": maxEpisode,
+                            "current_episode": parseInt(episode),
+                            "max_episode": parseInt(maxEpisode),
                             "up_to_date": isUpToDate
                         }
                     }, function (err, ret) {
