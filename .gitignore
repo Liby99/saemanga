@@ -42,3 +42,5 @@ log
 .idea
 
 *.swp
+
+*.key
