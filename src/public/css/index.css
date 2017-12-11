@@ -247,6 +247,10 @@ body.full-width.left #index-following-header-inner.stick {
     padding-left: 72px;
 }
 
+#index-follow-login-holder {
+    padding: 50px 0;
+}
+
 @media(max-width: 540px) {
     
     #index-header-section {
@@ -279,10 +283,14 @@ body.full-width.left #index-following-header-inner.stick {
     }
     
     body:not(.left) #index-following-header-inner.stick {
-        padding-right: 48px;
+        padding-right: 50px !important;
     }
     
     body.left #index-following-header-inner.stick {
-        padding-left: 48px;
+        padding-left: 50px !important;
+    }
+    
+    #index-follow-login-holder {
+        padding: 20px 0;
     }
 }

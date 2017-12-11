@@ -7,10 +7,6 @@
         cache.push($(this));
         var name = $(this).attr("name");
         
-        $(this).find(".panel-mask").css({
-            "z-index": $(this).attr("data-index")
-        });
-        
         // First close button
         $(this).find(".panel-head a").click(function () {
             $.panel.hide(name);
