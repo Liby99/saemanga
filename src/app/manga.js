@@ -108,7 +108,7 @@ module.exports = class Manga {
     }
     
     getSaemangaUrl (epi) {
-        return "/manga.html?id=" + this.data.dmkId + (epi ? ("&epi=" + epi) : "");
+        return "/manga.html?id=" + this.data.dmkId + (epi != undefined ? ("&epi=" + epi) : "");
     }
     
     lastEpisode () {
