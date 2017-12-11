@@ -3,7 +3,7 @@ const Manga = require("../api/manga");
 
 module.exports = {
     name: "refresh oldest 50 manga",
-    schedule: "25 * * * *",
+    schedule: "*/30 * * * *",
     task: function () {
         Debug.log("Refreshing oldest 50 mangas");
         Manga.updateOldest50(function () {

@@ -1,5 +1,5 @@
 {
-    "debug": true,
+    "debug": false,
     "name": "Sae Manga",
     "port": 21023,
     "session_secret": "keeling-session",
