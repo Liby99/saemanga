@@ -8,7 +8,7 @@
         "cheerio": "^1.0.0-rc.2",
         "ejs-alt": "0.0.3",
         "iconv-lite": "^0.4.19",
-        "keeling-js": "^1.3.11",
+        "keeling-js": "^1.3.12",
         "request": "^2.83.0"
     },
     "devDependencies": {
