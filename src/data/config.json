@@ -1,8 +1,8 @@
 {
     "debug": false,
     "name": "Sae Manga",
-    "port": 21023,
-    "session_secret": "keeling-session",
+    "port": 8193,
+    "session_secret": "sae-manga-secret",
     "default_page": "index",
     "error_page": "error",
     "public_directory": "public",
