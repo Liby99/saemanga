@@ -28,6 +28,34 @@ module.exports = {
         Hots.remove({});
     },
     
+    refreshLatest () {
+        this.clearLatest();
+        this.fetchLatest(function (ids) {
+            callback(ids);
+        }, error);
+    },
+    
+    clearLatest () {
+        Hots.remove({
+            "genre_dir": ""
+        });
+    },
+    
+    refreshAllGenres () {
+        this.clearAllGenres();
+        this.fetchAllGenres(function (ids) {
+            callback(ids);
+        }, error);
+    },
+    
+    clearAllGenres () {
+        Hots.remove({
+            "genre_dir": {
+                $ne: ""
+            }
+        });
+    },
+    
     /**
      * Fetch the latest hot manga ids and latest mangas of each genre
      */

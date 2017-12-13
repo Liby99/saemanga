@@ -1,3 +1,8 @@
+# [HEAD]
+
+- Changed scheduler. Fetch latest hot manga every hour but genre mangas every
+  4 hours.
+
 # v3.0.0 - Dec 10, 2017
 
 - Finally v3.0 comes along!
