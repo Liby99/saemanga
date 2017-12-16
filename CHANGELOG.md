@@ -2,6 +2,7 @@
 
 - Changed scheduler. Fetch latest hot manga every hour but genre mangas every
   4 hours.
+- Fixed Windows Font Family
 
 # v3.0.0 - Dec 10, 2017
 
