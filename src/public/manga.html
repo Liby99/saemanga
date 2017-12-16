@@ -29,6 +29,7 @@
     </section>
 <% }, templates: () => { %>
     <% include("view/templates/manga_image.html"); %>
+    <% include("view/panels/manga.html", { manga: manga }); %>
 <% }, scripts: () => { %>
     <script src="js/manga.js"></script>
 <% }}); %>
