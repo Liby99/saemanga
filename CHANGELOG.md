@@ -5,6 +5,7 @@
 - Add Manga Info Panel
 - Fixed Font Family Issue in Windows
 - Fixed Stick Bar Header Line Height
+- Multiple bug fixes
 
 # v3.0.0 - Dec 10, 2017
 

@@ -28,7 +28,7 @@ module.exports = {
         Hots.remove({});
     },
     
-    refreshLatest () {
+    refreshLatest (callback, error) {
         this.clearLatest();
         this.fetchLatest(function (ids) {
             callback(ids);
@@ -41,7 +41,7 @@ module.exports = {
         });
     },
     
-    refreshAllGenres () {
+    refreshAllGenres (callback, error) {
         this.clearAllGenres();
         this.fetchAllGenres(function (ids) {
             callback(ids);
