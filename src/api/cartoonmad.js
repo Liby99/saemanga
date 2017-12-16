@@ -201,14 +201,19 @@ module.exports = {
                           .children("table").children("tbody").children("tr")
                           .eq(0).children("td").eq(0).children("a")
                           .children("img").attr("src");
-                var msrc = src.match(COMIC_IMG_SRC_REG);
-                if (msrc) {
-                    manga.dmk_id_web = msrc[1];
-                    manga.dmk_id_gen = msrc[2];
-                    callback(manga);
+                if (src) {
+                    var msrc = src.match(COMIC_IMG_SRC_REG);
+                    if (msrc) {
+                        manga.dmk_id_web = msrc[1];
+                        manga.dmk_id_gen = msrc[2];
+                        callback(manga);
+                    }
+                    else {
+                        error(new Error("Img src info extraction error"));
+                    }
                 }
                 else {
-                    console.log(src);
+                    Debug.error("Manga " + dmkId + " img src info extraction error");
                     error(new Error("Img src info extraction error"));
                 }
             }, error);
