@@ -1,3 +1,35 @@
-<% include("layout/panel.html", { name: "manga", title: manga.title, index: 260, body: () => { %>
-    
+<% include("layout/panel.html", { name: "manga", title: "关于 " + manga.title(), index: 260, body: () => { %>
+    <div class="flex">
+        <div class="wrapper">
+            <img src="<%= manga.getCoverUrl() %>" id="manga-panel-cover" class="drop-shadow" />
+        </div>
+        <div class="flex-fill">
+            <div class="wrapper">
+                <div class="flex">
+                    <h3>
+                        <%= manga.title() %>
+                        <span id="manga-panel-ended" class="btn" style="font-weight: normal">
+                            <%= manga.ended() ? "已完结" : "连载中" %>
+                        </span>
+                    </h3>
+                </div>
+                <p class="flex manga-info-item">
+                    <label>作者：</label>
+                    <span><%= manga.author() %></span>
+                </p>
+                <p class="flex manga-info-item">
+                    <label>标签：</label>
+                    <span>
+                        <% manga.tags().forEach((tag, i) => { %>
+                            <span class="btn grey"><%= tag %></span>
+                        <% }); %>
+                    </span>
+                </p>
+                <p class="flex manga-info-item">
+                    <label>简介：</label>
+                    <span><%= manga.description() %></span>
+                </p>
+            </div>
+        </div>
+    </div>
 <% }}); %>

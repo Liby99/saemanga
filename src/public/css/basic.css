@@ -204,6 +204,7 @@ button.btn {
 
 .btn.grey {
     border: 1px solid var(--light-text);
+    color: var(--light-text);
 }
 
 .btn.solid {

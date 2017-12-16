@@ -64,6 +64,18 @@
     font-size: 16px;
 }
 
+#manga-panel-cover {
+    width: 160px;
+}
+
+#manga-panel-ended {
+    margin-left: 10px;
+}
+
+.manga-info-item label {
+    min-width: 50px;
+}
+
 @media(max-width: 540px) {
     #manga-header-section {
         padding-top: 15px;
