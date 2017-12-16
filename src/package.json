@@ -1,6 +1,6 @@
 {
     "name": "sae-manga",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "description": "Saenai Manga no Sodate Kata",
     "main": "saemanga.js",
     "dependencies": {
