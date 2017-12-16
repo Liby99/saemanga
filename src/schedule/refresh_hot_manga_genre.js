@@ -4,7 +4,7 @@ const Manga = require("../api/manga");
 
 module.exports = {
     name: "refresh hot manga genres",
-    schedule: "*/4 * * *",
+    schedule: "0 */4 * * *",
     task: function () {
         Debug.log("Refreshing hot mangas genres");
         Hot.refreshAllGenres(function (ids) {
