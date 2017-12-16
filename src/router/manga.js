@@ -3,7 +3,7 @@ const path = require("path");
 const User = require("../api/user");
 const Follow = require("../api/follow");
 const MangaAPI = require("../api/manga");
-const Manga = require("../app/manga");
+const Manga = require("../api/app/manga");
 
 function getFirstEpisode(manga) {
     return manga.books ? manga.books[0] : manga.episodes[0];
