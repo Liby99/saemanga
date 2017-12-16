@@ -2,7 +2,9 @@
 
 - Changed scheduler. Fetch latest hot manga every hour but genre mangas every
   4 hours.
-- Fixed Windows Font Family
+- Add Manga Info Panel
+- Fixed Font Family Issue in Windows
+- Fixed Stick Bar Header Line Height
 
 # v3.0.0 - Dec 10, 2017
 
