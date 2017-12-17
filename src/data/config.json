@@ -1,5 +1,5 @@
 {
-    "debug": true,
+    "debug": false,
     "name": "Sae Manga",
     "port": 8193,
     "session_secret": "sae-manga-secret",
