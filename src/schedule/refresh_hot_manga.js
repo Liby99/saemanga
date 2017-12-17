@@ -6,7 +6,7 @@ module.exports = {
     name: "refresh latest hot manga",
     schedule: "0 * * * *", // At the start of every hour
     task: function () {
-        Debug.info(new Date() + "Refreshing latest hot mangas ");
+        Debug.log(new Date() + " Refreshing latest hot mangas ");
         Hot.refreshLatest(function (ids) {
             Manga.updateAll(ids, function () {
                 Debug.log("Successfully fetched " + ids.length + " mangas");

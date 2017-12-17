@@ -6,7 +6,7 @@ module.exports = {
     name: "refresh hot manga genres",
     schedule: "0 */4 * * *", // At the start of every 4 hours
     task: function () {
-        Debug.info(new Date() + "Refreshing hot mangas genres ");
+        Debug.log(new Date() + " Refreshing hot mangas genres ");
         Hot.refreshAllGenres(function (ids) {
             Manga.updateAll(ids, function () {
                 Debug.log("Successfully fetched " + ids.length + " mangas");
