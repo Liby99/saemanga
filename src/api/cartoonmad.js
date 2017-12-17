@@ -191,34 +191,28 @@ module.exports = {
             
                 // Get manga ids
                 var epiHref = $t3.eq(0).find("tbody tr").eq(1).children("td").eq(1)
-                             .children("a").attr("href");
-                if (epiHref) {
-                    Request.get(BASE_URL + epiHref.substring(1), function (res, $) {
-                        var src = $("body > table > tbody > tr").eq(4).children("td")
-                                  .children("table").children("tbody").children("tr")
-                                  .eq(0).children("td").eq(0).children("a")
-                                  .children("img").attr("src");
-                        if (src) {
-                            var msrc = src.match(COMIC_IMG_SRC_REG);
-                            if (msrc) {
-                                manga.dmk_id_web = msrc[1];
-                                manga.dmk_id_gen = msrc[2];
-                                callback(manga);
-                            }
-                            else {
-                                error(new Error("Img src info extraction error"));
-                            }
+                             .children("a").attr("href").substring(1);
+                Request.get(BASE_URL + epiHref, function (res, $) {
+                    var src = $("body > table > tbody > tr").eq(4).children("td")
+                              .children("table").children("tbody").children("tr")
+                              .eq(0).children("td").eq(0).children("a")
+                              .children("img").attr("src");
+                    if (src) {
+                        var msrc = src.match(COMIC_IMG_SRC_REG);
+                        if (msrc) {
+                            manga.dmk_id_web = msrc[1];
+                            manga.dmk_id_gen = msrc[2];
+                            callback(manga);
                         }
                         else {
-                            Debug.error("Error extracting manga " + dmkId + " img src info");
                             error(new Error("Img src info extraction error"));
                         }
-                    }, error);
-                }
-                else {
-                    Debug.error("Error getting manga " + dmkId + " href");
-                    error(new Error("Manga href extraction error"));
-                }
+                    }
+                    else {
+                        Debug.error("Error extracting manga " + dmkId + " img src info");
+                        error(new Error("Img src info extraction error"));
+                    }
+                }, error);
             }
             catch (err) {
                 Debug.error("Error getting manga " + dmkId + " info");
