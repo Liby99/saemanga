@@ -1,10 +1,11 @@
-# v3.0.1 - Dec 15, 2017
+# v3.0.1 - Dec 16, 2017
 
 - Changed scheduler. Fetch latest hot manga every hour but genre mangas every
   4 hours.
 - Add Manga Info Panel
 - Fixed Font Family Issue in Windows
 - Fixed Stick Bar Header Line Height
+- Use Async Promise for an array of requests. Speeds up by more than 10 times.
 - Multiple bug fixes
 
 # v3.0.0 - Dec 10, 2017

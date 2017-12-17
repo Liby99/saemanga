@@ -3,6 +3,7 @@ const Debug = require("keeling-js/lib/debug");
 const Mongo = require("keeling-js/lib/mongo");
 const Mangas = Mongo.db.collection("manga");
 const Cartoonmad = require("./cartoonmad");
+const Promise = require("./lib/promise");
 
 function hasUpdate (oldManga, newManga) {
     if (newManga["dmk_id_gen"] != oldManga["dmk_id_gen"] ||
@@ -69,17 +70,14 @@ module.exports = {
                 else {
                     var gotIds = mangas.map((manga) => manga["dmk_id"]);
                     var diff = dmkIds.filter((id) => !id in gotIds);
-                    (function p (i) {
-                        if (i < diff.length) {
-                            self.get(diff[i], (m) => {
-                                mangas.push(m);
-                                p(i + 1);
-                            }, error);
-                        }
-                        else {
-                            callback(mangas);
-                        }
-                    })(0);
+                    Promise.all(diff, function (dmkId, i, c, e) {
+                        self.get(dmkId, (m) => {
+                            mangas.push(m);
+                            c();
+                        }, error);
+                    }, function () {
+                        callback(mangas);
+                    }, error);
                 }
             }
         });
@@ -152,38 +150,32 @@ module.exports = {
     },
     
     updateAll (dmkIds, callback, error) {
-        (function p (i) {
-            if (i < dmkIds.length) {
-                var dmkId = dmkIds[i];
-                Cartoonmad.getMangaInfo(dmkId, function (manga) {
-                    manga["update_date"] = new Date();
-                    Mangas.findOneAndUpdate({
-                        "dmk_id": dmkId
-                    }, {
-                        $setOnInsert: {
-                            "insert_date": new Date()
-                        },
-                        $set: manga
-                    }, {
-                        "upsert": true
-                    }, function (err, result) {
-                        if (err) {
-                            Debug.error(err);
-                        }
-                        else {
-                            Debug.log("Successfully updated manga " + dmkId);
-                        }
-                        p(i + 1)
-                    });
-                }, function (err) {
-                    Debug.error(err);
-                    p(i + 1);
+        Promise.all(dmkIds, (dmkId, i, c, e) => {
+            Cartoonmad.getMangaInfo(dmkId, (manga) => {
+                manga["update_date"] = new Date();
+                Mangas.findOneAndUpdate({
+                    "dmk_id": dmkId
+                }, {
+                    $setOnInsert: {
+                        "insert_date": new Date()
+                    },
+                    $set: manga
+                }, {
+                    "upsert": true
+                }, (err, result) => {
+                    if (err) {
+                        Debug.error(err);
+                    }
+                    else {
+                        Debug.log("Successfully updated manga " + dmkId);
+                    }
+                    c();
                 });
-            }
-            else {
-                callback();
-            }
-        })(0)
+            }, function (err) {
+                Debug.error(err);
+                c();
+            });
+        }, callback, error);
     },
     
     updateOldest50 (callback, error) {
@@ -197,33 +189,27 @@ module.exports = {
             }
             else {
                 Debug.log("There are " + mangas.length + " mangas in total");
-                (function p (i) {
-                    if (i < mangas.length) {
-                        var oi = mangas[i];
-                        var dmkId = oi["dmk_id"];
-                        Cartoonmad.getMangaInfo(dmkId, function (ni) {
-                            ni["insert_date"] = oi["insert_date"];
-                            ni["update_date"] = new Date();
-                            Mangas.findOneAndUpdate({
-                                "dmk_id": dmkId
-                            }, ni, function (err, result) {
-                                if (err) {
-                                    Debug.error("Error inserting manga " + dmkId);
-                                }
-                                else {
-                                    Debug.log("Successfully updated manga " + dmkId);
-                                }
-                                p(i + 1);
-                            });
-                        }, function (err) {
-                            Debug.error("Error updating manga " + dmkId);
-                            p(i + 1);
+                Promise.all(mangas, (oi, i, c, e) => {
+                    var dmkId = oi["dmk_id"];
+                    Cartoonmad.getMangaInfo(dmkId, function (ni) {
+                        ni["insert_date"] = oi["insert_date"];
+                        ni["update_date"] = new Date();
+                        Mangas.findOneAndUpdate({
+                            "dmk_id": dmkId
+                        }, ni, function (err, result) {
+                            if (err) {
+                                Debug.error("Error inserting manga " + dmkId);
+                            }
+                            else {
+                                Debug.log("Successfully updated manga " + dmkId);
+                            }
+                            c();
                         });
-                    }
-                    else {
-                        callback();
-                    }
-                })(0);
+                    }, function (err) {
+                        Debug.error("Error updating manga " + dmkId);
+                        c();
+                    });
+                }, callback, error);
             }
         });
     }
