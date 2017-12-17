@@ -1,5 +1,6 @@
 const Cartoonmad = require("./cartoonmad");
 const Genre = require("./genre");
+const Promise = require("./lib/promise");
 const Debug = require("keeling-js/lib/debug");
 const Mongo = require("keeling-js/lib/mongo");
 const Hots = Mongo.db.collection("hot");
@@ -93,14 +94,14 @@ module.exports = {
     
     fetchAllGenres (callback, error) {
         var self = this, gs = Genre.get(), ids = [];
-        (function p(i) {
-            i < gs.length ? self.fetchGenre(gs[i], (gids) => {
+        Promise.all(gs, (genreDir, i, c, e) => {
+            self.fetchGenre(genreDir, (gids) => {
                 ids = ids.concat(gids);
-                p(i + 1);
-            }, (err) => {
-                error(err);
-            }) : callback(ids);
-        })(0);
+                c();
+            }, e);
+        }, () => {
+            callback(ids);
+        }, error);
     },
     
     fetchGenre (genre, callback, error) {
