@@ -69,7 +69,7 @@ module.exports = {
                 }
                 else {
                     var gotIds = mangas.map((manga) => manga["dmk_id"]);
-                    var diff = dmkIds.filter((id) => !id in gotIds);
+                    var diff = dmkIds.filter((id) => !(id in gotIds));
                     Promise.all(diff, function (dmkId, i, c, e) {
                         self.get(dmkId, (m) => {
                             mangas.push(m);

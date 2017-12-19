@@ -12,6 +12,7 @@
         "request": "^2.83.0"
     },
     "devDependencies": {
+        "excel-as-json": "^2.0.1",
         "nodemon": "^1.13.3"
     },
     "scripts": {
