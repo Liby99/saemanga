@@ -23,10 +23,16 @@ function getUser(req, res, hasUser, noUser) {
     var username = req.cookies.username;
     var loggedIn = username != undefined;
     if (loggedIn) {
-        User.getUser(username, function (user) {
-            hasUser(user);
-        }, function () {
-            res.error(403, "用户 " + username + " 不存在");
+        User.getAndTouchUser(username, function (user) {
+            if (user) {
+                hasUser(user);
+            }
+            else {
+                res.clearCookie("username");
+                res.error(403, "用户 " + username + " 不存在");
+            }
+        }, function (err) {
+            res.error(500, err);
         });
     }
     else {

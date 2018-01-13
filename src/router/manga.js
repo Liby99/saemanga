@@ -40,7 +40,7 @@ function getMangaInfo(req, res, callback) {
 
 function getUser(req, res, hasUser, noUser) {
     if (req.cookies.username) {
-        User.getUser(req.cookies.username, function (user) {
+        User.getAndTouchUser(req.cookies.username, function (user) {
             if (user) {
                 hasUser(user);
             }
