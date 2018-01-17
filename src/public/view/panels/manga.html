@@ -1,7 +1,9 @@
 <% include("layout/panel.html", { name: "manga", title: "关于 " + manga.title(), index: 260, body: () => { %>
-    <div class="flex">
+    <div id="manga-panel-body">
         <div class="wrapper">
-            <img src="<%= manga.getCoverUrl() %>" id="manga-panel-cover" class="drop-shadow" />
+            <center>
+                <img src="<%= manga.getCoverUrl() %>" id="manga-panel-cover" class="drop-shadow" />
+            </center>
         </div>
         <div class="flex-fill">
             <div class="wrapper">

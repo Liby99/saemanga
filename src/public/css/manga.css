@@ -64,6 +64,11 @@
     font-size: 16px;
 }
 
+#manga-panel-body {
+    display: flex;
+    flex-flow: row;
+}
+
 #manga-panel-cover {
     width: 160px;
 }
@@ -74,6 +79,16 @@
 
 .manga-info-item label {
     min-width: 50px;
+}
+
+@media(max-width: 748px) {
+    #manga-panel-body {
+        flex-flow: column;
+    }
+    
+    #manga-panel-body > div {
+        width: auto !important;
+    }
 }
 
 @media(max-width: 540px) {

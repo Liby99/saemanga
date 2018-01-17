@@ -6,6 +6,7 @@
 - Fixed Font Family Issue in Windows
 - Fixed Stick Bar Header Line Height
 - Use Async Promise for an array of requests. Speeds up by more than 10 times.
+- Performance improvements
 - Multiple bug fixes
 
 # v3.0.0 - Dec 10, 2017

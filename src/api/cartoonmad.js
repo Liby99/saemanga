@@ -171,7 +171,7 @@ module.exports = {
                 manga.info.author = _as[_as.length - 1];
                 var $tags = $t1.eq(12).children("td").children("a");
                 var _ta = Array.apply(1, { length: $tags.length });
-                manga.info.tags = _ta.map((n, i) => $tags.eq(i).text());
+                manga.info.tags = _ta.map((n, i) => $tags.eq(i).text()).filter((t) => t != "");
                 var _src = $t1.eq(6).find("img").last().attr("src");
                 manga.info.ended = _src && (_src.indexOf("9") > 0 ? true : false);
                 

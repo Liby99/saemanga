@@ -99,6 +99,20 @@ module.exports = {
         });
     },
     
+    getAndTouchUser (username, callback, error) {
+        var self = this;
+        this.getUser(username, function (user) {
+            if (user) {
+                self.touchUser(username, function () {
+                    callback(user);
+                }, error);
+            }
+            else {
+                callback(undefined);
+            }
+        }, error);
+    },
+    
     /**
      * Add a new user to the database specified by username and password. Will
      * abort if the username is already existed.
@@ -211,6 +225,26 @@ module.exports = {
                 else {
                     callback(false);
                 }
+            }
+        });
+    },
+    
+    touchUser (username, callback, error) {
+        Users.update({
+            "username": username
+        }, {
+            $set: {
+                "last_visit": new Date()
+            },
+            $inc: {
+                "visit_amount": 1
+            }
+        }, function (err, result) {
+            if (err) {
+                error(new Error("Error when updating user visit info: " + err));
+            }
+            else {
+                callback();
             }
         });
     },
