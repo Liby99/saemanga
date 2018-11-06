@@ -17,6 +17,50 @@ Now the system has semi-enforced user system, a much more robust front-end and
 back-end, and much more user-friendly functionalities such as scaling, managing,
 genre filtering and so on. In short future there will be even more great updates.
 
+# Getting Started
+
+First of all, make sure you installed [NodeJS](https://nodejs.org/) and
+[NPM](https://www.npmjs.com).
+
+To build this, please first clone this repository, cd into `src/` folder and then
+install the dependencies.
+
+```
+$ git clone https://github.com/Liby99/saemanga.git
+$ cd saemanga/
+$ cd src/
+$ npm install
+```
+
+If you want to integrate the Database, please also install 
+[MongoDB](https://www.mongodb.com), set it up, and create a schema called `manga`. 
+Then go to `src/data/` and create a file called `mongo.json` which contains
+
+```
+{
+  "host": "localhost",
+  "port": 27017,
+  "username": "<Your MongoDB Username>",
+  "password": "<Your MongoDB Password>",
+  "database": "manga"
+}
+```
+
+Then type
+
+```
+npm run dev
+```
+
+to start the development server. You will see a line called 
+
+```
+successfully connected to mongo db
+```
+
+if you have correctly setup your database. After that, you can go to your browser
+and type `localhost:8193` to visit the locally running website.
+
 # License
 
 Coming soon.
