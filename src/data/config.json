@@ -9,5 +9,6 @@
     "ajax_directory": "ajax",
     "router_directory": "router",
     "schedule_directory": "schedule",
-    "engine": "ejs-alt"
+    "engine": "ejs-alt",
+    "allow_cross_origin": false
 }
