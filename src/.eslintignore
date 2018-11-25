@@ -1,4 +1,4 @@
 script/
 node_modules/
 data/
-public/js/vendor
+public/js
