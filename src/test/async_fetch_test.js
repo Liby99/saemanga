@@ -57,25 +57,6 @@ const arr = [
   '1204',
 ];
 
-function runAsyncOld(callback) {
-  let count = 0;
-  function trigger() {
-    count++;
-    if (count == arr.length) {
-      callback();
-    }
-  }
-  for (let i = 0; i < arr.length; i++) {
-    Cartoonmad.getMangaInfo(arr[i], (info) => {
-      console.log(`Async Done fetching ${info.dmk_id}`);
-      trigger();
-    }, (err) => {
-      console.log(`fetch error: ${err}`);
-      process.exit(1);
-    });
-  }
-}
-
 function runAsync(callback) {
   Promise.all(arr, (dmkId, i, c, e) => {
     Cartoonmad.getMangaInfo(dmkId, (info) => {
@@ -91,7 +72,7 @@ function runAsync(callback) {
 function runSync(callback) {
   (function p(i) {
     if (i < arr.length) {
-      Cartoonmad.getMangaInfo(arr[i], (info) => {
+      Cartoonmad.getMangaInfo(arr[i], () => {
         console.log(`Sync Done fetching ${arr[i]}`);
         p(i + 1);
       }, (err) => {
@@ -114,7 +95,7 @@ function benchmark(func, callback) {
 
 benchmark(runAsync, (time) => {
   console.log(`Async runs ${time}s`);
-  benchmark(runSync, (time) => {
-    console.log(`Sync runs ${time}s`);
+  benchmark(runSync, (time2) => {
+    console.log(`Sync runs ${time2}s`);
   });
 });

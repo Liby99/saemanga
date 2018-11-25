@@ -1,4 +1,4 @@
-/* eslint no-console: off */
+/* eslint no-console: off, global-require: off */
 
 const assert = require('assert');
 const MongoUnitTest = require('./lib/mongo_unit_test');

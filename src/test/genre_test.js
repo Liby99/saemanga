@@ -6,11 +6,11 @@ const UnitTest = require('./lib/unit_test');
 
 UnitTest({
   tests: [
-    function testGet(next, error) {
+    function testGet(next) {
       console.log('-----Test Genre Get-----');
       const gs = Genre.get();
       console.log(gs);
-      assert(gs.length != 0);
+      assert(gs.length !== 0);
       next();
     },
   ],

@@ -1,4 +1,4 @@
-/* eslint no-console: off */
+/* eslint no-console: off, global-require: off */
 
 const assert = require('assert');
 const Cartoonmad = require('../api/cartoonmad');
@@ -9,9 +9,9 @@ UnitTest({
 
     (next, error) => {
       console.log('-----Testing Search Empty-----');
-      Cartoonmad.search('', (ids) => {
+      Cartoonmad.search('', () => {
         error(new Error('Should throw error'));
-      }, (err) => {
+      }, () => {
         console.log('passed');
         next();
       });
@@ -19,9 +19,9 @@ UnitTest({
 
     (next, error) => {
       console.log('-----Testing Search Trimmed Empty-----');
-      Cartoonmad.search('    ', (ids) => {
+      Cartoonmad.search('    ', () => {
         error(new Error('Should throw error'));
-      }, (err) => {
+      }, () => {
         console.log('passed');
         next();
       });
@@ -31,7 +31,7 @@ UnitTest({
       console.log('-----Testing search with no result-----');
       Cartoonmad.search('哈哈哈', (ids) => {
         try {
-          assert(ids.length == 0);
+          assert(ids.length === 0);
           console.log('passed');
           next();
         } catch (err) {
@@ -44,7 +44,7 @@ UnitTest({
       console.log('-----Testing 刀剑-----');
       Cartoonmad.search('刀剑', (ids) => {
         try {
-          assert(ids.length != 0);
+          assert(ids.length !== 0);
           console.log(ids);
           next();
         } catch (err) {
@@ -57,7 +57,7 @@ UnitTest({
       console.log('-----Testing 抱歉-----');
       Cartoonmad.search('抱歉', (ids) => {
         try {
-          assert(ids.length != 0);
+          assert(ids.length !== 0);
           console.log(ids);
           next();
         } catch (err) {
@@ -70,7 +70,7 @@ UnitTest({
       console.log('-----Testing 小埋-----');
       Cartoonmad.search('小埋', (ids) => {
         try {
-          assert(ids.length != 0);
+          assert(ids.length !== 0);
           console.log(ids);
           next();
         } catch (err) {

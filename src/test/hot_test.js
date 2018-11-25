@@ -1,6 +1,5 @@
-/* eslint no-console: off */
+/* eslint no-console: off, global-require: off */
 
-const assert = require('assert');
 const MongoUnitTest = require('./lib/mongo_unit_test');
 const Genre = require('../api/genre');
 const Cartoonmad = require('../api/cartoonmad');
@@ -17,7 +16,7 @@ MongoUnitTest({
     function testGet(next, error) {
       console.log('-----Testing Getting Latest Manga-----');
       Cartoonmad.getHotManga((ids) => {
-        console.log(`Latest: [${ids}]`);
+        console.log(ids);
         next();
       }, error);
     },
@@ -39,7 +38,6 @@ MongoUnitTest({
 
     function testAPIFetch(next, error) {
       console.log('-----Test Fetching-----');
-      const Hot = require('../api/hot');
       Hot.refresh(() => {
         console.log('Successfully Fetched All Hot Manga');
         next();
@@ -48,13 +46,12 @@ MongoUnitTest({
 
     function testGetFromDB(next, error) {
       console.log('-----Test Getting From DB-----');
-      const Hot = require('../api/hot');
-      Hot.getLatestIds((ids) => {
-        console.log(`Latest: [${ids}]`);
-        Hot.getIdsOfGenre('comic04', (ids) => {
-          console.log(`Comic 04: [${ids}]`);
-          Hot.getIdsOfGenre('comic18', (ids) => {
-            console.log(`Comic 18: [${ids}]`);
+      Hot.getLatestIds((ids1) => {
+        console.log(`Latest: [${ids1}]`);
+        Hot.getIdsOfGenre('comic04', (ids2) => {
+          console.log(`Comic 04: [${ids2}]`);
+          Hot.getIdsOfGenre('comic18', (ids3) => {
+            console.log(`Comic 18: [${ids3}]`);
             next();
           }, error);
         }, error);
