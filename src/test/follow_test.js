@@ -1,3 +1,5 @@
+/* eslint no-console: off */
+
 const assert = require('assert');
 const MongoUnitTest = require('./lib/mongo_unit_test');
 const Genre = require('../api/genre');

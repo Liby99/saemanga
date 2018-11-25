@@ -1,3 +1,5 @@
+/* eslint no-console: off */
+
 const Cartoonmad = require('../api/cartoonmad');
 const Promise = require('../api/lib/promise');
 

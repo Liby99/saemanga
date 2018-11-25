@@ -274,13 +274,13 @@ module.exports = {
         .children('table')
         .children('tbody')
         .children('tr');
-      let $r = $rs.eq(2);
+      const $r = $rs.eq(2);
 
       // Check if
       if ($r.text().indexOf('抱歉，資料庫找不到該漫畫。') >= 0) {
         callback([]);
       } else {
-        let tds = [$r.children()];
+        const tds = [$r.children()];
         const ids = [];
         for (let i = 4; i < $rs.length; i += 2) {
           tds.push($rs.eq(i).children());

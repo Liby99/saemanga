@@ -1,3 +1,5 @@
+/* eslint no-console: off */
+
 const assert = require('assert');
 const Cartoonmad = require('../api/cartoonmad');
 const UnitTest = require('./lib/unit_test');

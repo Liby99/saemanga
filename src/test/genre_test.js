@@ -1,3 +1,5 @@
+/* eslint no-console: off */
+
 const assert = require('assert');
 const Genre = require('../api/genre');
 const UnitTest = require('./lib/unit_test');
