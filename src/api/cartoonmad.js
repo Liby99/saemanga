@@ -10,14 +10,14 @@ const Request = require('./lib/request');
 const Chinese = require('./lib/chinese');
 
 // Url lists
-const BASE_URL = 'http://cartoonmad.com/';
+const BASE_URL = 'https://www.cartoonmad.com/';
 const SEARCH_URL = `${BASE_URL}search.html`;
 
 // Regex lists
 const COMIC_URL_REG = /^comic\/(\d+)\.html$/;
 const COMIC_GENRE_REG = /^\/(comic\d\d).html$/;
 const NUM_REG = /\d+/;
-const COMIC_IMG_SRC_REG = /^http:\/\/(web\d?)\.cartoonmad\.com\/([\w|\d]+)\//;
+const COMIC_IMG_SRC_REG = /^https:\/\/(web\d?)\.cartoonmad\.com\/([\w|\d]+)\//;
 
 function getMangaUrl(id) {
   return `${BASE_URL}comic/${id}.html`;
@@ -280,13 +280,13 @@ module.exports = {
       if ($r.text().indexOf('抱歉，資料庫找不到該漫畫。') >= 0) {
         callback([]);
       } else {
+        let tds = [$r.children()];
         const ids = [];
         for (let i = 4; i < $rs.length; i += 2) {
-          $r.append($rs.eq(i).children());
+          tds.push($rs.eq(i).children());
         }
-        $r = $r.children();
-        $r.each(function () {
-          const $a = $(this).children('a');
+        tds.forEach(($elem) => {
+          const $a = $elem.children('a');
           const href = $a.attr('href');
           const title = $a.text();
           if (href) {

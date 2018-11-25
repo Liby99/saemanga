@@ -84,7 +84,7 @@ module.exports = {
       } else {
         Manga.getByObjId(mangaId, (manga) => {
           if (manga) {
-            let isUpToDate; 
+            let isUpToDate;
             let currentEpisode;
             if (manga.books) {
               isUpToDate = false;

@@ -1,19 +1,59 @@
 const request = require('request');
 const cheerio = require('cheerio');
+const https = require('https');
 const http = require('http');
 const iconv = require('iconv-lite');
 const BufferHelper = require('bufferhelper');
 
-function parseUrl(url) {
-  const purl = url.indexOf('http://') === 0 ? url.substring(7) : url;
-  if (purl.indexOf('/') >= 0) {
-    const index = purl.indexOf('/');
+const httpPrefix = 'http://';
+const httpsPrefix = 'https://';
+
+function parseHttpUrl(url) {
+  const index = url.indexOf('/');
+  if (index >= 0) {
     return {
-      host: purl.substring(0, index),
-      path: purl.substring(index),
+      generator: http,
+      port: 80,
+      host: url.substring(0, index),
+      path: url.substring(index),
+    };
+  } else {
+    return {
+      generator: http,
+      port: 80,
+      host: url
     };
   }
-  return { host: purl };
+}
+
+function parseHttpsUrl(url) {
+  const index = url.indexOf('/');
+  if (index >= 0) {
+    return {
+      generator: https,
+      port: 443,
+      host: url.substring(0, index),
+      path: url.substring(index),
+    };
+  } else {
+    return {
+      generator: https,
+      port: 443,
+      host: url
+    };
+  }
+}
+
+function parseUrl(url) {
+  if (url.indexOf(httpsPrefix) === 0) {
+    return parseHttpsUrl(url.substring(httpsPrefix.length));
+  } else {
+    if (url.indexOf(httpPrefix) === 0) {
+      return parseHttpUrl(url.substring(httpPrefix.length));
+    } else {
+      return parseHttpUrl(url);
+    }
+  }
 }
 
 module.exports = {
@@ -31,11 +71,11 @@ module.exports = {
     });
   },
   post(url, data, success, error) {
-    const parsedUrl = parseUrl(url);
-    const req = http.request({
-      host: parsedUrl.host,
-      path: parsedUrl.path,
-      port: '80',
+    const { generator, port, host, path } = parseUrl(url);
+    const req = generator.request({
+      host,
+      path,
+      port,
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',

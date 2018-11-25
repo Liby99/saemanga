@@ -39,11 +39,11 @@ UnitTest({
     },
 
     (next, error) => {
-      console.log('-----Testing 抱歉-----');
-      Cartoonmad.search('抱歉', (ids) => {
+      console.log('-----Testing 刀剑-----');
+      Cartoonmad.search('刀剑', (ids) => {
         try {
           assert(ids.length != 0);
-          console.log(`[${ids}]`);
+          console.log(ids);
           next();
         } catch (err) {
           error(err);
@@ -52,11 +52,11 @@ UnitTest({
     },
 
     (next, error) => {
-      console.log('-----Testing 魔法-----');
-      Cartoonmad.search('魔法', (ids) => {
+      console.log('-----Testing 抱歉-----');
+      Cartoonmad.search('抱歉', (ids) => {
         try {
           assert(ids.length != 0);
-          console.log(`[${ids}]`);
+          console.log(ids);
           next();
         } catch (err) {
           error(err);
@@ -69,7 +69,7 @@ UnitTest({
       Cartoonmad.search('小埋', (ids) => {
         try {
           assert(ids.length != 0);
-          console.log(`[${ids}]`);
+          console.log(ids);
           next();
         } catch (err) {
           error(err);
