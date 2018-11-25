@@ -1,4 +1,3 @@
-const ObjectID = require('mongodb').ObjectID;
-module.exports = function (id) {
-    return (id instanceof ObjectID) ? id : ObjectID(id);
-}
+const { ObjectID } = require('mongodb');
+
+module.exports = id => ((id instanceof ObjectID) ? id : ObjectID(id));

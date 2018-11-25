@@ -1,7 +1,7 @@
-const Genre = require("../api/genre");
+const Genre = require('../api/genre');
 
 module.exports = {
-    "get": function (req, res) {
-        res.success(Genre.get());
-    }
-}
+  get(req, res) {
+    res.success(Genre.get());
+  },
+};

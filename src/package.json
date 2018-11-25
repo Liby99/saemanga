@@ -9,15 +9,20 @@
         "ejs-alt": "0.0.4",
         "iconv-lite": "^0.4.24",
         "keeling-js": "^1.3.22",
+        "mongodb": "^3.1.10",
         "request": "^2.88.0"
     },
     "devDependencies": {
+        "eslint": "^5.9.0",
+        "eslint-config-airbnb-base": "^13.1.0",
+        "eslint-config-google": "^0.11.0",
+        "eslint-plugin-import": "^2.14.0",
         "nodemon": "^1.18.6"
     },
     "scripts": {
         "dev": "nodemon --config data/nodemon.json saemanga.js",
         "start": "node saemanga.js",
-        "create-entry": "cp node_modules/keeling-js/entry.js ./app.js"
+        "lint": "./node_modules/.bin/eslint --fix ajax/**/*.js api/**/*.js test/**/*.js router/**/*.js"
     },
     "repository": {
         "type": "git",

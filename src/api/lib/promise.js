@@ -1,7 +1,7 @@
 module.exports = {
-    all (arr, func, cb, error) {
-        if (!arr.length) return cb();
-        var c = 0, t = () => { if (++c == arr.length) cb() }
-        for (var i = 0; i < arr.length; i++) func(arr[i], i, t, error);
-    }
-}
+  all(arr, func, cb, error) {
+    let c = 0;
+    const take = () => ++c === arr.length && cb(); // eslint-disable-line no-plusplus
+    arr.forEach((elem, i) => func(elem, i, take, error));
+  },
+};

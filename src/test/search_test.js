@@ -5,7 +5,7 @@ const UnitTest = require("./lib/unit_test");
 UnitTest({
     tests: [
         
-        function (next, error) {
+        (next, error) => {
             console.log("-----Testing Search Empty-----");
             Cartoonmad.search("", function (ids) {
                 error(new Error("Should throw error"));
@@ -15,7 +15,7 @@ UnitTest({
             });
         },
         
-        function (next, error) {
+        (next, error) => {
             console.log("-----Testing Search Trimmed Empty-----");
             Cartoonmad.search("    ", function (ids) {
                 error(new Error("Should throw error"));
@@ -25,7 +25,7 @@ UnitTest({
             });
         },
         
-        function (next, error) {
+        (next, error) => {
             console.log("-----Testing search with no result-----");
             Cartoonmad.search("哈哈哈", function (ids) {
                 try {
@@ -39,7 +39,7 @@ UnitTest({
             }, error)
         },
         
-        function (next, error) {
+        (next, error) => {
             console.log("-----Testing 抱歉-----");
             Cartoonmad.search("抱歉", function (ids) {
                 try {
@@ -53,7 +53,7 @@ UnitTest({
             }, error);
         },
         
-        function (next, error) {
+        (next, error) => {
             console.log("-----Testing 魔法-----");
             Cartoonmad.search("魔法", function (ids) {
                 try {
@@ -67,7 +67,7 @@ UnitTest({
             }, error);
         },
         
-        function (next, error) {
+        (next, error) => {
             console.log("-----Testing 小埋-----");
             Cartoonmad.search("小埋", function (ids) {
                 try {
