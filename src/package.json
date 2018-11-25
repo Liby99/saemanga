@@ -22,7 +22,7 @@
     "scripts": {
         "dev": "nodemon --config data/nodemon.json saemanga.js",
         "start": "node saemanga.js",
-        "lint": "./node_modules/.bin/eslint --fix ajax/**/*.js api/**/*.js test/**/*.js router/**/*.js"
+        "lint": "./node_modules/.bin/eslint --fix ajax/**/*.js api/**/*.js test/**/*.js router/**/*.js schedule/**/*.js"
     },
     "repository": {
         "type": "git",
