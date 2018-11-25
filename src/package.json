@@ -25,7 +25,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Liby99/SaeManga.git"
+        "url": "git+https://github.com/Liby99/saemanga.git"
     },
     "keywords": [
         "MangaReader"
@@ -33,7 +33,7 @@
     "author": "Liby99",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/Liby99/SaeManga/issues"
+        "url": "https://github.com/Liby99/saemanga/issues"
     },
-    "homepage": "https://github.com/Liby99/SaeManga#readme"
+    "homepage": "https://github.com/Liby99/saemanga#readme"
 }
