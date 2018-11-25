@@ -1,5 +1,5 @@
 {
-    "ignore": [],
-    "delay": "3000",
-    "ext": "js json html"
+  "ignore": [],
+  "delay": "3000",
+  "ext": "js json html"
 }
