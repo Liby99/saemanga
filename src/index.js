@@ -1,6 +1,6 @@
 // Require the library
-var keeling = require("keeling-js");
+const keeling = require('keeling-js');
 
 // Create and start server
-var server = keeling.createServer();
+const server = keeling.createServer();
 server.start();
