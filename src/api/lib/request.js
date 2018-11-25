@@ -17,13 +17,12 @@ function parseHttpUrl(url) {
       host: url.substring(0, index),
       path: url.substring(index),
     };
-  } else {
-    return {
-      generator: http,
-      port: 80,
-      host: url
-    };
   }
+  return {
+    generator: http,
+    port: 80,
+    host: url,
+  };
 }
 
 function parseHttpsUrl(url) {
@@ -35,25 +34,22 @@ function parseHttpsUrl(url) {
       host: url.substring(0, index),
       path: url.substring(index),
     };
-  } else {
-    return {
-      generator: https,
-      port: 443,
-      host: url
-    };
   }
+  return {
+    generator: https,
+    port: 443,
+    host: url,
+  };
 }
 
 function parseUrl(url) {
   if (url.indexOf(httpsPrefix) === 0) {
     return parseHttpsUrl(url.substring(httpsPrefix.length));
-  } else {
-    if (url.indexOf(httpPrefix) === 0) {
-      return parseHttpUrl(url.substring(httpPrefix.length));
-    } else {
-      return parseHttpUrl(url);
-    }
   }
+  if (url.indexOf(httpPrefix) === 0) {
+    return parseHttpUrl(url.substring(httpPrefix.length));
+  }
+  return parseHttpUrl(url);
 }
 
 module.exports = {
@@ -71,7 +67,9 @@ module.exports = {
     });
   },
   post(url, data, success, error) {
-    const { generator, port, host, path } = parseUrl(url);
+    const {
+      generator, port, host, path,
+    } = parseUrl(url);
     const req = generator.request({
       host,
       path,
