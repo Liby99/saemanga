@@ -1,3 +1,9 @@
+# v3.1.0 - Nov 25, 2018
+
+- Fixed search bug
+- Added eslint and improved lots of code quality issues
+- Updated packages and got rid of security issue
+
 # v3.0.1 - Dec 16, 2017
 
 - Changed scheduler. Fetch latest hot manga every hour but genre mangas every
