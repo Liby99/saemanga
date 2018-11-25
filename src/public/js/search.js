@@ -21,9 +21,7 @@ var Search = {
             $(this).children("input").focus();
         });
         
-        
-        
-        asdaasdfasdfthis.$form.on("submit", function() {
+        this.$form.on("submit", function() {
             self.showLoading();
             var val = self.$input.val().trim();
             if (val && val.length > 0) {
