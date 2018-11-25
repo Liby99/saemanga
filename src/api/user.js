@@ -2,14 +2,13 @@ const Crypto = require('keeling-js/lib/crypto');
 const Mongo = require('keeling-js/lib/mongo');
 
 const Users = Mongo.db.collection('user');
-const ObjectID = require('mongodb').ObjectID;
 
-const usernameReg = /^[A-Za-z0-9@\-\_\.\#\*]{4,16}$/;
-const passwordReg = /^[A-Za-z0-9@\-\_\.\#\*]{8,32}$/;
+const usernameReg = /^[A-Za-z0-9@-_.#*]{4,16}$/;
+const passwordReg = /^[A-Za-z0-9@-_.#*]{8,32}$/;
 
-const defaultLightMode = 'day';
-const defaultHandMode = 'right';
-const defaultScale = 100;
+// const defaultLightMode = 'day';
+// const defaultHandMode = 'right';
+// const defaultScale = 100;
 
 function validateUsername(username) {
   if (!username) {
@@ -128,10 +127,10 @@ module.exports = {
         error(new Error(`Username ${username} has already existed`));
       } else {
         // Then encrypt the password and save the entry to database
-        var user = generateUser(username, password);
-        Users.insertOne(user, (err, res) => {
-          if (err) {
-            error(new Error(`Error inserting new user ${username}: ${err}`));
+        const genUser = generateUser(username, password);
+        Users.insertOne(genUser, (err2, res) => {
+          if (err2) {
+            error(new Error(`Error inserting new user ${username}: ${err2}`));
           } else {
             callback(res.insertedId);
           }
@@ -153,7 +152,7 @@ module.exports = {
       if (err) {
         error(new Error(`Error when removing user ${username}: ${err}`));
       } else {
-        callback(ret.result.n != 0);
+        callback(ret.result.n !== 0);
       }
     });
   },
@@ -189,9 +188,9 @@ module.exports = {
           $set: {
             password: encNewPwd,
           },
-        }, (err, result) => {
-          if (err) {
-            error(new Error(`Error when updating user ${username} password: ${err}`));
+        }, (err2) => {
+          if (err2) {
+            error(new Error(`Error when updating user ${username} password: ${err2}`));
           } else {
             callback(true);
           }
@@ -212,7 +211,7 @@ module.exports = {
       $inc: {
         visit_amount: 1,
       },
-    }, (err, result) => {
+    }, (err) => {
       if (err) {
         error(new Error(`Error when updating user visit info: ${err}`));
       } else {
@@ -257,9 +256,9 @@ module.exports = {
               login_amount: 1,
               visit_amount: 1,
             },
-          }, (err, result) => {
-            if (err) {
-              error(new Error(`Error when updating user login info: ${err}`));
+          }, (err2) => {
+            if (err2) {
+              error(new Error(`Error when updating user login info: ${err2}`));
             } else {
               callback(true);
             }

@@ -25,14 +25,14 @@ function getMangaUrl(id) {
 
 function getEpisodeList($rs) {
   const arr = [];
-  for (let i = 1; i < $rs.length; i++) {
+  for (let i = 1; i < $rs.length; i += 1) {
     const $ds = $rs.eq(i).children('td');
-    for (let j = 1; j < $ds.length; j++) {
+    for (let j = 1; j < $ds.length; j += 1) {
       const $e = $ds.eq(j);
       const _epi = $e.text().trim();
       const _mepi = _epi.match(NUM_REG);
       if (_mepi) {
-        arr.push(parseInt(_mepi[0]));
+        arr.push(parseInt(_mepi[0], 10));
       } else {
         throw new Error('Error matching episode list');
       }
@@ -66,7 +66,7 @@ function extractHotMangaId($) {
   const ids = [];
 
   // Go through every element to get the id and append to ids
-  $r.each(function () {
+  $r.each(() => {
     const href = $(this).children('a').attr('href');
     if (href) {
       const m = href.match(COMIC_URL_REG);
@@ -90,14 +90,15 @@ function extractHotMangaId($) {
 
 function getHotMangaWithUrl(url, callback, error) {
   Request.get(url, (res, $) => {
+    let extracted;
     try {
-      var extracted = extractHotMangaId($);
+      extracted = extractHotMangaId($);
     } catch (err) {
       error(err);
       return;
     }
     callback(extracted);
-  }, (err) => {
+  }, () => {
     error(new Error('Internet connection error'));
   });
 }
@@ -188,7 +189,7 @@ module.exports = {
         manga.info.author = _as[_as.length - 1];
         const $tags = $t1.eq(12).children('td').children('a');
         const _ta = Array.apply(1, { length: $tags.length });
-        manga.info.tags = _ta.map((n, i) => $tags.eq(i).text()).filter(t => t != '');
+        manga.info.tags = _ta.map((n, i) => $tags.eq(i).text()).filter(t => t !== '');
         const _src = $t1.eq(6).find('img').last().attr('src');
         manga.info.ended = _src && (_src.indexOf('9') > 0);
 
@@ -198,7 +199,7 @@ module.exports = {
 
         // Get books and episodes
         const $t3 = $m.eq(2).find('tbody tr td fieldset table');
-        if ($t3.length == 1) {
+        if ($t3.length === 1) {
           manga.episodes = getEpisodeList($t3.eq(0).find('tbody tr'));
         } else {
           manga.books = getEpisodeList($t3.eq(0).find('tbody tr'));
@@ -211,8 +212,8 @@ module.exports = {
           .children('a')
           .attr('href')
           .substring(1);
-        Request.get(BASE_URL + epiHref, (res, $) => {
-          const src = $('body > table > tbody > tr').eq(4).children('td')
+        Request.get(BASE_URL + epiHref, (res2, $2) => {
+          const src = $2('body > table > tbody > tr').eq(4).children('td')
             .children('table')
             .children('tbody')
             .children('tr')
@@ -225,9 +226,12 @@ module.exports = {
           if (src) {
             const msrc = src.match(COMIC_IMG_SRC_REG);
             if (msrc) {
-              manga.dmk_id_web = msrc[1];
-              manga.dmk_id_gen = msrc[2];
-              callback(manga);
+              const [, dmkIdWeb, dmkIdGen] = msrc;
+              callback({
+                ...manga,
+                dmk_id_web: dmkIdWeb,
+                dmk_id_gen: dmkIdGen,
+              });
             } else {
               error(new Error('Img src info extraction error'));
             }
@@ -245,12 +249,12 @@ module.exports = {
 
   search(str, callback, error) {
     // First process the string and get the query arguments
-    str = str.trim();
-    if (!str || !str.trim().length) {
+    const s = str.trim();
+    if (!s || !s.trim().length) {
       error(new Error('Search text cannot be empty'));
       return;
     }
-    const query = getSearchQuery(Chinese.traditionalize(str.trim()));
+    const query = getSearchQuery(Chinese.traditionalize(s.trim()));
 
     // Then go to the search request
     Request.post(SEARCH_URL, query, (res, $) => {
