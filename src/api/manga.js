@@ -190,14 +190,14 @@ module.exports = {
               update_date: new Date(),
             }, (err2) => {
               if (err2) {
-                Debug.error(`Error inserting manga ${dmkId}`);
+                Debug.error(`Error inserting manga ${dmkId}: ${err2}`);
               } else {
                 Debug.log(`Successfully updated manga ${dmkId}`);
               }
               c();
             });
-          }, () => {
-            Debug.error(`Error updating manga ${dmkId}`);
+          }, (err2) => {
+            Debug.error(`Error updating manga ${dmkId}: ${err2}`);
             c();
           });
         }, callback, error);

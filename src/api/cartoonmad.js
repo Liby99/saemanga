@@ -17,7 +17,7 @@ const SEARCH_URL = `${BASE_URL}search.html`;
 const COMIC_URL_REG = /^comic\/(\d+)\.html$/;
 const COMIC_GENRE_REG = /^\/(comic\d\d).html$/;
 const NUM_REG = /\d+/;
-const COMIC_IMG_SRC_REG = /^https:\/\/(web\d?)\.cartoonmad\.com\/([\w|\d]+)\//;
+const COMIC_IMG_SRC_REG = /^https?:\/\/(web\d?)\.cartoonmad\.com\/([\w|\d]+)\//;
 
 function getMangaUrl(id) {
   return `${BASE_URL}comic/${id}.html`;
@@ -284,30 +284,21 @@ module.exports = {
       if ($r.text().indexOf('抱歉，資料庫找不到該漫畫。') >= 0) {
         callback([]);
       } else {
-        const tds = [$r.children()];
-        const ids = [];
-        for (let i = 4; i < $rs.length; i += 2) {
-          tds.push($rs.eq(i).children());
-        }
-        tds.forEach(($elem) => {
-          const $a = $elem.children('a');
-          const href = $a.attr('href');
-          const title = $a.text();
-          if (href) {
+        const ms = $rs.filter(i => i > 0 && i % 2 === 0).map((i, e) => {
+          const $a = $(e).children().eq(0).children('a');
+          return { href: $a.attr('href'), title: $a.text() };
+        }).get().filter(({ href, title }) => !!href && !!title && href.trim() !== '' && title.trim() !== '')
+          .reduce((arr, { href, title }) => {
             const m = href.match(COMIC_URL_REG);
             if (m) {
-              ids.push({
+              return arr.concat({
                 dmk_id: m[1],
                 title,
               });
-            } else {
-              error(new Error('Error when matching id'));
             }
-          } else {
-            error(new Error('Error finding manga href'));
-          }
-        });
-        callback(ids);
+            return arr;
+          }, []);
+        callback(ms);
       }
     }, error);
   },
