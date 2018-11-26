@@ -10,6 +10,7 @@ const username = 'test_user_1';
 
 let userId;
 let mangaId;
+let maxEpi;
 
 MongoUnitTest({
   begin(cb) {
@@ -31,6 +32,7 @@ MongoUnitTest({
       const dmkId = 5827;
       Manga.get(dmkId, (manga) => {
         mangaId = manga._id;
+        maxEpi = manga.episodes[manga.episodes.length - 1];
         next();
       }, error);
     },
@@ -164,14 +166,14 @@ MongoUnitTest({
 
     (next, error) => {
       console.log('-----Testing read 3-----');
-      Follow.read(userId, mangaId, 10, () => {
+      Follow.read(userId, mangaId, maxEpi, () => {
         Follow.getFollow(userId, mangaId, (follow) => {
           try {
             const curr = follow.current_episode;
             const max = follow.max_episode;
             const isUpToDate = follow.up_to_date;
-            assert(curr === 10);
-            assert(max === 10);
+            assert(curr === maxEpi);
+            assert(max === maxEpi);
             assert(isUpToDate === true);
             console.log('passed');
             next();
@@ -191,7 +193,7 @@ MongoUnitTest({
             const max = follow.max_episode;
             const isUpToDate = follow.up_to_date;
             assert(curr === 1);
-            assert(max === 10);
+            assert(max === maxEpi);
             assert(isUpToDate === true);
             console.log('passed');
             next();
