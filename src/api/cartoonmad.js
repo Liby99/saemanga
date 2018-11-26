@@ -1,9 +1,3 @@
-/**
- * Cartoonmad Scrapper
- * @author Liby99
- * @date 2017/11/28
- */
-
 const Debug = require('keeling-js/lib/debug');
 const Iconv = require('iconv-lite');
 const Request = require('./lib/request');
@@ -249,12 +243,11 @@ module.exports = {
 
   search(str, callback, error) {
     // First process the string and get the query arguments
-    const s = str.trim();
-    if (!s || !s.trim().length) {
+    if (!str || !str.trim().length) {
       error(new Error('Search text cannot be empty'));
       return;
     }
-    const query = getSearchQuery(Chinese.traditionalize(s.trim()));
+    const query = getSearchQuery(Chinese.traditionalize(str.trim()));
 
     // Then go to the search request
     Request.post(SEARCH_URL, query, (res, $) => {
