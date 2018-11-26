@@ -57,29 +57,10 @@ function extractHotMangaId($) {
     .children('tbody')
     .children('tr');
   const $r = $rs.eq(2).append($rs.eq(4).children()).children();
-  const ids = [];
-
-  // Go through every element to get the id and append to ids
-  $r.each(() => {
-    const href = $(this).children('a').attr('href');
-    if (href) {
-      const m = href.match(COMIC_URL_REG);
-      if (m) {
-        ids.push(m[1]);
-      } else {
-        throw new Error('Error when matching id');
-      }
-    } else {
-      throw new Error('Error finding manga href');
-    }
-  });
-
-  // Check if there is id
-  if (ids.length) {
-    return ids;
-  }
-
-  throw new Error('No hot manga id found');
+  return $r.map((i, e) => $(e).children('a').attr('href')).get().reduce((ids, url) => {
+    const m = url.match(COMIC_URL_REG);
+    return m ? ids.concat(m[1]) : ids;
+  }, []);
 }
 
 function getHotMangaWithUrl(url, callback, error) {
