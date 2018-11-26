@@ -1,6 +1,6 @@
 function toCamel(str) {
   const cfl = s => s[0].toUpperCase() + s.substring(1);
-  return str.split('_').filter(s => s !== '').map((s, i) => (i === 0 ? s : cfl(str))).join('');
+  return str.split('_').filter(s => s !== '').map((s, i) => (i === 0 ? s : cfl(s))).join('');
 }
 
 function clone(data) {

@@ -9,9 +9,9 @@ function getFirstEpisode(manga) {
 
 function isValidEpisode(manga, epi) {
   const pepi = parseInt(epi, 10);
-  if (Number.isNaN(pepi)) {
-    const hasBook = manga.books && manga.books.indexOf(pepi) >= 0;
-    const hasEpi = manga.episodes.indexOf(epi) >= 0;
+  if (!Number.isNaN(pepi)) {
+    const hasBook = manga.books && pepi in manga.books;
+    const hasEpi = pepi in manga.episodes;
     return hasBook || hasEpi;
   }
   return false;
@@ -63,8 +63,9 @@ function isFollowing(req, res, user, manga, yes, no) {
 }
 
 function checkEpisode(req, res, user, manga, hasEpisode, noEpisode) {
-  if (req.query.epi) {
-    if (isValidEpisode(manga, req.query.epi)) {
+  const { epi } = req.query;
+  if (epi) {
+    if (isValidEpisode(manga, epi)) {
       hasEpisode();
     } else {
       res.error(404, '该章节不存在');
