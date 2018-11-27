@@ -1,3 +1,4 @@
+const Debug = require('keeling-js/lib/debug');
 const User = require('../api/user');
 const Follow = require('../api/follow');
 const MangaAPI = require('../api/manga');
@@ -9,12 +10,11 @@ function getFirstEpisode(manga) {
 
 function isValidEpisode(manga, epi) {
   const pepi = parseInt(epi, 10);
-  if (!Number.isNaN(pepi)) {
-    const hasBook = manga.books && pepi in manga.books;
-    const hasEpi = pepi in manga.episodes;
-    return hasBook || hasEpi;
-  }
-  return false;
+  const isNum = !Number.isNaN(pepi);
+  const hasBook = manga.books && (pepi in manga.books);
+  const hasEpi = pepi in manga.episodes;
+  Debug.log(`${isNum}, ${hasBook}, ${hasEpi}`);
+  return isNum && (hasBook || hasEpi);
 }
 
 function getMangaInfo(req, res, callback) {
