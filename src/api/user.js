@@ -3,8 +3,8 @@ const Mongo = require('keeling-js/lib/mongo');
 
 const Users = Mongo.db.collection('user');
 
-const usernameReg = /^[A-Za-z0-9@-_.#*]{4,16}$/;
-const passwordReg = /^[A-Za-z0-9@-_.#*]{8,32}$/;
+const usernameReg = /^[A-Za-z0-9@\-_.#*]{4,16}$/;
+const passwordReg = /^[A-Za-z0-9@\-_.#*]{8,32}$/;
 
 // const defaultLightMode = 'day';
 // const defaultHandMode = 'right';
