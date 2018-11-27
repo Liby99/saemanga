@@ -43,7 +43,7 @@ module.exports = {
         res.error(6, '对不起，您的用户名或密码输入错误');
       }
     }, (err) => {
-      Debug.errro(err);
+      Debug.error(err);
       res.error(1, err);
     });
   },
