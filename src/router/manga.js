@@ -13,7 +13,7 @@ function isValidEpisode(manga, epi) {
   const isNum = !Number.isNaN(pepi);
   const hasBook = manga.books && (pepi in manga.books);
   const hasEpi = pepi in manga.episodes;
-  Debug.log(manga);
+  Debug.log(JSON.stringify(manga));
   Debug.log(`${pepi}, ${isNum}, ${hasBook}, ${hasEpi}`);
   return isNum && (hasBook || hasEpi);
 }
