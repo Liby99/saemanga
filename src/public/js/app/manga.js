@@ -77,7 +77,7 @@ class Manga {
     }
     
     getCoverUrl () {
-        return "http://img.cartoonmad.com/ctimg/" + this.data.dmkId + ".jpg";
+        return "http://cartoonmad.com/cartoonimg/ctimg/" + this.data.dmkId + ".jpg";
     }
     
     getCartoonmadUrl () {
