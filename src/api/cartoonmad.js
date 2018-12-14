@@ -1,3 +1,4 @@
+const assert = require('assert');
 const Debug = require('keeling-js/lib/debug');
 const Iconv = require('iconv-lite');
 const Request = require('./lib/request');
@@ -11,7 +12,7 @@ const SEARCH_URL = `${BASE_URL}search.html`;
 const COMIC_URL_REG = /^comic\/(\d+)\.html$/;
 const COMIC_GENRE_REG = /^\/(comic\d\d).html$/;
 const NUM_REG = /\d+/;
-const COMIC_IMG_SRC_REG = /^https?:\/\/(web\d?)\.cartoonmad\.com\/([\w|\d]+)\//;
+const COMIC_IMG_SRC_REG = /^\/cartoonimg\/([\d\w]+)\/(\d+)\/\d+\/\d+\.jpg$/;
 
 function getMangaUrl(id) {
   return `${BASE_URL}comic/${id}.html`;
@@ -188,31 +189,34 @@ module.exports = {
           .attr('href')
           .substring(1);
         Request.get(BASE_URL + epiHref, (res2, $2) => {
-          const src = $2('body > table > tbody > tr').eq(4).children('td')
+          const $tr = $2('body > table > tbody > tr').eq(4);
+          const $a = $tr.children('td')
             .children('table')
             .children('tbody')
             .children('tr')
             .eq(0)
             .children('td')
             .eq(0)
-            .children('a')
-            .children('img')
-            .attr('src');
+            .children('a');
+          const $img = $a.children('img');
+          const src = $img.attr('src');
           if (src) {
             const msrc = src.match(COMIC_IMG_SRC_REG);
             if (msrc) {
-              const [, dmkIdWeb, dmkIdGen] = msrc;
+              const [, dmkIdGen, dmkIdRep] = msrc;
+              assert.equal(dmkIdRep, dmkId);
               callback({
                 ...manga,
-                dmk_id_web: dmkIdWeb,
+                // dmk_id_web: dmkIdWeb,
                 dmk_id_gen: dmkIdGen,
               });
             } else {
+              Debug.error(`Unable to match img src info from ${src}`);
               error(new Error('Img src info extraction error'));
             }
           } else {
-            Debug.error(`Error extracting manga ${dmkId} img src info`);
-            error(new Error('Img src info extraction error'));
+            Debug.error(`Cannot get manga ${dmkId} img src info`);
+            error(new Error(`Cannot get image src for manga ${dmkId}`));
           }
         }, error);
       } catch (err) {

@@ -73,7 +73,7 @@ class Manga {
     
     getImageUrl (epi, page) {
         var p3 = (n) => n < 10 ? ("00" + n) : n < 100 ? ("0" + n) : n;
-        return "http://" + this.data.dmkIdWeb + ".cartoonmad.com/" + this.data.dmkIdGen + "/" + this.data.dmkId + "/" + p3(epi) + "/" + p3(page) + ".jpg";
+        return "http://www.cartoonmad.com/cartoonimg/" + this.data.dmkIdGen + "/" + this.data.dmkId + "/" + p3(epi) + "/" + p3(page) + ".jpg";
     }
     
     getCoverUrl () {

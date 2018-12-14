@@ -29,8 +29,8 @@ MongoUnitTest({
     },
 
     (next, error) => {
-      console.log('-----Testing Scrapper Get Manga 1152-----');
-      Cartoonmad.getMangaInfo(1152, (info) => {
+      console.log('-----Testing Scrapper Get Manga 5687-----');
+      Cartoonmad.getMangaInfo(5687, (info) => {
         console.log(info);
         next();
       }, error);

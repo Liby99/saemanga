@@ -32,9 +32,9 @@ module.exports = class Manga {
     return this.data.dmkIdGen;
   }
 
-  dmkIdWeb() {
-    return this.data.dmkIdWeb;
-  }
+  // dmkIdWeb() {
+  //   return this.data.dmkIdWeb;
+  // }
 
   title() {
     return this.data.info.title;
@@ -86,8 +86,9 @@ module.exports = class Manga {
   }
 
   getImageUrl(epi, page) {
+    const { dmkIdGen, dmkId } = this.data;
     const p3 = itg => itg.toString().padStart(3, '0');
-    return `http://${this.data.dmkIdWeb}.cartoonmad.com/${this.data.dmkIdGen}/${this.data.dmkId}/${p3(epi)}/${p3(page)}.jpg`;
+    return `http://www.cartoonmad.com/cartoonimg/${dmkIdGen}/${dmkId}/${p3(epi)}/${p3(page)}.jpg`;
   }
 
   getCoverUrl() {
