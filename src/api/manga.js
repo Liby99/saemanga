@@ -208,7 +208,11 @@ module.exports = {
             });
           }, (err2) => {
             Debug.error(`Error updating manga ${dmkId}: ${err2}`);
-            c();
+            Mangas.findOneAndUpdate({
+              dmk_id: dmkId,
+            }, {
+              update_date: new Date(),
+            }, c);
           });
         }, callback, error);
       }
