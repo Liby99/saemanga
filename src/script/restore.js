@@ -1,3 +1,4 @@
+/* eslint-disable */
 const RunScript = require("./lib/run_script");
 const Promise = require("../api/lib/promise");
 var Mongo, FollowDB, UserDB, MangaDB;
