@@ -25,6 +25,16 @@ function hasUpdate(oldManga, newManga) {
 
 module.exports = {
 
+  count(callback, error) {
+    Mangas.count({}, (err, result) => {
+      if (err) {
+        error(err);
+      } else {
+        callback(result);
+      }
+    });
+  },
+
   get(dmkId, callback, error) {
     Mangas.findOne({ dmk_id: dmkId }, (err, foundManga) => {
       if (err) {
