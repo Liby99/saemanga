@@ -180,6 +180,17 @@ module.exports = {
     }, callback, error);
   },
 
+  updateAllMangas(callback, error) {
+    Mangas.find({}).toArray((err, mangas) => {
+      if (err) {
+        error(err);
+      } else {
+        Debug.log(`There are ${mangas.length} mangas in total`);
+        this.updateMulti(mangas, callback, error);
+      }
+    });
+  },
+
   updateOldest50(callback, error) {
     Mangas.find({
       'info.ended': false,
@@ -190,31 +201,59 @@ module.exports = {
         error(err);
       } else {
         Debug.log(`There are ${mangas.length} mangas in total`);
-        Promise.all(mangas, ({ dmk_id: dmkId, insert_date: insertDate }, i, c) => {
-          Cartoonmad.getMangaInfo(dmkId, (ni) => {
-            Mangas.findOneAndUpdate({
-              dmk_id: dmkId,
-            }, {
-              ...ni,
-              insert_date: insertDate,
-              update_date: new Date(),
-            }, (err2) => {
-              if (err2) {
-                Debug.error(`Error inserting manga ${dmkId}: ${err2}`);
-              } else {
-                Debug.log(`Successfully updated manga ${dmkId}`);
-              }
-              c();
-            });
-          }, (err2) => {
-            Debug.error(`Error updating manga ${dmkId}: ${err2}`);
-            Mangas.findOneAndUpdate({
-              dmk_id: dmkId,
-            }, {
-              update_date: new Date(),
-            }, c);
-          });
-        }, callback, error);
+        this.updateMulti(mangas, callback, error);
+      }
+    });
+  },
+
+  updateEnded(callback, error) {
+    Mangas.find({
+      'info.ended': true,
+    }).toArray((err, mangas) => {
+      if (err) {
+        error(err);
+      } else {
+        Debug.log(`There are ${mangas.length} ended mangas in total`);
+        this.updateMulti(mangas, callback, error);
+      }
+    });
+  },
+
+  updateMulti(mangas, callback, error) {
+    Promise.all(mangas, ({ dmk_id: dmkId, insert_date: insertDate }, i, c) => {
+      Cartoonmad.getMangaInfo(dmkId, (ni) => {
+        Mangas.findOneAndUpdate({
+          dmk_id: dmkId,
+        }, {
+          ...ni,
+          insert_date: insertDate,
+          update_date: new Date(),
+        }, (err2) => {
+          if (err2) {
+            Debug.error(`Error inserting manga ${dmkId}: ${err2}`);
+            this.touch(dmkId, c, c);
+          } else {
+            Debug.log(`Successfully updated manga ${dmkId}`);
+            c();
+          }
+        });
+      }, (err2) => {
+        Debug.error(`Error updating manga ${dmkId}: ${err2}`);
+        this.touch(dmkId, c, c);
+      });
+    }, callback, error);
+  },
+
+  touch(dmkId, callback, error) {
+    Mangas.findOneAndUpdate({
+      dmk_id: dmkId,
+    }, {
+      update_date: new Date(),
+    }, (err) => {
+      if (err) {
+        error(err);
+      } else {
+        callback();
       }
     });
   },

@@ -86,8 +86,13 @@ module.exports = class Manga {
   }
 
   getImageUrl(epi, page) {
-    const { dmkIdGen, dmkId } = this.data;
+    const {
+      isOldId, dmkIdWeb, dmkIdGen, dmkId,
+    } = this.data;
     const p3 = itg => itg.toString().padStart(3, '0');
+    if (isOldId) {
+      return `http://${dmkIdWeb}.cartoonmad.com/${dmkIdGen}/${dmkId}/${p3(epi)}/${p3(page)}.jpg`;
+    }
     return `http://www.cartoonmad.com/cartoonimg/${dmkIdGen}/${dmkId}/${p3(epi)}/${p3(page)}.jpg`;
   }
 

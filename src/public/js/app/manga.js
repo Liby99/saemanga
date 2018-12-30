@@ -72,8 +72,14 @@ class Manga {
     }
     
     getImageUrl (epi, page) {
-        var p3 = (n) => n < 10 ? ("00" + n) : n < 100 ? ("0" + n) : n;
-        return "http://www.cartoonmad.com/cartoonimg/" + this.data.dmkIdGen + "/" + this.data.dmkId + "/" + p3(epi) + "/" + p3(page) + ".jpg";
+        var p3 = itg => itg.toString().padStart(3, '0');
+        var dmkId = this.data.dmkId, dmkIdWeb = this.data.dmkIdWeb, dmkIdGen = this.data.dmkIdGen;
+        var isOldId = this.data.isOldId;
+        if (isOldId) {
+            return 'http://' + dmkIdWeb + '.cartoonmad.com/' + dmkIdGen + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
+        } else {
+            return 'http://www.cartoonmad.com/cartoonimg/' + dmkIdGen + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
+        }
     }
     
     getCoverUrl () {
