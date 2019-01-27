@@ -26,7 +26,10 @@
         }
     },
     "lint-staged": {
-        "*.js": ["./node_modules/.bin/eslint --fix", "git add"]
+        "*.js": [
+            "./node_modules/.bin/eslint --fix",
+            "git add"
+        ]
     },
     "scripts": {
         "dev": "nodemon --config data/nodemon.json index.js",
