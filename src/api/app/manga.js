@@ -87,17 +87,22 @@ module.exports = class Manga {
 
   getImageUrl(epi, page) {
     const {
-      isOldId, dmkIdWeb, dmkIdGen, dmkId,
+      idVer, isOldId, dmkIdWeb, dmkIdGen, dmkId,
     } = this.data;
     const p3 = itg => itg.toString().padStart(3, '0');
-    if (isOldId) {
-      return `http://${dmkIdWeb}.cartoonmad.com/${dmkIdGen}/${dmkId}/${p3(epi)}/${p3(page)}.jpg`;
+    switch (idVer) {
+      case 3: {
+        return `http://www.cartoonmad.com/home1/${dmkIdGen}/${dmkId}/${p3(epi)}/${p3(page)}.jpg`;
+      }
+      default: {
+        if (isOldId) return `http://${dmkIdWeb}.cartoonmad.com/${dmkIdGen}/${dmkId}/${p3(epi)}/${p3(page)}.jpg`;
+        return `http://www.cartoonmad.com/cartoonimg/${dmkIdGen}/${dmkId}/${p3(epi)}/${p3(page)}.jpg`;
+      }
     }
-    return `http://www.cartoonmad.com/cartoonimg/${dmkIdGen}/${dmkId}/${p3(epi)}/${p3(page)}.jpg`;
   }
 
   getCoverUrl() {
-    return `http://cartoonmad.com/cartoonimg/ctimg/${this.data.dmkId}.jpg`;
+    return `http://cartoonmad.com/home1/cnimg/${this.data.dmkId}.jpg`;
   }
 
   getCartoonmadUrl() {

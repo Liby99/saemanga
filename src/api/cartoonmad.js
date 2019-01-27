@@ -12,6 +12,7 @@ const SEARCH_URL = `${BASE_URL}search.html`;
 const COMIC_URL_REG = /^comic\/(\d+)\.html$/;
 const COMIC_GENRE_REG = /^\/(comic\d\d).html$/;
 const NUM_REG = /\d+/;
+const COMIC_IMG_SRC_REG_NEW = /^\/home1\/([\d\w]+)\/(\d+)\/\d+\/\d+\.jpg$/;
 const COMIC_IMG_SRC_REG = /^\/cartoonimg\/([\d\w]+)\/(\d+)\/\d+\/\d+\.jpg$/;
 const COMIC_IMG_SRC_REG_OLD = /^https?:\/\/(web\d?)\.cartoonmad\.com\/([\w|\d]+)\//;
 
@@ -202,31 +203,45 @@ module.exports = {
           const $img = $a.children('img');
           const src = $img.attr('src');
           if (src) {
-            // Use new regex
-            const msrc = src.match(COMIC_IMG_SRC_REG);
-            if (msrc) {
-              const [, dmkIdGen, dmkIdRep] = msrc;
+            // Regex version 3
+            const nsrc = src.match(COMIC_IMG_SRC_REG_NEW);
+            if (nsrc) {
+              const [, dmkIdGen, dmkIdRep] = nsrc;
               assert.equal(dmkIdRep, dmkId);
               callback({
                 ...manga,
-                is_old_id: false,
+                id_ver: 3,
                 dmk_id_gen: dmkIdGen,
               });
             } else {
-              // If new regex not working, use old regex
-              const omsrc = src.match(COMIC_IMG_SRC_REG_OLD);
-              if (omsrc) {
-                const [, dmkIdWeb, dmkIdGen] = omsrc;
+              // Regex version 2
+              const msrc = src.match(COMIC_IMG_SRC_REG);
+              if (msrc) {
+                const [, dmkIdGen, dmkIdRep] = msrc;
+                assert.equal(dmkIdRep, dmkId);
                 callback({
                   ...manga,
-                  is_old_id: true,
-                  dmk_id_web: dmkIdWeb,
+                  is_ver: 2,
+                  is_old_id: false,
                   dmk_id_gen: dmkIdGen,
                 });
               } else {
-                // If both not working, throw error
-                Debug.error(`Unable to match img src info from ${src}`);
-                error(new Error('Img src info extraction error'));
+                // If new regex not working, use old regex
+                const omsrc = src.match(COMIC_IMG_SRC_REG_OLD);
+                if (omsrc) {
+                  const [, dmkIdWeb, dmkIdGen] = omsrc;
+                  callback({
+                    ...manga,
+                    id_ver: 1,
+                    is_old_id: true,
+                    dmk_id_web: dmkIdWeb,
+                    dmk_id_gen: dmkIdGen,
+                  });
+                } else {
+                  // If both not working, throw error
+                  Debug.error(`Unable to match img src info from ${src}`);
+                  error(new Error('Img src info extraction error'));
+                }
               }
             }
           } else {

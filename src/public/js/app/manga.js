@@ -75,15 +75,20 @@ class Manga {
         var p3 = itg => itg.toString().padStart(3, '0');
         var dmkId = this.data.dmkId, dmkIdWeb = this.data.dmkIdWeb, dmkIdGen = this.data.dmkIdGen;
         var isOldId = this.data.isOldId;
-        if (isOldId) {
-            return 'http://' + dmkIdWeb + '.cartoonmad.com/' + dmkIdGen + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
+        var idVer = this.data.idVer;
+        if (idVer === 3) {
+            return 'http://www.cartoonmad.com/home1/' + dmkIdGen + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
         } else {
-            return 'http://www.cartoonmad.com/cartoonimg/' + dmkIdGen + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
+            if (isOldId) {
+                return 'http://' + dmkIdWeb + '.cartoonmad.com/' + dmkIdGen + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
+            } else {
+                return 'http://www.cartoonmad.com/cartoonimg/' + dmkIdGen + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
+            }
         }
     }
     
     getCoverUrl () {
-        return "http://cartoonmad.com/cartoonimg/ctimg/" + this.data.dmkId + ".jpg";
+        return "http://cartoonmad.com/home1/cnimg/" + this.data.dmkId + ".jpg";
     }
     
     getCartoonmadUrl () {

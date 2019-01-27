@@ -62,7 +62,8 @@
             <div id="index-discover-content" class="flex">
                 <% latests.forEach(function (manga, i) { %>
                     <a class="manga discover" href="/manga.html?id=<%= manga.dmk_id %>" id="<%= manga._id %>">
-                        <div class="cover" style="background-image: url('http://cartoonmad.com/cartoonimg/ctimg/<%= manga.dmk_id %>.jpg')"></div>
+                        <div class="cover" style="background-image:
+                          url('http://cartoonmad.com/home1/cnimg/<%= manga.dmk_id %>.jpg')"></div>
                         <h4 class="title"><%= manga.info.title %></h4>
                     </a>
                 <% }); %>
@@ -94,7 +95,8 @@
                 <% if (follows.length) { %>
                     <% follows.forEach(function (follow, i) { %>
                         <a class="mix manga following" id="<%= follow.manga._id %>" href="/manga.html?id=<%= follow.manga.dmk_id %>">
-                            <div class="cover" style="background-image: url('http://cartoonmad.com/cartoonimg/ctimg/<%= follow.manga.dmk_id %>.jpg')">
+                            <div class="cover" style="background-image:
+                              url('http://cartoonmad.com/home1/cnimg/<%= follow.manga.dmk_id %>.jpg')">
                                 <span class="badge <%= follow.showBadge ? '' : 'hidden' %>"></span>
                                 <span class="remove btn circle grey solid">
                                     <i class="fa fa-times"></i>
