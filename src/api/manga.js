@@ -124,9 +124,11 @@ module.exports = {
             Mangas.findOneAndUpdate({
               dmk_id: dmkId,
             }, {
-              ...newManga,
-              insert_date: new Date(),
-              update_date: new Date(),
+              $set: {
+                ...newManga,
+                insert_date: new Date(),
+                update_date: new Date(),
+              },
             }, (err2) => {
               if (err2) {
                 error(err2);
@@ -225,9 +227,11 @@ module.exports = {
         Mangas.findOneAndUpdate({
           dmk_id: dmkId,
         }, {
-          ...ni,
-          insert_date: insertDate,
-          update_date: new Date(),
+          $set: {
+            ...ni,
+            insert_date: insertDate,
+            update_date: new Date(),
+          },
         }, (err2) => {
           if (err2) {
             Debug.error(`Error inserting manga ${dmkId}: ${err2}`);
@@ -248,7 +252,9 @@ module.exports = {
     Mangas.findOneAndUpdate({
       dmk_id: dmkId,
     }, {
-      update_date: new Date(),
+      $set: {
+        update_date: new Date(),
+      },
     }, (err) => {
       if (err) {
         error(err);
