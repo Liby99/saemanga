@@ -1,3 +1,8 @@
+# IMPORTANT
+
+DUE TO http://cartoonmad.com UPDATE, THE ORIGINAL PAGE IS NO LONGER ABLE TO WORK. 
+STILL WAITING FOR SOLUTIONS. PR WELCOME.
+
 # 冴えない漫画の育て方
 
 Sae Manga, a minimalist manga reader developed by Liby with love. http://saemanga.com.
