@@ -87,22 +87,19 @@ module.exports = class Manga {
 
   getImageUrl(epi, page) {
     const {
-      idVer, isOldId, dmkIdWeb, dmkIdGen, dmkId,
+      idVer, dmkIdWeb, dmkIdGen, dmkId,
     } = this.data;
     const p3 = itg => itg.toString().padStart(3, '0');
     switch (idVer) {
-      case 3: {
-        return `http://www.cartoonmad.com/home1/${dmkIdGen}/${dmkId}/${p3(epi)}/${p3(page)}.jpg`;
-      }
-      default: {
-        if (isOldId) return `http://${dmkIdWeb}.cartoonmad.com/${dmkIdGen}/${dmkId}/${p3(epi)}/${p3(page)}.jpg`;
-        return `http://www.cartoonmad.com/cartoonimg/${dmkIdGen}/${dmkId}/${p3(epi)}/${p3(page)}.jpg`;
-      }
+      case 7: return `http://www.cartoonmad.com/home1/${dmkIdGen}/${dmkId}/${p3(epi)}/${p3(page)}.jpg`;
+      case 6: return `http://www.cartoonmad.com/cartoonimg/${dmkIdGen}/${dmkId}/${p3(epi)}/${p3(page)}.jpg`;
+      case 5: return `http://${dmkIdWeb}.cartoonmad.com/${dmkIdGen}/${dmkId}/${p3(epi)}/${p3(page)}.jpg`;
+      default: throw new Error(`Not recognizing version ${idVer}`);
     }
   }
 
   getCoverUrl() {
-    return `http://cartoonmad.com/home1/cnimg/${this.data.dmkId}.jpg`;
+    return `http://www.cartoonmad.com/home1/crimg/${this.data.dmkId}.jpg`;
   }
 
   getCartoonmadUrl() {

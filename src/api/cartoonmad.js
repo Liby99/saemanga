@@ -1,4 +1,4 @@
-const assert = require('assert');
+const request = require('request');
 const Debug = require('keeling-js/lib/debug');
 const Iconv = require('iconv-lite');
 const Request = require('./lib/request');
@@ -12,6 +12,7 @@ const SEARCH_URL = `${BASE_URL}search.html`;
 const COMIC_URL_REG = /^comic\/(\d+)\.html$/;
 const COMIC_GENRE_REG = /^\/(comic\d\d).html$/;
 const NUM_REG = /\d+/;
+const COMIC_IMG_ASP_REG = /^comicpic\.asp\?file=\/(\d+)\/\d+\/\d+/;
 const COMIC_IMG_SRC_REG_NEW = /^\/home1\/([\d\w]+)\/(\d+)\/\d+\/\d+\.jpg$/;
 const COMIC_IMG_SRC_REG = /^\/cartoonimg\/([\d\w]+)\/(\d+)\/\d+\/\d+\.jpg$/;
 const COMIC_IMG_SRC_REG_OLD = /^https?:\/\/(web\d?)\.cartoonmad\.com\/([\w|\d]+)\//;
@@ -93,6 +94,61 @@ function toByteString(str) {
 
 function getSearchQuery(str) {
   return `keyword=${toByteString(str)}&searchtype=all`;
+}
+
+const imgSrcParsers = [
+  (location, success, error) => {
+    const regRes = location.match(COMIC_IMG_SRC_REG_NEW);
+    if (regRes) {
+      const [, dmkIdGen] = regRes;
+      success({ dmk_id_gen: dmkIdGen, id_ver: 7 });
+    } else {
+      error(new Error(`Cannot parse ${location} using version 7 parser`));
+    }
+  },
+  (location, success, error) => {
+    const regRes = location.match(COMIC_IMG_SRC_REG);
+    if (regRes) {
+      const [, dmkIdGen] = regRes;
+      success({ dmk_id_gen: dmkIdGen, id_ver: 6 });
+    } else {
+      error(new Error(`Cannot parse ${location} using version 6 parser`));
+    }
+  },
+  (location, success, error) => {
+    const regRes = location.match(COMIC_IMG_SRC_REG_OLD);
+    if (regRes) {
+      const [, dmkIdWeb, dmkIdGen] = regRes;
+      success({ dmk_id_web: dmkIdWeb, dmk_id_gen: dmkIdGen, id_ver: 5 });
+    } else {
+      error(new Error(`Cannot parse ${location} using version 5 parser`));
+    }
+  },
+];
+
+function getRealImageInfo(aspUrl, baseUrl, success, error) {
+  request({
+    url: aspUrl,
+    followRedirect: false,
+    headers: { Referer: baseUrl },
+  }, (err, response) => {
+    if (err) {
+      error(err);
+    } else {
+      const { headers: { location } } = response;
+      (function process([attempt, ...rest]) {
+        if (attempt) {
+          attempt(location, (result) => {
+            success(result);
+          }, () => {
+            process(rest);
+          });
+        } else {
+          error(new Error(`Cannot parse ${location}`));
+        }
+      }(imgSrcParsers));
+    }
+  });
 }
 
 module.exports = {
@@ -190,7 +246,8 @@ module.exports = {
           .children('a')
           .attr('href')
           .substring(1);
-        Request.get(BASE_URL + epiHref, (res2, $2) => {
+        const epiUrl = BASE_URL + epiHref;
+        Request.get(epiUrl, (res2, $2) => {
           const $tr = $2('body > table > tbody > tr').eq(4);
           const $a = $tr.children('td')
             .children('table')
@@ -203,46 +260,20 @@ module.exports = {
           const $img = $a.children('img');
           const src = $img.attr('src');
           if (src) {
-            // Regex version 3
-            const nsrc = src.match(COMIC_IMG_SRC_REG_NEW);
-            if (nsrc) {
-              const [, dmkIdGen, dmkIdRep] = nsrc;
-              assert.equal(dmkIdRep, dmkId);
-              callback({
-                ...manga,
-                id_ver: 3,
-                dmk_id_gen: dmkIdGen,
+            if (src.match(COMIC_IMG_ASP_REG)) {
+              const aspSrc = `${BASE_URL}comic/${src}`;
+              // At this point (Samples)
+              // - src: comicpic.asp?file=/4085/002/001
+              // - epiUrl: https://www.cartoonmad.com/comic/435201502015001.html
+              // - aspSrc: https://www.cartoonmad.com/comic/comicpic.asp?file=/4085/002/001
+              getRealImageInfo(aspSrc, epiUrl, (result) => {
+                callback({ ...manga, ...result });
+              }, (err) => {
+                error(err);
               });
             } else {
-              // Regex version 2
-              const msrc = src.match(COMIC_IMG_SRC_REG);
-              if (msrc) {
-                const [, dmkIdGen, dmkIdRep] = msrc;
-                assert.equal(dmkIdRep, dmkId);
-                callback({
-                  ...manga,
-                  is_ver: 2,
-                  is_old_id: false,
-                  dmk_id_gen: dmkIdGen,
-                });
-              } else {
-                // If new regex not working, use old regex
-                const omsrc = src.match(COMIC_IMG_SRC_REG_OLD);
-                if (omsrc) {
-                  const [, dmkIdWeb, dmkIdGen] = omsrc;
-                  callback({
-                    ...manga,
-                    id_ver: 1,
-                    is_old_id: true,
-                    dmk_id_web: dmkIdWeb,
-                    dmk_id_gen: dmkIdGen,
-                  });
-                } else {
-                  // If both not working, throw error
-                  Debug.error(`Unable to match img src info from ${src}`);
-                  error(new Error('Img src info extraction error'));
-                }
-              }
+              Debug.error(`Cannot parse ASP src from ${src}`);
+              error(new Error(`Cannot parse ASP src from ${src}`));
             }
           } else {
             Debug.error(`Cannot get manga ${dmkId} img src info`);

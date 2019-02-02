@@ -33,6 +33,7 @@ var Page = {
         loadImage(1);
     },
     refreshMangaInfo: function () {
+        var self = this;
         if (this.errorAttempt) {
             this.alertInfoError();
         }

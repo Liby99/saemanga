@@ -152,36 +152,7 @@ module.exports = {
     });
   },
 
-  updateAll(dmkIds, callback, error) {
-    Promise.all(dmkIds, (dmkId, i, c) => {
-      Cartoonmad.getMangaInfo(dmkId, (manga) => {
-        Mangas.findOneAndUpdate({
-          dmk_id: dmkId,
-        }, {
-          $setOnInsert: {
-            insert_date: new Date(),
-          },
-          $set: {
-            ...manga,
-            update_date: new Date(),
-          },
-        }, {
-          upsert: true,
-        }, (err) => {
-          if (err) {
-            Debug.error(err);
-          } else {
-            Debug.log(`Successfully updated manga ${dmkId}`);
-          }
-          c();
-        });
-      }, (err) => {
-        Debug.error(err);
-        c();
-      });
-    }, callback, error);
-  },
-
+  // Should be deprecated, since this is going to break the memory limit
   updateAllMangas(callback, error) {
     Mangas.find({}).toArray((err, mangas) => {
       if (err) {
@@ -193,12 +164,12 @@ module.exports = {
     });
   },
 
-  updateOldest50(callback, error) {
+  updateOldest(amount, callback, error) {
     Mangas.find({
       'info.ended': false,
     }).sort({
       update_date: 1,
-    }).limit(50).toArray((err, mangas) => {
+    }).limit(amount).toArray((err, mangas) => {
       if (err) {
         error(err);
       } else {
@@ -206,6 +177,10 @@ module.exports = {
         this.updateMulti(mangas, callback, error);
       }
     });
+  },
+
+  updateOldest50(callback, error) {
+    this.updateOldest(50, callback, error);
   },
 
   updateEnded(callback, error) {
@@ -222,16 +197,24 @@ module.exports = {
   },
 
   updateMulti(mangas, callback, error) {
-    Promise.all(mangas, ({ dmk_id: dmkId, insert_date: insertDate }, i, c) => {
-      Cartoonmad.getMangaInfo(dmkId, (ni) => {
+    this.updateMultiIds(mangas.map(({ dmk_id: dmkId }) => dmkId), callback, error);
+  },
+
+  updateMultiIds(ids, callback, error) {
+    Promise.all(ids, (dmkId, i, c) => {
+      Cartoonmad.getMangaInfo(dmkId, (info) => {
         Mangas.findOneAndUpdate({
           dmk_id: dmkId,
         }, {
+          $setOnInsert: {
+            insert_date: new Date(),
+          },
           $set: {
-            ...ni,
-            insert_date: insertDate,
+            ...info,
             update_date: new Date(),
           },
+        }, {
+          upsert: true,
         }, (err2) => {
           if (err2) {
             Debug.error(`Error inserting manga ${dmkId}: ${err2}`);

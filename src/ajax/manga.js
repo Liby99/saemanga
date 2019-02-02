@@ -61,7 +61,7 @@ module.exports = {
         }
       }, (err) => {
         Debug.error(err);
-        res.error(2, err);
+        res.error(2, err.toString());
       });
     } else {
       res.error(1, 'Please specify manga id');
@@ -77,7 +77,7 @@ module.exports = {
         }
       }, (err) => {
         Debug.error(err);
-        res.error(2, err);
+        res.error(2, err.toString());
       });
     } else {
       res.error(1, 'Please specify manga id');

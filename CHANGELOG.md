@@ -1,3 +1,9 @@
+# v3.2.0 - Feb 1, 2019
+
+- Fixed lots of bug due to cartoonmad.com update
+- Sorry for potentially losing some of the user data (you might sense some of the following manga
+  disappearing in your homepage...) I apologize for the instability of the previous system.
+
 # v3.1.0 - Nov 25, 2018
 
 - Fixed search bug

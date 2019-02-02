@@ -76,19 +76,16 @@ class Manga {
         var dmkId = this.data.dmkId, dmkIdWeb = this.data.dmkIdWeb, dmkIdGen = this.data.dmkIdGen;
         var isOldId = this.data.isOldId;
         var idVer = this.data.idVer;
-        if (idVer === 3) {
-            return 'http://www.cartoonmad.com/home1/' + dmkIdGen + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
-        } else {
-            if (isOldId) {
-                return 'http://' + dmkIdWeb + '.cartoonmad.com/' + dmkIdGen + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
-            } else {
-                return 'http://www.cartoonmad.com/cartoonimg/' + dmkIdGen + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
-            }
+        switch (idVer) {
+            case 7: return 'http://www.cartoonmad.com/home1/' + dmkIdGen + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
+            case 6: return 'http://www.cartoonmad.com/cartoonimg/' + dmkIdGen + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
+            case 5: return 'http://' + dmkIdWeb + '.cartoonmad.com/' + dmkIdGen + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
+            default: throw new Error('Unknown img src version ' + idVer);
         }
     }
     
     getCoverUrl () {
-        return "http://cartoonmad.com/home1/cnimg/" + this.data.dmkId + ".jpg";
+        return "http://cartoonmad.com/home1/crimg/" + this.data.dmkId + ".jpg";
     }
     
     getCartoonmadUrl () {

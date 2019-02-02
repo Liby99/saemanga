@@ -8,6 +8,8 @@ const BufferHelper = require('bufferhelper');
 const httpPrefix = 'http://';
 const httpsPrefix = 'https://';
 
+const fakeUserAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.46 Safari/537.36';
+
 function parseHttpUrl(url) {
   const index = url.indexOf('/');
   if (index >= 0) {
@@ -63,6 +65,22 @@ module.exports = {
       } else {
         const cbody = iconv.decode(body, 'Big5');
         success(response, cheerio.load(cbody));
+      }
+    });
+  },
+  getWithReferer(url, referer, success, error) {
+    request({
+      url,
+      followRedirect: false,
+      headers: {
+        'User-Agent': fakeUserAgent,
+        Referer: referer,
+      },
+    }, (err, response, body) => {
+      if (err) {
+        error(err);
+      } else {
+        success(response, body);
       }
     });
   },

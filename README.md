@@ -1,8 +1,3 @@
-# IMPORTANT
-
-DUE TO http://cartoonmad.com UPDATE, THE ORIGINAL PAGE IS NO LONGER ABLE TO WORK. 
-STILL WAITING FOR SOLUTIONS. PR WELCOME.
-
 # 冴えない漫画の育て方
 
 Sae Manga, a minimalist manga reader developed by Liby with love. http://saemanga.com.
@@ -37,8 +32,8 @@ $ cd src/
 $ npm install
 ```
 
-If you want to integrate the Database, please also install 
-[MongoDB](https://www.mongodb.com), set it up, and create a schema called `manga`. 
+If you want to integrate the Database, please also install
+[MongoDB](https://www.mongodb.com), set it up, and create a schema called `manga`.
 Then go to `src/data/` and create a file called `mongo.json` which contains
 
 ```
@@ -57,7 +52,7 @@ Then type
 npm run dev
 ```
 
-to start the development server. You will see a line called 
+to start the development server. You will see a line called
 
 ```
 successfully connected to mongo db

@@ -15,7 +15,7 @@ RunScript({
       console.log('Successfully refreshed hot manga, start updating manga info');
 
       // Then fetch all manga in ids
-      Manga.updateAll(ids, () => {
+      Manga.updateMultiIds(ids, () => {
         const diff = new Date().getTime() - start.getTime();
         console.log(`Successfully fetched ${ids.length} mangas`);
         console.log(`Time elapsed: ${Math.round(diff / 1000)}s`);

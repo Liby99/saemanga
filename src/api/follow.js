@@ -84,12 +84,14 @@ module.exports = {
       } else {
         Manga.getByObjId(mangaId, (manga) => {
           if (manga) {
+            const { dmk_id: dmkId } = manga;
             const isBooks = !!manga.books;
             const isUpToDate = isBooks ? false : manga.episodes.length === 1;
             const [currentEpisode] = isBooks ? manga.books : manga.episodes;
             Follows.insertOne({
               user_id: ObjectID(userId),
               manga_id: ObjectID(mangaId),
+              dmk_id: dmkId,
               start_date: new Date(),
               update_date: new Date(),
               up_to_date: isUpToDate,
