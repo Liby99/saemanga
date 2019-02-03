@@ -16,10 +16,19 @@ module.exports = {
         foreignField: '_id',
         as: 'manga',
       },
-    }, { $unwind: '$manga' }, {
+    },
+    { $unwind: '$manga' },
+    {
       $addFields: {
         latest_episode: {
           $slice: ['$manga.episodes', -1],
+        },
+        liked_int: {
+          $cond: {
+            if: '$liked',
+            then: 1,
+            else: 0,
+          },
         },
         up_to_date_int: {
           $cond: {
@@ -29,18 +38,26 @@ module.exports = {
           },
         },
       },
-    }, { $unwind: '$latest_episode' }, {
+    },
+    { $unwind: '$latest_episode' },
+    {
       $addFields: {
-        sort_num: {
+        priority: {
           $multiply: [
             '$up_to_date_int',
-            { $subtract: ['$latest_episode', '$max_episode'] },
+            {
+              $subtract: [
+                '$latest_episode',
+                '$max_episode',
+              ],
+            },
           ],
         },
       },
     }, {
       $sort: {
-        sort_num: -1,
+        liked_int: -1,
+        priority: -1,
         update_date: -1,
       },
     }, {

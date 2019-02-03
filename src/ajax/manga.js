@@ -3,6 +3,35 @@ const Cartoonmad = require('../api/cartoonmad');
 const User = require('../api/user');
 const Follow = require('../api/follow');
 const Manga = require('../api/manga');
+const ObjectID = require('../api/lib/object_id');
+
+function setLiked(req, res, liked) {
+  if (req.body.id) {
+    const { id: mangaId } = req.body;
+    const { username } = req.cookies;
+    User.getUser(username, (user) => {
+      if (user) {
+        const { _id: userId } = user;
+        try {
+          const mangaObjectId = ObjectID(mangaId); // eslint-disable-line
+          Follow.setLiked(userId, mangaId, liked, () => {
+            res.success();
+          }, (err) => {
+            res.error(5, err);
+          });
+        } catch (err) {
+          res.error(4, err);
+        }
+      } else {
+        res.error(3, `User ${username} not found`);
+      }
+    }, (err) => {
+      res.error(2, err);
+    });
+  } else {
+    res.error(1, 'Please specify manga id');
+  }
+}
 
 module.exports = {
   search(req, res) {
@@ -110,47 +139,9 @@ module.exports = {
     }
   },
   like(req, res) {
-    if (req.body.id) {
-      const { id: mangaId } = req.body;
-      const { username } = req.cookies;
-      User.getUser(username, (user) => {
-        if (user) {
-          const { _id: userId } = user;
-          Follow.setLiked(userId, mangaId, true, () => {
-            res.success();
-          }, (err) => {
-            res.error(4, err);
-          });
-        } else {
-          res.error(3, `User ${username} not found`);
-        }
-      }, (err) => {
-        res.error(2, err);
-      });
-    } else {
-      res.error(1, 'Please specify manga id');
-    }
+    setLiked(req, res, true);
   },
   unlike(req, res) {
-    if (req.body.id) {
-      const { id: mangaId } = req.body;
-      const { username } = req.cookies;
-      User.getUser(username, (user) => {
-        if (user) {
-          const { _id: userId } = user;
-          Follow.setLiked(userId, mangaId, false, () => {
-            res.success();
-          }, (err) => {
-            res.error(4, err);
-          });
-        } else {
-          res.error(3, `User ${username} not found`);
-        }
-      }, (err) => {
-        res.error(2, err);
-      });
-    } else {
-      res.error(1, 'Please specify manga id');
-    }
+    setLiked(req, res, false);
   },
 };
