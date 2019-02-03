@@ -122,7 +122,7 @@ function renderPageWithUser(req, res, user, manga, callback) {
 }
 
 function renderPageNoUser(req, res, manga, callback) {
-  renderPage(false, {}, manga, req.query.epi, callback);
+  renderPage(false, {}, manga, {}, req.query.epi, callback);
 }
 
 module.exports = (req, res, callback) => {
