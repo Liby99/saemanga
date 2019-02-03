@@ -127,6 +127,23 @@ module.exports = {
     });
   },
 
+  setLiked(userId, mangaId, liked, callback, error) {
+    Follows.updateOne({
+      user_id: ObjectID(userId),
+      manga_id: ObjectID(mangaId),
+    }, {
+      $set: { liked },
+    }, (err, ret) => {
+      if (err) {
+        error(err);
+      } else if (ret.modifiedCount === 1) {
+        callback();
+      } else {
+        error(new Error('Not updating likedness'));
+      }
+    });
+  },
+
   updateAllFollowOfManga(mangaId, callback, error) {
     Manga.getByObjId(mangaId, (manga) => {
       if (manga) {

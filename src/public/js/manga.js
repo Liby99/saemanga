@@ -3,6 +3,7 @@ var Page = {
     errorAttempt: 0,
     initiate: function () {
         this.renderManga();
+        this.fetchLike();
     },
     renderManga: function () {
         var self = this;
@@ -71,6 +72,46 @@ var Page = {
                 }
             });
         }
+    },
+    fetchLike: function () {
+        $.kajax({
+            url: "/ajax/manga?action=get_liked&id=" + manga.id(),
+            type: "get",
+            success: function (result) {
+                let $like = $("#like"), $unlike = $("#unlike");
+                if (result) {
+                    $like.attr("hidden", "hidden");
+                    $unlike.removeAttr("hidden");
+                } else {
+                    $like.removeAttr("hidden");
+                    $unlike.attr("hidden", "hidden");
+                }
+            }
+        });
+    },
+    like: function () {
+        $.kajax({
+            url: "/ajax/manga?action=like",
+            type: "post",
+            data: { id: manga.id() },
+            success: function () {
+                let $like = $("#like"), $unlike = $("#unlike");
+                $like.attr("hidden", "hidden");
+                $unlike.removeAttr("hidden");
+            }
+        });
+    },
+    unlike: function () {
+        $.kajax({
+            url: "/ajax/manga?action=unlike",
+            type: "post",
+            data: { id: manga.id() },
+            success: function () {
+                let $like = $("#like"), $unlike = $("#unlike");
+                $like.removeAttr("hidden");
+                $unlike.attr("hidden", "hidden");
+            }
+        });
     }
 };
 

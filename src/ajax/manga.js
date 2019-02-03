@@ -83,4 +83,74 @@ module.exports = {
       res.error(1, 'Please specify manga id');
     }
   },
+  get_liked(req, res) {
+    if (req.query.id) {
+      const { id: mangaId } = req.query;
+      const { username } = req.cookies;
+      User.getUser(username, (user) => {
+        if (user) {
+          const { _id: userId } = user;
+          Follow.getFollow(userId, mangaId, (follow) => {
+            if (follow) {
+              res.success(!!follow.liked);
+            } else {
+              res.error(5, 'User not following manga');
+            }
+          }, (err) => {
+            res.error(4, err);
+          });
+        } else {
+          res.error(3, `User ${username} not found`);
+        }
+      }, (err) => {
+        res.error(2, err);
+      });
+    } else {
+      res.error(1, 'Please specify manga id');
+    }
+  },
+  like(req, res) {
+    if (req.body.id) {
+      const { id: mangaId } = req.body;
+      const { username } = req.cookies;
+      User.getUser(username, (user) => {
+        if (user) {
+          const { _id: userId } = user;
+          Follow.setLiked(userId, mangaId, true, () => {
+            res.success();
+          }, (err) => {
+            res.error(4, err);
+          });
+        } else {
+          res.error(3, `User ${username} not found`);
+        }
+      }, (err) => {
+        res.error(2, err);
+      });
+    } else {
+      res.error(1, 'Please specify manga id');
+    }
+  },
+  unlike(req, res) {
+    if (req.body.id) {
+      const { id: mangaId } = req.body;
+      const { username } = req.cookies;
+      User.getUser(username, (user) => {
+        if (user) {
+          const { _id: userId } = user;
+          Follow.setLiked(userId, mangaId, false, () => {
+            res.success();
+          }, (err) => {
+            res.error(4, err);
+          });
+        } else {
+          res.error(3, `User ${username} not found`);
+        }
+      }, (err) => {
+        res.error(2, err);
+      });
+    } else {
+      res.error(1, 'Please specify manga id');
+    }
+  },
 };

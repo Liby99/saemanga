@@ -107,10 +107,7 @@ function renderPage(loggedIn, user, manga, episode, callback) {
   callback({
     loggedIn,
     user,
-    manga: new Manga({
-      ...manga,
-      _id: manga._id.toString(),
-    }),
+    manga: new Manga(manga),
     episode: parseInt(episode, 10),
   });
 }
