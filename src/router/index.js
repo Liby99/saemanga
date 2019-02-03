@@ -3,6 +3,7 @@ const Genre = require('../api/genre');
 const Follow = require('../api/follow');
 const Hot = require('../api/hot');
 const User = require('../api/user');
+const Manga = require('../api/app/manga');
 
 function getGenre(req, res, callback) {
   const gs = Genre.get();
@@ -11,7 +12,7 @@ function getGenre(req, res, callback) {
 
 function getLatestMangas(req, res, callback) {
   Hot.getLatest((mangas) => {
-    callback(mangas);
+    callback(mangas.map(manga => new Manga(manga)));
   }, (err) => {
     Debug.error(err);
     res.error(500, err);
@@ -44,7 +45,7 @@ function getFollows(req, res, user, callback) {
       const hasUpdate = f.max_episode < lastEpisode;
       const showBadge = f.up_to_date && hasUpdate;
       return {
-        ...f, manga: { ...f.manga, lastEpisode }, hasUpdate, showBadge,
+        ...f, manga: new Manga(f.manga), lastEpisode, hasUpdate, showBadge,
       };
     }));
   }, (err) => {

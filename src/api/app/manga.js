@@ -9,7 +9,7 @@ function clone(data) {
   } if (data instanceof Object) {
     return Object.keys(data).reduce((ret, key) => ({
       ...ret,
-      [toCamel(key)]: clone(data[key]),
+      [toCamel(key)]: key === '_id' ? data[key].toString() : clone(data[key]),
     }), {});
   }
   return data;

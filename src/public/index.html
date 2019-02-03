@@ -61,10 +61,10 @@
         <div id="index-discover-outer" class="scroll x wrapper no-top">
             <div id="index-discover-content" class="flex">
                 <% latests.forEach(function (manga, i) { %>
-                    <a class="manga discover" href="/manga.html?id=<%= manga.dmk_id %>" id="<%= manga._id %>">
+                    <a class="manga discover" href="<%= manga.getSaemangaUrl() %>" id="<%= manga.dmkId() %>">
                         <div class="cover" style="background-image:
-                          url('http://web4.cartoonmad.com/coimg/<%= manga.dmk_id %>.jpg')"></div>
-                        <h4 class="title"><%= manga.info.title %></h4>
+                          url('<%= manga.getCoverUrl() %>')"></div>
+                        <h4 class="title"><%= manga.title() %></h4>
                     </a>
                 <% }); %>
             </div>
@@ -94,26 +94,31 @@
             <% if (loggedIn) { %>
                 <% if (follows.length) { %>
                     <% follows.forEach(function (follow, i) { %>
-                        <a class="mix manga following" id="<%= follow.manga._id %>" href="/manga.html?id=<%= follow.manga.dmk_id %>">
+                        <a class="mix manga following" id="<%= follow.manga.id() %>" href="<%= follow.manga.getSaemangaUrl() %>">
                             <div class="cover" style="background-image:
-                              url('http://web4.cartoonmad.com/coimg/<%= follow.manga.dmk_id %>.jpg')">
+                              url('<%= follow.manga.getCoverUrl() %>')">
                                 <span class="badge <%= follow.showBadge ? '' : 'hidden' %>"></span>
                                 <span class="remove btn circle grey solid">
                                     <i class="fa fa-times"></i>
                                 </span>
+                                <% if (follow.liked) { %>
+                                    <span class="like">
+                                        <i class="fa fa-heart"></i>
+                                    </span>
+                                <% } %>
                             </div>
                             <center>
                                 <p class="episode">
                                     已读<%= follow.max_episode %>话，
-                                    <% if (follow.manga.info.ended) { %>
-                                        共<%= follow.manga.lastEpisode %>话，已完结
+                                    <% if (follow.manga.ended()) { %>
+                                        共<%= follow.lastEpisode %>话，已完结
                                     <% } else if (follow.hasUpdate) { %>
-                                        更新至<%= follow.manga.lastEpisode %>话
+                                        更新至<%= follow.lastEpisode %>话
                                     <% } else { %>
                                         未更新
                                     <% } %>
                                 </p>
-                                <h4 class="title"><%= follow.manga.info.title %></h4>
+                                <h4 class="title"><%= follow.manga.title() %></h4>
                             </center>
                         </a>
                     <% }); %>

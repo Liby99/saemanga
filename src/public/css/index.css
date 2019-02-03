@@ -114,6 +114,13 @@
     background-color: var(--light-text);
 }
 
+.manga.following .like {
+    display: block;
+    margin: -8px;
+    position: absolute;
+    font-size: 20px;
+}
+
 @keyframes shake {
     0% { transform: rotate(0deg) translateY(1px); }
     25% { transform: rotate(1deg) translateY(0px); }
