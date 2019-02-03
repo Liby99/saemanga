@@ -7,7 +7,7 @@
         const episode = <%- episode %>;
     </script>
 <% }, sidebar: () => { %>
-    <% include("view/manga_sidebar.html", { loggedIn: loggedIn, user: user, manga: manga, episode: episode }); %>
+    <% include("view/manga_sidebar.html", { loggedIn, user, manga, follow, episode }); %>
 <% }, main: () => { %>
     <section id="manga-header-section">
         <center class="wrapper">

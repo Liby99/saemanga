@@ -43,6 +43,10 @@ a.black {
     color: var(--deep-text);
 }
 
+.pink {
+    color: var(--pink);
+}
+
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
     color: var(--deep-text);
@@ -153,7 +157,7 @@ input:focus, input:active {
 /* -------------------- flex related styles -------------------- */
 
 .flex {
-    display: flex;
+    display: flex !important;
 }
 
 .flex.wrap {

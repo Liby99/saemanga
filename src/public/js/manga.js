@@ -73,23 +73,8 @@ var Page = {
             });
         }
     },
-    fetchLike: function () {
-        $.kajax({
-            url: "/ajax/manga?action=get_liked&id=" + manga.id(),
-            type: "get",
-            success: function (result) {
-                let $like = $("#like"), $unlike = $("#unlike");
-                if (result) {
-                    $like.attr("hidden", "hidden");
-                    $unlike.removeAttr("hidden");
-                } else {
-                    $like.removeAttr("hidden");
-                    $unlike.attr("hidden", "hidden");
-                }
-            }
-        });
-    },
     like: function () {
+        console.log(manga.id());
         $.kajax({
             url: "/ajax/manga?action=like",
             type: "post",
@@ -102,6 +87,7 @@ var Page = {
         });
     },
     unlike: function () {
+        console.log(manga.id());
         $.kajax({
             url: "/ajax/manga?action=unlike",
             type: "post",

@@ -19,16 +19,20 @@
                     <a href="javascript:void(0)" onclick="Page.unfollow()" class="black">取消关注该漫画</a>
                 </li>
                 <li class="full">
-                    <span id="like">
-                        <a href="javascript:void(0)" onclick="Page.like()" class="black">
-                            喜爱该漫画
-                            <i href="fa fa-heart-o"></i>
+                    <span id="like"<%= follow.liked ? " hidden=\"hidden\"" : "" %>>
+                        <a href="javascript:void(0)" onclick="Page.like()" class="black flex">
+                            <div class="flex full">喜爱该漫画</div>
+                            <div>
+                                <i class="fa fa-heart-o pink"></i>
+                            </div>
                         </a>
                     </span>
-                    <span id="unlike" hidden="hidden">
-                        <a href="javascript:void(0)" onclick="Page.unlike()" class="black">
-                            取消喜爱该漫画
-                            <i href="fa fa-heart"></i>
+                    <span id="unlike"<%= follow.liked ? "" : " hidden=\"hidden\"" %>>
+                        <a href="javascript:void(0)" onclick="Page.unlike()" class="black flex">
+                            <div class="flex full">取消喜爱该漫画</div>
+                            <div>
+                                <i class="fa fa-heart pink"></i>
+                            </div>
                         </a>
                     </span>
                 </li>

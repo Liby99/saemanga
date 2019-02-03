@@ -1,5 +1,5 @@
 const User = require('../api/user');
-const Follow = require('../api/follow');
+const FollowAPI = require('../api/follow');
 const MangaAPI = require('../api/manga');
 const Manga = require('../api/app/manga');
 
@@ -49,7 +49,7 @@ function getUser(req, res, hasUser, noUser) {
 }
 
 function isFollowing(req, res, user, manga, yes, no) {
-  Follow.isFollowing(user._id, manga._id, (is) => {
+  FollowAPI.isFollowing(user._id, manga._id, (is) => {
     if (is) {
       yes();
     } else {
@@ -74,7 +74,7 @@ function checkEpisode(req, res, user, manga, hasEpisode, noEpisode) {
 }
 
 function read(req, res, user, manga, callback) {
-  Follow.read(user._id, manga._id, req.query.epi, () => {
+  FollowAPI.read(user._id, manga._id, req.query.epi, () => {
     callback();
   }, (err) => {
     res.error(500, err);
@@ -82,7 +82,7 @@ function read(req, res, user, manga, callback) {
 }
 
 function redirectToLatest(req, res, user, manga) {
-  Follow.getFollow(user._id, manga._id, (followInfo) => {
+  FollowAPI.getFollow(user._id, manga._id, (followInfo) => {
     if (followInfo) {
       res.redirect(`manga.html?id=${req.query.id}&epi=${followInfo.max_episode}`);
     } else {
@@ -94,7 +94,7 @@ function redirectToLatest(req, res, user, manga) {
 }
 
 function follow(req, res, user, manga, success) {
-  Follow.follow(user._id, manga._id, success, (err) => {
+  FollowAPI.follow(user._id, manga._id, success, (err) => {
     res.error(500, err);
   });
 }
@@ -103,17 +103,22 @@ function redirectToFirst(req, res, manga) {
   res.redirect(`manga.html?id=${req.query.id}&epi=${getFirstEpisode(manga)}`);
 }
 
-function renderPage(loggedIn, user, manga, episode, callback) {
+function renderPage(loggedIn, user, manga, followInfo, episode, callback) {
   callback({
     loggedIn,
     user,
+    follow: followInfo,
     manga: new Manga(manga),
     episode: parseInt(episode, 10),
   });
 }
 
 function renderPageWithUser(req, res, user, manga, callback) {
-  renderPage(true, user, manga, req.query.epi, callback);
+  FollowAPI.getFollow(user._id, manga._id, (followInfo) => {
+    renderPage(true, user, manga, followInfo, req.query.epi, callback);
+  }, (err) => {
+    res.error(500, err);
+  });
 }
 
 function renderPageNoUser(req, res, manga, callback) {
