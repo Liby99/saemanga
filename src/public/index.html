@@ -85,6 +85,13 @@
                                     <i class="fa fa-check"></i>
                                 </i>
                             </a>
+                            <a id="index-following-only-liked" href="javascript:void(0);" class="btn rounded" style="padding-right: 5px">
+                                <span>仅喜爱</span>
+                                <i class="fa-rotation-toggle">
+                                    <i class="fa fa-heart-o"></i>
+                                    <i class="fa fa-heart"></i>
+                                </i>
+                            </a>
                         </div>
                     <% } %>
                 </div>
@@ -94,7 +101,7 @@
             <% if (loggedIn) { %>
                 <% if (follows.length) { %>
                     <% follows.forEach(function (follow, i) { %>
-                        <a class="mix manga following" id="<%= follow.manga.id() %>" href="<%= follow.manga.getSaemangaUrl() %>">
+                        <a class="mix manga following<%= follow.liked ? " liked" : "" %>" id="<%= follow.manga.id() %>" href="<%= follow.manga.getSaemangaUrl() %>">
                             <div class="cover" style="background-image:
                               url('<%= follow.manga.getCoverUrl() %>')">
                                 <span class="badge <%= follow.showBadge ? '' : 'hidden' %>"></span>

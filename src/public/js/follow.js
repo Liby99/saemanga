@@ -1,11 +1,14 @@
 var Follow = {
     $header: $("#index-following-header"),
     $headerInner: $("#index-following-header-inner"),
+    $list: $("#index-following-list"),
     $manage: $("#index-following-manage"),
+    $onlyLiked: $("#index-following-only-liked"),
     $mangas: $("#index-following-list"),
     initiate: function () {
         this.initiateHeader();
         this.initiateManage();
+        this.initiateOnlyLiked();
         this.initiateFollows();
     },
     initiateHeader: function () {
@@ -22,8 +25,14 @@ var Follow = {
     },
     initiateManage: function () {
         var self = this;
-        $("#index-following-manage").click(function () {
+        this.$manage.click(function () {
             self.toggleManage();
+        });
+    },
+    initiateOnlyLiked: function () {
+        var self = this;
+        this.$onlyLiked.click(function () {
+            self.toggleOnlyLiked();
         });
     },
     toggleManage: function () {
@@ -46,6 +55,25 @@ var Follow = {
         this.$manage.children("span").text("管理");
         this.$manage.children("i").removeClass("active");
         $(".following.manga").removeClass("managing");
+    },
+    toggleOnlyLiked: function () {
+        if (this.isShowingLikedOnly())
+            this.showAll();
+        else
+            this.showLikedOnly();
+    },
+    isShowingLikedOnly: function () {
+        return this.$onlyLiked.hasClass("active");
+    },
+    showAll: function () {
+        this.$onlyLiked.removeClass("active");
+        this.$onlyLiked.children("i").removeClass("active");
+        this.$list.removeClass("liked-only");
+    },
+    showLikedOnly: function () {
+        this.$onlyLiked.addClass("active");
+        this.$onlyLiked.children("i").addClass("active");
+        this.$list.addClass("liked-only");
     },
     initiateFollows: function () {
         

@@ -247,6 +247,10 @@
     align-content: flex-start;
 }
 
+#index-following-list.liked-only .manga:not(.liked) {
+    display: none;
+}
+
 body.full-width:not(.left) #index-following-header-inner.stick {
     padding-right: 72px;
 }
