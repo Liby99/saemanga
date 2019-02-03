@@ -135,18 +135,22 @@ function getRealImageInfo(aspUrl, baseUrl, success, error) {
     if (err) {
       error(err);
     } else {
-      const { headers: { location } } = response;
-      (function process([attempt, ...rest]) {
-        if (attempt) {
-          attempt(location, (result) => {
-            success(result);
-          }, () => {
-            process(rest);
-          });
-        } else {
-          error(new Error(`Cannot parse ${location}`));
-        }
-      }(imgSrcParsers));
+      const { headers: { location }, rawHeaders } = response;
+      if (location) {
+        (function process([attempt, ...rest]) {
+          if (attempt) {
+            attempt(location, (result) => {
+              success(result);
+            }, () => {
+              process(rest);
+            });
+          } else {
+            error(new Error(`Cannot parse ${location}`));
+          }
+        }(imgSrcParsers));
+      } else {
+        error(new Error(`No location presented in redirect header ${rawHeaders}`));
+      }
     }
   });
 }
@@ -216,7 +220,7 @@ module.exports = {
         const $t1 = $m.eq(0).children('tbody').children('tr');
         const _g = $t1.eq(2).children('td').children('a').eq(0)
           .attr('href');
-        const _gm = _g.match(COMIC_GENRE_REG);
+        const _gm = _g && _g.match(COMIC_GENRE_REG);
         manga.info.genre_dir = _gm ? _gm[1] : '';
         const _as = $t1.eq(4).children('td').text().trim()
           .split(' ');

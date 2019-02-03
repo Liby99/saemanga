@@ -63,7 +63,7 @@
                 <% latests.forEach(function (manga, i) { %>
                     <a class="manga discover" href="/manga.html?id=<%= manga.dmk_id %>" id="<%= manga._id %>">
                         <div class="cover" style="background-image:
-                          url('http://cartoonmad.com/home1/crimg/<%= manga.dmk_id %>.jpg')"></div>
+                          url('http://web4.cartoonmad.com/coimg/<%= manga.dmk_id %>.jpg')"></div>
                         <h4 class="title"><%= manga.info.title %></h4>
                     </a>
                 <% }); %>
@@ -96,7 +96,7 @@
                     <% follows.forEach(function (follow, i) { %>
                         <a class="mix manga following" id="<%= follow.manga._id %>" href="/manga.html?id=<%= follow.manga.dmk_id %>">
                             <div class="cover" style="background-image:
-                              url('http://cartoonmad.com/home1/crimg/<%= follow.manga.dmk_id %>.jpg')">
+                              url('http://web4.cartoonmad.com/coimg/<%= follow.manga.dmk_id %>.jpg')">
                                 <span class="badge <%= follow.showBadge ? '' : 'hidden' %>"></span>
                                 <span class="remove btn circle grey solid">
                                     <i class="fa fa-times"></i>
