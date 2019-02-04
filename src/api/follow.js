@@ -23,13 +23,13 @@ module.exports = {
         latest_episode: {
           $slice: ['$manga.episodes', -1],
         },
-        liked_int: {
-          $cond: {
-            if: '$liked',
-            then: 1,
-            else: 0,
-          },
-        },
+        // liked_int: {
+        //   $cond: {
+        //     if: '$liked',
+        //     then: 1,
+        //     else: 0,
+        //   },
+        // },
         up_to_date_int: {
           $cond: {
             if: '$up_to_date',
@@ -56,7 +56,7 @@ module.exports = {
       },
     }, {
       $sort: {
-        liked_int: -1,
+        // liked_int: -1,
         priority: -1,
         update_date: -1,
       },
