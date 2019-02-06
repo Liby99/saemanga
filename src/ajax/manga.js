@@ -144,4 +144,22 @@ module.exports = {
   unlike(req, res) {
     setLiked(req, res, false);
   },
+  request_update(req, res) {
+    if (req.query.dmk_id) {
+      const { dmk_id: dmkId } = req.query;
+      if (dmkId.match(/^\d{4}$/)) {
+        Manga.update(dmkId, ({ updated }) => {
+          res.success(updated);
+        }, (err) => {
+          Debug.info(`user requested update encountering error ${err}`);
+          res.error(3, err);
+        });
+      } else {
+        Debug.info(`user requested update with invalid dmk_id ${dmkId}`);
+        res.error(2, 'Invalid dmk_id');
+      }
+    } else {
+      res.error(1, 'Please specify manga id');
+    }
+  },
 };
