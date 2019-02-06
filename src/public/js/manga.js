@@ -3,7 +3,6 @@ var Page = {
     errorAttempt: 0,
     initiate: function () {
         this.renderManga();
-        this.fetchLike();
     },
     renderManga: function () {
         var self = this;

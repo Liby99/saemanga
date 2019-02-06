@@ -98,6 +98,15 @@ function getSearchQuery(str) {
 
 const imgSrcParsers = [
   (location, success, error) => {
+    const res = location.match(/^\/([\w\d]+)\/(\d+)\/\d+\/\d+\.jpg$/);
+    if (res) {
+      const [, dmkIdHome] = res;
+      success({ dmk_id_home: dmkIdHome, id_ver: 8 });
+    } else {
+      error(new Error(`Cannot parse ${location} using version 8 parser`));
+    }
+  },
+  (location, success, error) => {
     const regRes = location.match(COMIC_IMG_SRC_REG_NEW);
     if (regRes) {
       const [, dmkIdGen] = regRes;

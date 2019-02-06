@@ -77,6 +77,7 @@ class Manga {
         var isOldId = this.data.isOldId;
         var idVer = this.data.idVer;
         switch (idVer) {
+            case 8: return 'http://www.cartoonmad.com/' + this.data.dmkIdHome + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
             case 7: return 'http://www.cartoonmad.com/home1/' + dmkIdGen + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
             case 6: return 'http://www.cartoonmad.com/cartoonimg/' + dmkIdGen + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
             case 5: return 'http://' + dmkIdWeb + '.cartoonmad.com/' + dmkIdGen + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
@@ -85,7 +86,7 @@ class Manga {
     }
     
     getCoverUrl () {
-        return "http://web4.cartoonmad.com/coimg/" + this.data.dmkId + ".jpg";
+        return "http://cartoonmad.com/cartoonimg/coimg/" + this.data.dmkId + ".jpg";
     }
     
     getCartoonmadUrl () {
