@@ -31,9 +31,18 @@ var Follow = {
     },
     initiateOnlyLiked: function () {
         var self = this;
+        if (this.getLikeOnlyCookie()) {
+            this.showLikedOnly();
+        }
         this.$onlyLiked.click(function () {
             self.toggleOnlyLiked();
         });
+    },
+    getLikeOnlyCookie: function () {
+        return window.cookie.get("likeonly") === "1" ? true : false;
+    },
+    setLikeOnlyCookie: function (on) {
+        window.cookie.set("likeonly", on ? "1" : "0");
     },
     toggleManage: function () {
         if (this.isManaging())
@@ -66,11 +75,13 @@ var Follow = {
         return this.$onlyLiked.hasClass("active");
     },
     showAll: function () {
+        this.setLikeOnlyCookie(false);
         this.$onlyLiked.removeClass("active");
         this.$onlyLiked.children("i").removeClass("active");
         this.$list.removeClass("liked-only");
     },
     showLikedOnly: function () {
+        this.setLikeOnlyCookie(true);
         this.$onlyLiked.addClass("active");
         this.$onlyLiked.children("i").addClass("active");
         this.$list.addClass("liked-only");
