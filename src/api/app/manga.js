@@ -136,6 +136,10 @@ module.exports = class Manga {
     return `/manga.html?id=${this.data.dmkId}${epi ? (`&epi=${epi}`) : ''}`;
   }
 
+  getFullSaemangaUrl(epi) {
+    return `http://saemanga.com${this.getSaemangaUrl(epi)}`;
+  }
+
   lastEpisode() {
     return this.data.episodes[this.data.episodes.length - 1].index;
   }

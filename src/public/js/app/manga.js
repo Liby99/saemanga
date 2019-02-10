@@ -122,6 +122,10 @@ class Manga {
     getSaemangaUrl(epi) {
         return "/manga.html?id=" + this.data.dmkId + (epi != undefined ? ("&epi=" + epi) : "");
     }
+    
+    getFullSaemangaUrl(epi) {
+        return "http://saemanga.com" + this.getSaemangaUrl(epi);
+    }
 
     lastEpisode() {
         return this.data.episodes[this.data.episodes.length - 1].index;
@@ -136,9 +140,7 @@ class Manga {
     }
 
     getEpisodeType(epi) {
-        if (this.data.books && this.data.books.some(({
-                index
-            }) => index === epi)) {
+        if (this.data.books && this.data.books.some(({ index }) => index === epi)) {
             return "卷";
         } else {
             return "话";

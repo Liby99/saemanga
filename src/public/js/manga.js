@@ -1,6 +1,7 @@
 var Page = {
     $holder: $("#manga-body-section"),
     errorAttempt: 0,
+    copiedShowing: false,
     initiate: function () {
         this.renderManga();
     },
@@ -101,6 +102,18 @@ var Page = {
                 }
             }
         });
+    },
+    shareURL: function () {
+        if (!this.copiedShowing) {
+            $("#share-url-input").select();
+            document.execCommand("copy");
+            $("#copied-tag").removeClass("hidden");
+            this.copiedShowing = true;
+            setTimeout(() => {
+                this.copiedShowing = false;
+                $("#copied-tag").addClass("hidden");
+            }, 2000);
+        }
     }
 };
 

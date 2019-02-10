@@ -125,6 +125,10 @@ ul.sidebar-btn-list li.full a:active {
     background-color: var(--active-white);
 }
 
+ul.sidebar-btn-list li.center {
+    text-align: center;
+}
+
 @media(max-width: 540px) {
     #sidebar-toggle {
         right: 9px;

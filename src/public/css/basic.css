@@ -43,6 +43,10 @@ a.black {
     color: var(--deep-text);
 }
 
+a.red {
+    color: var(--red);
+}
+
 .pink {
     color: var(--pink);
 }

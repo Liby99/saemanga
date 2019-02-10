@@ -77,6 +77,40 @@
     margin-left: 10px;
 }
 
+#share-url-input {
+    /* Hide the input but not disabling it */
+    position: fixed;
+    top: -100px;
+    left: -100px;
+}
+
+#copied-tag {
+    opacity: 1;
+}
+
+#copied-tag .tag {
+    background-color: var(--black-background);
+    border-radius: 5px;
+    line-height: 24px;
+    padding: 0 12px;
+    margin: 8px 20px 8px 12px;
+    color: var(--white);
+}
+
+#copied-tag .tag i {
+    position: absolute;
+    display: inline-block;
+    color: var(--black-background);
+    margin-left: 12px;
+    line-height: 24px;
+    font-size: 16px;
+}
+
+#copied-tag.hidden {
+    transition: all 0.2s;
+    opacity: 0;
+}
+
 .manga-info-item label {
     min-width: 50px;
 }

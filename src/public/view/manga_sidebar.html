@@ -14,10 +14,22 @@
             <li class="full">
                 <a href="javascript:void(0)" onclick="$.panel.show('manga')" class="black">关于该漫画</a>
             </li>
+            <li class="full">
+                <a href="javascript:void(0)" onclick="Page.shareURL()" class="black flex">
+                    <div class="flex full">分享漫画链接</div>
+                    <div id="copied-tag" class="hidden">
+                        <div class="tag">
+                            Copied
+                            <i class="fa fa-caret-right"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <i class="fa fa-share pink"></i>
+                    </div>
+                </a>
+                <input id="share-url-input" value="<%= manga.getFullSaemangaUrl() %>" readonly="readonly" />
+            </li>
             <% if (loggedIn) { %>
-                <li class="full">
-                    <a href="javascript:void(0)" onclick="Page.unfollow()" class="black">取消关注该漫画</a>
-                </li>
                 <li class="full">
                     <span id="like"<%= follow.liked ? " hidden=\"hidden\"" : "" %>>
                         <a href="javascript:void(0)" onclick="Page.like()" class="black flex">
@@ -72,4 +84,13 @@
             <% }); %>
         </ul>
     </section>
+    <% if (loggedIn) { %>
+        <section class="no-border" style="padding: 15px 0; border-top: 1px solid var(--line)">
+            <ul class="sidebar-btn-list">
+                <li class="full center">
+                    <a href="javascript:void(0)" onclick="Page.unfollow()" class="red">取消关注该漫画</a>
+                </li>
+            </ul>
+        </section>
+    <% } %>
 <% }}); %>
