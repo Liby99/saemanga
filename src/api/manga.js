@@ -201,6 +201,7 @@ module.exports = {
   },
 
   updateMultiIds(ids, callback, error) {
+    let updatedAmount = 0;
     Promise.all(ids, (dmkId, i, c) => {
       Cartoonmad.getMangaInfo(dmkId, (info) => {
         Mangas.findOneAndUpdate({
@@ -220,6 +221,7 @@ module.exports = {
             Debug.error(`Error inserting manga ${dmkId}: ${err2}`);
             this.touch(dmkId, c, c);
           } else {
+            updatedAmount += 1;
             Debug.log(`Successfully updated manga ${dmkId}`);
             c();
           }
@@ -228,7 +230,7 @@ module.exports = {
         Debug.error(`Error updating manga ${dmkId}: ${err2}`);
         this.touch(dmkId, c, c);
       });
-    }, callback, error);
+    }, () => callback(updatedAmount), error);
   },
 
   touch(dmkId, callback, error) {
