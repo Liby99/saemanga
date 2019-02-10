@@ -27,10 +27,17 @@ function getEpisodeList($rs) {
     const $ds = $rs.eq(i).children('td');
     for (let j = 1; j < $ds.length; j += 1) {
       const $e = $ds.eq(j);
-      const _epi = $e.text().trim();
+      const $a = $e.children('a').eq(0);
+      const $font = $e.children('font').eq(0);
+      const _epi = $a.text().trim();
       const _mepi = _epi.match(NUM_REG);
-      if (_mepi) {
-        arr.push(parseInt(_mepi[0], 10));
+      const _page = $font.text().trim();
+      const _mpage = _page.match(NUM_REG);
+      if (_mepi && _mpage) {
+        arr.push({
+          index: parseInt(_mepi[0], 10),
+          pages: parseInt(_mpage[0], 10),
+        });
       } else {
         throw new Error('Error matching episode list');
       }

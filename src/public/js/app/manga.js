@@ -58,7 +58,7 @@ class Manga {
     
     isBook (epi) {
         if (this.hasBookList())
-            return this.data.books.indexOf(epi) >= 0;
+            return this.data.books.some(({ index }) => index === epi);
         return false;
     }
     
@@ -66,8 +66,22 @@ class Manga {
         return this.data.episodes;
     }
     
+    getPageCount(epi) {
+      if (this.data.books) {
+        const id = this.data.books.findIndex(({ index }) => index === epi);
+        if (id >= 0) {
+          return this.data.books[id].pages;
+        }
+      } else {
+        const id = this.data.episodes.findIndex(({ index }) => index === epi);
+        if (id >= 0) {
+          return this.data.episodes[id].pages;
+        }
+      }
+    }
+    
     getFirstImageUrl () {
-        var firstEpi = this.hasBookList() ? this.data.books[0] : this.data.episodes[0];
+        var firstEpi = this.hasBookList() ? this.data.books[0].index : this.data.episodes[0].index;
         return this.getImageUrl(firstEpi, 1);
     }
     
@@ -98,20 +112,20 @@ class Manga {
     }
     
     lastEpisode () {
-        return this.data.episodes[this.data.episodes.length - 1];
+        return this.data.episodes[this.data.episodes.length - 1].index;
     }
     
     firstEpisode () {
         if (this.data.books) {
-            return this.data.books[0];
+            return this.data.books[0].index;
         }
         else {
-            return this.data.episodes[0];
+            return this.data.episodes[0].index;
         }
     }
     
     getEpisodeType (epi) {
-        if (this.data.books && this.data.books.indexOf(epi) >= 0) {
+        if (this.data.books && this.data.books.some(({ index }) => index === epi)) {
             return "卷";
         }
         else {
@@ -131,7 +145,7 @@ class Manga {
     
     prevEpisodeOf (epi) {
         if (this.data.books) {
-            var bi = this.data.books.indexOf(epi);
+            var bi = this.data.books.findIndex(({ index }) => index === epi);
             if (bi >= 0) {
                 if (bi > 0) {
                     return this.data.books[bi - 1];
@@ -141,7 +155,7 @@ class Manga {
                 }
             }
         }
-        var ei = this.data.episodes.indexOf(epi);
+        var ei = this.data.episodes.findIndex(({ index }) => index === epi);
         if (ei >= 0) {
             if (ei > 0) {
                 return this.data.episodes[ei - 1];

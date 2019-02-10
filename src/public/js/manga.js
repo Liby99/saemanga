@@ -5,32 +5,25 @@ var Page = {
         this.renderManga();
     },
     renderManga: function () {
-        var self = this;
-        function loadImage(i) {
-            
-            // First generate the url and id and append the image
-            var url = manga.getImageUrl(episode, i);
-            var id = "manga-image-" + i;
-            self.$holder.render("manga-image", { id: id, src: url });
-            var $img = $("#" + id);
-            
-            // Then check if the images has already loaded
-            if ($img.prop("complete")) {
-                loadImage(i + 1);
+        const self = this;
+        const pageCount = manga.getPageCount(episode);
+        const data = Array.apply(null, Array(pageCount)).map(function (_, i) {
+            const index = i + 1;
+            return {
+                id: 'manga-image-' + index,
+                src: manga.getImageUrl(episode, index),
+                loaded: false,
+            };
+        });
+        self.$holder.render('manga-image', data);
+        $(".manga-image").on('load', function () {
+            const pageIndex = parseInt($(this).attr("id").split('-')[2], 10);
+            data[pageIndex].loaded = true;
+            for (var i = 0; i < data.length; i++) {
+                if (!data[i].loaded) break;
+                $("#manga-image-" + i).removeAttr("hidden");
             }
-            else {
-                $img.on("load", function () {
-                    loadImage(i + 1);
-                });
-                $img.on("error", function () {
-                    $img.remove();
-                    if (i == 1) {
-                        self.refreshMangaInfo();
-                    }
-                });
-            }
-        }
-        loadImage(1);
+        });
     },
     refreshMangaInfo: function () {
         var self = this;

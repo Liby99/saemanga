@@ -51,10 +51,10 @@
     <% if (manga.hasBookList()) { %>
         <section class="wrapper" style="padding-bottom: 5px;">
             <ul class="book-list">
-                <% manga.bookList().forEach(function (b) { %>
+                <% manga.bookList().forEach(({ index }) => { %>
                     <li>
-                        <a href="<%= manga.getSaemangaUrl(b) %>" class="btn <%= b == episode ? 'active' : '' %>">
-                            第 <%= b %> 卷
+                        <a href="<%= manga.getSaemangaUrl(index) %>" class="btn <%= index == episode ? 'active' : '' %>">
+                            第 <%= index %> 卷
                         </a>
                     </li>
                 <% }); %>
@@ -63,10 +63,10 @@
     <% } %>
     <section class="wrapper no-border">
         <ul class="episode-list">
-            <% manga.episodeList().forEach(function (e) { %>
+            <% manga.episodeList().forEach(({ index }) => { %>
                 <li>
-                    <a href="<%= manga.getSaemangaUrl(e) %>" class="btn <%= e == episode ? 'active' : '' %>">
-                        <%= e %>
+                    <a href="<%= manga.getSaemangaUrl(index) %>" class="btn <%= index == episode ? 'active' : '' %>">
+                        <%= index %>
                     </a>
                 </li>
             <% }); %>

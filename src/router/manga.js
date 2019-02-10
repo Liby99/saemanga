@@ -3,16 +3,10 @@ const FollowAPI = require('../api/follow');
 const MangaAPI = require('../api/manga');
 const Manga = require('../api/app/manga');
 
-function getFirstEpisode(manga) {
-  return manga.books ? manga.books[0] : manga.episodes[0];
-}
-
 function isValidEpisode(manga, epi) {
   const pepi = parseInt(epi, 10);
   const isNum = !Number.isNaN(pepi);
-  const hasBook = manga.books && manga.books.indexOf(pepi) >= 0;
-  const hasEpi = manga.episodes.indexOf(pepi) >= 0;
-  return isNum && (hasBook || hasEpi);
+  return isNum && (manga.hasEpisode(pepi) || manga.hasBook(pepi));
 }
 
 function getMangaInfo(req, res, callback) {
@@ -49,7 +43,7 @@ function getUser(req, res, hasUser, noUser) {
 }
 
 function isFollowing(req, res, user, manga, yes, no) {
-  FollowAPI.isFollowing(user._id, manga._id, (is) => {
+  FollowAPI.isFollowing(user._id, manga.id(), (is) => {
     if (is) {
       yes();
     } else {
@@ -74,7 +68,7 @@ function checkEpisode(req, res, user, manga, hasEpisode, noEpisode) {
 }
 
 function read(req, res, user, manga, callback) {
-  FollowAPI.read(user._id, manga._id, req.query.epi, () => {
+  FollowAPI.read(user._id, manga.id(), req.query.epi, () => {
     callback();
   }, (err) => {
     res.error(500, err);
@@ -82,7 +76,7 @@ function read(req, res, user, manga, callback) {
 }
 
 function redirectToLatest(req, res, user, manga) {
-  FollowAPI.getFollow(user._id, manga._id, (followInfo) => {
+  FollowAPI.getFollow(user._id, manga.id(), (followInfo) => {
     if (followInfo) {
       res.redirect(`manga.html?id=${req.query.id}&epi=${followInfo.max_episode}`);
     } else {
@@ -94,13 +88,13 @@ function redirectToLatest(req, res, user, manga) {
 }
 
 function follow(req, res, user, manga, success) {
-  FollowAPI.follow(user._id, manga._id, success, (err) => {
+  FollowAPI.follow(user._id, manga.id(), success, (err) => {
     res.error(500, err);
   });
 }
 
 function redirectToFirst(req, res, manga) {
-  res.redirect(`manga.html?id=${req.query.id}&epi=${getFirstEpisode(manga)}`);
+  res.redirect(`manga.html?id=${req.query.id}&epi=${manga.firstEpisode()}`);
 }
 
 function renderPage(loggedIn, user, manga, followInfo, episode, callback) {
@@ -108,13 +102,13 @@ function renderPage(loggedIn, user, manga, followInfo, episode, callback) {
     loggedIn,
     user,
     follow: followInfo,
-    manga: new Manga(manga),
+    manga,
     episode: parseInt(episode, 10),
   });
 }
 
 function renderPageWithUser(req, res, user, manga, callback) {
-  FollowAPI.getFollow(user._id, manga._id, (followInfo) => {
+  FollowAPI.getFollow(user._id, manga.id(), (followInfo) => {
     renderPage(true, user, manga, followInfo, req.query.epi, callback);
   }, (err) => {
     res.error(500, err);
@@ -126,7 +120,8 @@ function renderPageNoUser(req, res, manga, callback) {
 }
 
 module.exports = (req, res, callback) => {
-  getMangaInfo(req, res, (manga) => {
+  getMangaInfo(req, res, (m) => {
+    const manga = new Manga(m);
     getUser(req, res, (user) => {
       isFollowing(req, res, user, manga, () => {
         checkEpisode(req, res, user, manga, () => {
