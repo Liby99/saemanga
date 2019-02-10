@@ -191,8 +191,8 @@ module.exports = {
           const maxEpisode = Math.max(episode, follow.max_episode);
           const isUpToDate = maxEpisode === latestEpisode;
           Follows.updateOne({
-            user_id: userId,
-            manga_id: mangaId,
+            user_id: ObjectID(userId),
+            manga_id: ObjectID(mangaId),
           }, {
             $set: {
               update_date: new Date(),
