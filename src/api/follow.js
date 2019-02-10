@@ -47,7 +47,7 @@ module.exports = {
             '$up_to_date_int',
             {
               $subtract: [
-                '$latest_episode',
+                '$latest_episode.index',
                 '$max_episode',
               ],
             },
