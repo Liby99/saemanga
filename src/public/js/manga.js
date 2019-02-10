@@ -1,9 +1,25 @@
 var Page = {
     $holder: $("#manga-body-section"),
     errorAttempt: 0,
+    clipboard: undefined,
     copiedShowing: false,
     initiate: function () {
         this.renderManga();
+        this.initiateClipboard();
+    },
+    initiateClipboard: function () {
+        this.clipboard = new ClipboardJS('#share-url-button');
+        this.clipboard.on('success', (e) => {
+            if (!this.copiedShowing) {
+                $("#copied-tag").removeClass("hidden");
+                this.copiedShowing = true;
+                setTimeout(() => {
+                    this.copiedShowing = false;
+                    $("#copied-tag").addClass("hidden");
+                }, 2000);
+            }
+            e.clearSelection();
+        });
     },
     renderManga: function () {
         const self = this;
@@ -18,7 +34,7 @@ var Page = {
         });
         self.$holder.render('manga-image', data);
         $(".manga-image").on('load', function () {
-            const pageIndex = parseInt($(this).attr("id").split('-')[2], 10);
+            const pageIndex = parseInt($(this).attr("id").split('-')[2], 10) - 1;
             data[pageIndex].loaded = true;
             for (var i = 0; i < data.length; i++) {
                 if (!data[i].loaded) break;
@@ -102,40 +118,8 @@ var Page = {
                 }
             }
         });
-    },
-    shareURL: function () {
-        if (!this.copiedShowing) {
-            copyToClipboard(document.getElementById("share-url-input"));
-            $("#copied-tag").removeClass("hidden");
-            this.copiedShowing = true;
-            setTimeout(() => {
-                this.copiedShowing = false;
-                $("#copied-tag").addClass("hidden");
-            }, 2000);
-        }
     }
 };
-
-function copyToClipboard(el) {
-    var oldContentEditable = el.contentEditable,
-        oldReadOnly = el.readOnly,
-        range = document.createRange();
-
-    el.contentEditable = true;
-    el.readOnly = false;
-    range.selectNodeContents(el);
-
-    var s = window.getSelection();
-    s.removeAllRanges();
-    s.addRange(range);
-
-    el.setSelectionRange(0, 999999); // A big number, to cover anything that could be inside the element.
-
-    el.contentEditable = oldContentEditable;
-    el.readOnly = oldReadOnly;
-
-    document.execCommand('copy');
-}
 
 $(function () {
     Sidebar.initiate();
