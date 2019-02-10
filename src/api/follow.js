@@ -112,8 +112,8 @@ module.exports = {
               start_date: new Date(),
               update_date: new Date(),
               up_to_date: isUpToDate,
-              current_episode: currentEpisode,
-              max_episode: currentEpisode,
+              current_episode: currentEpisode.index,
+              max_episode: currentEpisode.index,
             }, (err, followId) => {
               if (err) {
                 error(err);
@@ -185,7 +185,7 @@ module.exports = {
   read(userId, mangaId, episode, callback, error) {
     const self = this;
     Manga.getByObjId(mangaId, (manga) => {
-      const latestEpisode = manga.episodes[manga.episodes.length - 1];
+      const latestEpisode = manga.episodes[manga.episodes.length - 1].index;
       self.getFollow(userId, mangaId, (follow) => {
         if (follow) {
           const maxEpisode = Math.max(episode, follow.max_episode);

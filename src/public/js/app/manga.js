@@ -1,156 +1,166 @@
 class Manga {
-    constructor (obj) {
+    constructor(obj) {
         this.data = clone(obj);
     }
-    
-    id () {
+
+    id() {
         return this.data.id;
     }
-    
-    dmkId () {
+
+    dmkId() {
         return this.data.dmkId;
     }
-    
-    dmkIdGen () {
+
+    dmkIdGen() {
         return this.data.dmkIdGen;
     }
-    
-    dmkIdWeb () {
+
+    dmkIdWeb() {
         return this.data.dmkIdWeb;
     }
-    
-    title () {
+
+    title() {
         return this.data.info.title;
     }
-    
-    author () {
+
+    author() {
         return this.data.info.author;
     }
-    
-    description () {
+
+    description() {
         return this.data.info.description;
     }
-    
-    genreDir () {
+
+    genreDir() {
         return this.data.info.genreDir;
     }
-    
-    ended () {
+
+    ended() {
         return this.data.info.ended;
     }
-    
-    tags () {
+
+    tags() {
         return this.data.info.tags;
     }
-    
-    hasBookList () {
+
+    hasBookList() {
         return this.data.books != null;
     }
-    
-    bookList () {
+
+    bookList() {
         if (this.hasBookList()) {
             return this.data.books;
-        }
-        else {
+        } else {
             throw new Error("Manga " + this.dmkId() + " doesn't have a book list");
         }
     }
-    
-    isBook (epi) {
+
+    isBook(epi) {
         if (this.hasBookList())
-            return this.data.books.some(({ index }) => index === epi);
+            return this.data.books.some(({
+                index
+            }) => index === epi);
         return false;
     }
-    
-    episodeList () {
+
+    episodeList() {
         return this.data.episodes;
     }
-    
+
     getPageCount(epi) {
-      if (this.data.books) {
-        const id = this.data.books.findIndex(({ index }) => index === epi);
-        if (id >= 0) {
-          return this.data.books[id].pages;
+        if (this.data.books) {
+            const id = this.data.books.findIndex(({
+                index
+            }) => index === epi);
+            if (id >= 0) {
+                return this.data.books[id].pages;
+            }
         }
-      } else {
-        const id = this.data.episodes.findIndex(({ index }) => index === epi);
+        const id = this.data.episodes.findIndex(({
+            index
+        }) => index === epi);
         if (id >= 0) {
-          return this.data.episodes[id].pages;
+            return this.data.episodes[id].pages;
         }
-      }
+        throw new Error(`Episode ${epi} not found in manga`);
     }
-    
-    getFirstImageUrl () {
+
+    getFirstImageUrl() {
         var firstEpi = this.hasBookList() ? this.data.books[0].index : this.data.episodes[0].index;
         return this.getImageUrl(firstEpi, 1);
     }
-    
-    getImageUrl (epi, page) {
+
+    getImageUrl(epi, page) {
         var p3 = itg => itg.toString().padStart(3, '0');
-        var dmkId = this.data.dmkId, dmkIdWeb = this.data.dmkIdWeb, dmkIdGen = this.data.dmkIdGen;
+        var dmkId = this.data.dmkId,
+            dmkIdWeb = this.data.dmkIdWeb,
+            dmkIdGen = this.data.dmkIdGen;
         var isOldId = this.data.isOldId;
         var idVer = this.data.idVer;
         switch (idVer) {
-            case 8: return 'http://www.cartoonmad.com/' + this.data.dmkIdHome + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
-            case 7: return 'http://www.cartoonmad.com/home1/' + dmkIdGen + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
-            case 6: return 'http://www.cartoonmad.com/cartoonimg/' + dmkIdGen + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
-            case 5: return 'http://' + dmkIdWeb + '.cartoonmad.com/' + dmkIdGen + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
-            default: throw new Error('Unknown img src version ' + idVer);
+            case 8:
+                return 'http://www.cartoonmad.com/' + this.data.dmkIdHome + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
+            case 7:
+                return 'http://www.cartoonmad.com/home1/' + dmkIdGen + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
+            case 6:
+                return 'http://www.cartoonmad.com/cartoonimg/' + dmkIdGen + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
+            case 5:
+                return 'http://' + dmkIdWeb + '.cartoonmad.com/' + dmkIdGen + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
+            default:
+                throw new Error('Unknown img src version ' + idVer);
         }
     }
-    
-    getCoverUrl () {
+
+    getCoverUrl() {
         return "http://cartoonmad.com/cartoonimg/coimg/" + this.data.dmkId + ".jpg";
     }
-    
-    getCartoonmadUrl () {
+
+    getCartoonmadUrl() {
         return "http://www.cartoonmad.com/comic/" + this.data.dmkId + ".html";
     }
-    
-    getSaemangaUrl (epi) {
+
+    getSaemangaUrl(epi) {
         return "/manga.html?id=" + this.data.dmkId + (epi != undefined ? ("&epi=" + epi) : "");
     }
-    
-    lastEpisode () {
+
+    lastEpisode() {
         return this.data.episodes[this.data.episodes.length - 1].index;
     }
-    
-    firstEpisode () {
+
+    firstEpisode() {
         if (this.data.books) {
             return this.data.books[0].index;
-        }
-        else {
+        } else {
             return this.data.episodes[0].index;
         }
     }
-    
-    getEpisodeType (epi) {
-        if (this.data.books && this.data.books.some(({ index }) => index === epi)) {
+
+    getEpisodeType(epi) {
+        if (this.data.books && this.data.books.some(({
+                index
+            }) => index === epi)) {
             return "卷";
-        }
-        else {
+        } else {
             return "话";
         }
     }
-    
-    hasPrevEpisode (epi) {
+
+    hasPrevEpisode(epi) {
         try {
             this.prevEpisodeOf(epi);
             return true;
-        }
-        catch (err) {
+        } catch (err) {
             return false;
         }
     }
-    
-    prevEpisodeOf (epi) {
+
+    prevEpisodeOf(epi) {
         if (this.data.books) {
             var bi = this.data.books.findIndex(({ index }) => index === epi);
             if (bi >= 0) {
                 if (bi > 0) {
-                    return this.data.books[bi - 1];
-                }
-                else {
+                    return this.data.books[bi - 1].index;
+                } else {
                     throw new Error("No prev episode for " + epi);
                 }
             }
@@ -158,71 +168,64 @@ class Manga {
         var ei = this.data.episodes.findIndex(({ index }) => index === epi);
         if (ei >= 0) {
             if (ei > 0) {
-                return this.data.episodes[ei - 1];
-            }
-            else {
+                return this.data.episodes[ei - 1].index;
+            } else {
                 if (this.data.books) {
-                    return this.data.books[this.data.books.length - 1];
-                }
-                else {
+                    return this.data.books[this.data.books.length - 1].index;
+                } else {
                     throw new Error("No prev episode for " + epi);
                 }
             }
-        }
-        else {
+        } else {
             throw new Error("No such episode " + epi);
         }
     }
-    
-    prevEpisodeUrl (epi) {
+
+    prevEpisodeUrl(epi) {
         return this.getSaemangaUrl(this.prevEpisodeOf(epi));
     }
-    
-    prevEpisodeType (epi) {
+
+    prevEpisodeType(epi) {
         return this.getEpisodeType(this.prevEpisodeOf(epi));
     }
-    
-    hasNextEpisode (epi) {
+
+    hasNextEpisode(epi) {
         try {
             this.nextEpisodeOf(epi);
             return true;
-        }
-        catch (err) {
+        } catch (err) {
             return false;
         }
     }
-    
-    nextEpisodeOf (epi) {
+
+    nextEpisodeOf(epi) {
         if (this.data.books) {
-            var bi = this.data.books.indexOf(epi);
+            var bi = this.data.books.findIndex(({ index }) => index === epi);
             if (bi >= 0) {
                 if (bi + 1 >= this.data.books.length) {
-                    return this.data.episodes[0];
-                }
-                else {
-                    return this.data.books[bi + 1];
+                    return this.data.episodes[0].index;
+                } else {
+                    return this.data.books[bi + 1].index;
                 }
             }
         }
-        var ei = this.data.episodes.indexOf(epi);
+        var ei = this.data.episodes.findIndex(({ index }) => index === epi);
         if (ei >= 0) {
             if (ei + 1 >= this.data.episodes.length) {
                 throw new Error("No next episode for " + epi);
+            } else {
+                return this.data.episodes[ei + 1].index;
             }
-            else {
-                return this.data.episodes[ei + 1];
-            }
-        }
-        else {
+        } else {
             throw new Error("No such episode " + epi);
         }
     }
-    
-    nextEpisodeUrl (epi) {
+
+    nextEpisodeUrl(epi) {
         return this.getSaemangaUrl(this.nextEpisodeOf(epi));
     }
-    
-    nextEpisodeType (epi) {
+
+    nextEpisodeType(epi) {
         return this.getEpisodeType(this.nextEpisodeOf(epi));
     }
 }

@@ -32,7 +32,7 @@ MongoUnitTest({
       const dmkId = 5827;
       Manga.get(dmkId, (manga) => {
         mangaId = manga._id;
-        maxEpi = manga.episodes[manga.episodes.length - 1];
+        // maxEpi = manga.episodes[manga.episodes.length - 1].index;
         next();
       }, error);
     },

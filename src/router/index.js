@@ -41,7 +41,7 @@ function getUser(req, res, hasUser, noUser) {
 function getFollows(req, res, user, callback) {
   Follow.getAllFollow(user._id, (follows) => {
     callback(follows.map((f) => {
-      const lastEpisode = f.manga.episodes[f.manga.episodes.length - 1];
+      const lastEpisode = f.manga.episodes[f.manga.episodes.length - 1].index;
       const hasUpdate = f.max_episode < lastEpisode;
       const showBadge = f.up_to_date && hasUpdate;
       return {

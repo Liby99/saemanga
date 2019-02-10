@@ -10,8 +10,14 @@
     dmk_id: <Number>,
     dmk_id_gen: <String>,
     dmk_id_web: <String>,
-    books: [ <Number> ],
-    episodes: [ <Number> ],
+    books: [{
+      index: <Number>,
+      pages: <Number>,
+    }],
+    episodes: [{
+      index: <Number>,
+      pages: <Number>,
+    }],
     info: {
         title: <String>,
         author: <String>,
