@@ -105,6 +105,15 @@ function getSearchQuery(str) {
 
 const imgSrcParsers = [
   (location, success, error) => {
+    const res = location.match(/(home\d+)\/(\d+)\/\d+\/\d+\.jpg/);
+    if (res) {
+      const [, dmkIdHome] = res;
+      success({ dmk_id_home: dmkIdHome, id_ver: 9 });
+    } else {
+      error(new Error(`Cannot parse ${location} using version 9 parser`));
+    }
+  },
+  (location, success, error) => {
     const res = location.match(/^\/([\w\d]+)\/(\d+)\/\d+\/\d+\.jpg$/);
     if (res) {
       const [, dmkIdHome] = res;

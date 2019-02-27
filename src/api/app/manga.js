@@ -116,6 +116,7 @@ module.exports = class Manga {
     } = this.data;
     const p3 = itg => itg.toString().padStart(3, '0');
     switch (idVer) {
+      case 9: return `http://cartoonmad.com/${dmkIdHome}/${dmkId}/${p3(epi)}/${p3(page)}.jpg`;
       case 8: return `http://cartoonmad.com/${dmkIdHome}/${dmkId}/${p3(epi)}/${p3(page)}.jpg`;
       case 7: return `http://www.cartoonmad.com/home1/${dmkIdGen}/${dmkId}/${p3(epi)}/${p3(page)}.jpg`;
       case 6: return `http://www.cartoonmad.com/cartoonimg/${dmkIdGen}/${dmkId}/${p3(epi)}/${p3(page)}.jpg`;

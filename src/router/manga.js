@@ -56,7 +56,7 @@ function isFollowing(req, res, user, manga, yes, no) {
 
 function checkEpisode(req, res, user, manga, hasEpisode, noEpisode) {
   const { epi } = req.query;
-  if (epi) {
+  if (epi !== undefined) {
     if (isValidEpisode(manga, epi)) {
       hasEpisode();
     } else {

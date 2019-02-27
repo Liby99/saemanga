@@ -98,6 +98,8 @@ class Manga {
         var isOldId = this.data.isOldId;
         var idVer = this.data.idVer;
         switch (idVer) {
+            case 9:
+                return 'http://www.cartoonmad.com/' + this.data.dmkIdHome + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
             case 8:
                 return 'http://www.cartoonmad.com/' + this.data.dmkIdHome + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
             case 7:
@@ -122,7 +124,7 @@ class Manga {
     getSaemangaUrl(epi) {
         return "/manga.html?id=" + this.data.dmkId + (epi != undefined ? ("&epi=" + epi) : "");
     }
-    
+
     getFullSaemangaUrl(epi) {
         return "http://saemanga.com" + this.getSaemangaUrl(epi);
     }
