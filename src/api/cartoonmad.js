@@ -105,6 +105,19 @@ function getSearchQuery(str) {
 
 const imgSrcParsers = [
   (location, success, error) => {
+    const res = location.match(/(web\d+)\.cartoonmad.com\/(home\d+)\/(\d+)\/\d+\/\d+\.jpg/);
+    if (res) {
+      const [, dmkIdWeb, dmkIdHome] = res;
+      success({
+        dmk_id_web: dmkIdWeb,
+        dmk_id_home: dmkIdHome,
+        id_ver: 10,
+      });
+    } else {
+      error(new Error(`Cannot parse ${location} using version 10 parser`));
+    }
+  },
+  (location, success, error) => {
     const res = location.match(/(home\d+)\/(\d+)\/\d+\/\d+\.jpg/);
     if (res) {
       const [, dmkIdHome] = res;

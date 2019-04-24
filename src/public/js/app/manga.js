@@ -94,14 +94,17 @@ class Manga {
         var p3 = itg => itg.toString().padStart(3, '0');
         var dmkId = this.data.dmkId,
             dmkIdWeb = this.data.dmkIdWeb,
-            dmkIdGen = this.data.dmkIdGen;
+            dmkIdGen = this.data.dmkIdGen,
+            dmkIdHome = this.data.dmkIdHome;
         var isOldId = this.data.isOldId;
         var idVer = this.data.idVer;
         switch (idVer) {
+            case 10:
+                return 'http://' + dmkIdWeb + '.cartoonmad.com/' + dmkIdHome + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
             case 9:
-                return 'http://www.cartoonmad.com/' + this.data.dmkIdHome + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
+                return 'http://www.cartoonmad.com/' + dmkIdHome + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
             case 8:
-                return 'http://www.cartoonmad.com/' + this.data.dmkIdHome + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
+                return 'http://www.cartoonmad.com/' + dmkIdHome + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
             case 7:
                 return 'http://www.cartoonmad.com/home1/' + dmkIdGen + '/' + dmkId + '/' + p3(epi) + '/' + p3(page) + '.jpg';
             case 6:
