@@ -127,7 +127,7 @@ module.exports = class Manga {
   }
 
   getCoverUrl() {
-    return `http://cartoonmad.com/cartoonimg/coimg/${this.data.dmkId}.jpg`;
+    return `http://cartoonmad.com/cartoonimgs/coimg/${this.data.dmkId}.jpg`;
   }
 
   getCartoonmadUrl() {
