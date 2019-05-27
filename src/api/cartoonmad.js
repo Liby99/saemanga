@@ -105,7 +105,7 @@ function getSearchQuery(str) {
 
 const imgSrcParsers = [
   (location, success, error) => {
-    const res = location.match(/(web\d+)\.cartoonmad.com\/(home\d+)\/(\d+)\/\d+\/\d+\.jpg/);
+    const res = location.match(/(web\d*)\.cartoonmad.com\/(home\d+)\/(\d+)\/\d+\/\d+\.jpg/);
     if (res) {
       const [, dmkIdWeb, dmkIdHome] = res;
       success({
