@@ -158,14 +158,14 @@ module.exports = {
   },
 
   /**
-     * Change the user password. The user has to specify his old password
-     * correctly before setting up new password.
-     * @param {string} username
-     * @param {string} oldPassword
-     * @param {string} newPassword
-     * @param {Function} callback takes a boolean indicates whether the change
-     * password is success or not.
-     */
+   * Change the user password. The user has to specify his old password
+   * correctly before setting up new password.
+   * @param {string} username
+   * @param {string} oldPassword
+   * @param {string} newPassword
+   * @param {Function} callback takes a boolean indicates whether the change
+   * password is success or not.
+   */
   changePassword(username, oldPassword, newPassword, callback, error) {
     try {
       validatePassword(oldPassword);
@@ -197,6 +197,38 @@ module.exports = {
         });
       } else {
         callback(false);
+      }
+    });
+  },
+
+  /**
+   * Force Change the user password. The user does not have to specify his
+   * old password before setting up new password.
+   * @param {string} username
+   * @param {string} newPassword
+   * @param {Function} callback takes a boolean indicates whether the change
+   * password is success or not.
+   */
+  forceChangePassword(username, newPassword, callback, error) {
+    try {
+      validatePassword(newPassword);
+    } catch (err) {
+      error(err);
+      return;
+    }
+
+    const encNewPwd = Crypto.genEncrypted(newPassword);
+    Users.update({
+      username,
+    }, {
+      $set: {
+        password: encNewPwd,
+      },
+    }, (err2) => {
+      if (err2) {
+        error(new Error(`Error when force changing user ${username} password: ${err2}`));
+      } else {
+        callback(true);
       }
     });
   },
