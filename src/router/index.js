@@ -5,6 +5,8 @@ const Hot = require('../api/hot');
 const User = require('../api/user');
 const Manga = require('../api/app/manga');
 
+const expires = 1000 * 60 * 60 * 24 * 365;
+
 function getGenre(req, res, callback) {
   const gs = Genre.get();
   callback(gs);
@@ -25,6 +27,10 @@ function getUser(req, res, hasUser, noUser) {
   if (loggedIn) {
     User.getAndTouchUser(username, (user) => {
       if (user) {
+        res.cookie('username', username, {
+          expires: new Date(Date.now() + expires),
+          domain: '.saemanga.com',
+        });
         hasUser(user);
       } else {
         res.clearCookie('username');

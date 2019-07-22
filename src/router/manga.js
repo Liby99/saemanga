@@ -3,6 +3,8 @@ const FollowAPI = require('../api/follow');
 const MangaAPI = require('../api/manga');
 const Manga = require('../api/app/manga');
 
+const expires = 1000 * 60 * 60 * 24 * 365;
+
 function isValidEpisode(manga, epi) {
   const pepi = parseInt(epi, 10);
   const isNum = !Number.isNaN(pepi);
@@ -29,6 +31,10 @@ function getUser(req, res, hasUser, noUser) {
   if (req.cookies.username) {
     User.getAndTouchUser(req.cookies.username, (user) => {
       if (user) {
+        res.cookie('username', req.cookies.username, {
+          expires: new Date(Date.now() + expires),
+          domain: '.saemanga.com',
+        });
         hasUser(user);
       } else {
         res.clearCookie('username');

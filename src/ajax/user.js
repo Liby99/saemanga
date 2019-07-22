@@ -25,6 +25,7 @@ module.exports = {
     User.addUser(username, password, () => {
       res.cookie('username', username, {
         expires: new Date(Date.now() + expires),
+        domain: '.saemanga.com',
       });
       res.success();
     }, (err) => {
@@ -37,6 +38,7 @@ module.exports = {
       if (success) {
         res.cookie('username', username, {
           expires: new Date(Date.now() + expires),
+          domain: '.saemanga.com',
         });
         res.success();
       } else {
